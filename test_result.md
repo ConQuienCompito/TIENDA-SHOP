@@ -164,11 +164,11 @@ frontend:
 
   - task: "Product Page"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/pages/ProductPage.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
@@ -179,6 +179,9 @@ frontend:
       - working: "NA"
         agent: "testing"
         comment: "Retesting required for new trust elements: security text below Add to Cart, trust indicators grid, payment methods, guarantee message, 'Incluido en tu pedido' section, and collapsible sections"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: All new trust elements working perfectly. Security text 'Pago seguro · Datos encriptados' below Add to Cart button. Trust indicators grid shows 'Envío 24-48h', '30 días', 'Garantía 2 años'. Payment methods section with Visa, Mastercard, PayPal, Apple Pay icons. Guarantee message 'Si no encaja en tu espacio, puedes devolverlo. Sin preguntas.' present. 'Incluido en tu pedido' section with 4 items including USB-C cable and premium box. All collapsible sections (Especificaciones, Envío y entrega, Devoluciones y garantía, Cuidado del producto) work correctly. Variant selection text 'Has elegido: CALMA — Para quienes buscan silencio en la luz.' displays properly. Add to cart shows toast notification successfully."
 
   - task: "Testimonials Section"
     implemented: true
