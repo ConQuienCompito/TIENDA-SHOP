@@ -1,150 +1,124 @@
 # LUMEI - Product Requirements Document
 
-## Project Overview
-LUMEI is a premium e-commerce storefront for amethyst ambient LED lamps. The brand positioning focuses on "identity through light" - customers choose which light represents them, not which product has better specs.
+## Overview
+LUMEI es una tienda Shopify premium para lámparas LED de amatista. El tema está diseñado con filosofía "dark-mode first", enfocado en identidad emocional: "La luz que eliges dice quién eres".
 
-**Deliverable**: Shopify Theme (OS 2.0 compatible)
-
-## Brand Identity
-- **Brand Name**: LUMEI
-- **Tagline**: "La luz que eliges dice quién eres." (The light you choose says who you are.)
-- **Positioning**: Premium, minimal, emotional, identity-driven
-- **Language**: Spanish (Spain)
-
-## Design System
-
-### Color Palette (Dark Mode First)
-- **Background**: Deep black (`#0a0a0a`)
-- **Card**: Slightly lighter (`#0f0f0f`)
-- **Foreground**: Soft white (`#ebebeb`)
-- **Muted**: Gray (`#808080`)
-- **Accent**: Amethyst purple (`#9966cc`)
-
-### Lamp Light Colors (Identity Variants)
-- **CALMA** (Purple): `#9966cc` - For introspective personalities
-- **ENFOQUE** (Blue): `#33aaff` - For focused personalities
-- **PROFUNDO** (Amber): `#f5a623` - For warm personalities
-
-### Typography
-- **Display Font**: Cormorant Garamond (serif) - Headings
-- **Body Font**: Inter (sans-serif) - Body text
+**Entregable Final**: Tema Shopify OS 2.0 en archivo `.zip` listo para importar.
 
 ---
 
-## ✅ Completed Implementation (January 2025)
+## ✅ Implementado (Enero 2025)
 
-### Shopify Theme Structure
+### Estructura del Tema Shopify
 
-#### Templates Created:
-- `index.json` - Homepage
-- `product.json` - Product page
-- `collection.json` - Collection page
-- `cart.json` - Cart page
-- `page.json` - Default page
-- `page.faq.json` - FAQ page
-- `page.concepto.json` - Concept page
-- `page.politica-privacidad.json` - Privacy policy
-- `page.politica-devoluciones.json` - Returns policy
-- `page.terminos-condiciones.json` - Terms & conditions
-- `404.json` - 404 error page
-- `customers/login.json` - Login page
-- `customers/register.json` - Register page
-- `customers/account.json` - Account page
-- `customers/order.json` - Order details page
+**Layout:**
+- `theme.liquid` - Layout principal con Google Fonts, CSS y metadatos
 
-#### Sections Created:
-- `hero-section.liquid` - Identity-based hero with product image
-- `concept-section.liquid` - Emotional concept explanation
-- `variants-section.liquid` - Interactive variant selector
-- `context-section.liquid` - Lifestyle context images
-- `testimonials-section.liquid` - Customer testimonials carousel
-- `faq-section.liquid` - Accordion FAQ
-- `reassurance-section.liquid` - Trust indicators (shipping, returns, security, warranty)
-- `main-product.liquid` - Product page with variant picker and trust elements
-- `main-collection.liquid` - Product grid
-- `main-cart.liquid` - Shopping cart
-- `main-page.liquid` - Default page content
-- `page-faq.liquid` - Full FAQ page with categories
-- `page-concepto.liquid` - Brand concept page
-- `page-politica.liquid` - Policy pages (privacy, terms, refunds)
-- `main-login.liquid` - Customer login
-- `main-register.liquid` - Customer registration
-- `main-account.liquid` - Customer account dashboard
-- `main-order.liquid` - Order details view
-- `main-404.liquid` - 404 error page
-- `header.liquid` - Navigation header
-- `footer.liquid` - Site footer with trust bar
+**Templates (JSON):**
+| Template | Descripción |
+|----------|-------------|
+| `index.json` | Homepage |
+| `product.json` | Página de producto |
+| `collection.json` | Página de colección |
+| `cart.json` | Carrito |
+| `page.json` | Página por defecto |
+| `page.faq.json` | FAQ (con bloques editables) |
+| `page.concepto.json` | Concepto de marca |
+| `page.politica-privacidad.json` | Política de privacidad |
+| `page.politica-devoluciones.json` | Política de devoluciones |
+| `page.terminos-condiciones.json` | Términos y condiciones |
+| `404.json` | Error 404 |
+| `customers/login.json` | Login |
+| `customers/register.json` | Registro |
+| `customers/account.json` | Cuenta |
+| `customers/order.json` | Detalles de pedido |
 
-#### Snippets Created:
-- `payment-icons.liquid` - All payment method icons (Visa, Mastercard, Amex, PayPal, Apple Pay, Google Pay, Shop Pay, Klarna, Bizum, UnionPay)
-- `product-card.liquid` - Product card component
-- `meta-tags.liquid` - SEO meta tags
-- `icon.liquid` - Icon SVGs
+**Secciones (Liquid):**
+- Hero, Concepto, Variantes, Contexto, Testimonios, FAQ, Reassurance
+- Header, Footer con grupos JSON
+- Producto principal con carrito nativo
+- Colección con grid de productos
+- Páginas de cuenta completas
 
-#### Assets:
-- `lumei-base.css` - Base styles and CSS variables
-- `lumei-components.css` - Button and component styles
-- `lumei-scripts.js` - Interactive functionality (cart, toasts)
-- `lumei-product.png` - Product image placeholder
+### Características Clave
 
-#### Configuration:
-- `settings_schema.json` - Theme settings (colors, typography, social)
-- `settings_data.json` - Default settings values
-- `es.default.json` - Spanish translations
+✅ **100% Editable desde Theme Editor**
+- Todos los textos son editables
+- Secciones reordenables/ocultables
+- Bloques dinámicos para FAQ, testimonios, contexto
 
-### Trust & Reassurance Elements ✅
-- Hero Section trust indicators (free shipping, 30-day returns, secure payment)
-- Reassurance Section with 4 trust icons between sections
-- Product page trust grid (shipping, returns, warranty)
-- Payment method icons on product page and footer
-- Guarantee messages
-- "Included in your order" checklist
+✅ **Carrito y Checkout Nativos de Shopify**
+- Formulario POST a `/cart/add`
+- Input hidden con `variant.id`
+- Sin checkout personalizado
 
-### Payment Methods ✅
-All icons implemented: Visa, Mastercard, American Express, PayPal, Apple Pay, Google Pay, Shop Pay, Klarna, Bizum, UnionPay
+✅ **Métodos de Pago Nativos**
+- Usa `{{ shop.enabled_payment_types }}`
+- Iconos generados con `payment_type_svg_tag`
+- Sin SVGs personalizados
 
-### Shopify OS 2.0 Features ✅
-- All sections have `{% schema %}` with editable settings
-- JSON templates for all page types
-- Blocks support for dynamic content
-- Full theme customizer compatibility
-- No hardcoded content - everything editable
+✅ **Productos Dinámicos**
+- Usa objetos `{{ product }}`, `{{ variant }}`, `{{ collection }}`
+- Sin datos hardcodeados de productos
+- Funciona con cualquier producto de Shopify
+
+✅ **Imágenes Incluidas en Assets**
+- `lumei-product.png` - Imagen de producto placeholder
+- `context-bedroom.jpg`, `context-desk.jpg`, `context-living.jpg` - Contextos
 
 ---
 
-## 📋 User Instructions (Post-Upload)
+## 📥 Descarga
 
-After uploading the theme to Shopify:
+**URL**: https://lightvibe.preview.emergentagent.com/lumei-theme.zip
 
-1. **Create Products**: Add LUMEI products with variants (CALMA, ENFOQUE, PROFUNDO)
-2. **Create Pages**: Create pages with handles: `faq`, `concepto`, `politica-privacidad`, `terminos-condiciones`, `politica-devoluciones`
-3. **Configure Navigation**: Set up main menu links
-4. **Upload Images**: Replace placeholder with actual product photos
-5. **Configure Payments**: Set up Shopify Payments with desired methods
-
----
-
-## 📥 Theme Download
-
-**URL**: `https://lightvibe.preview.emergentagent.com/lumei-theme.zip`
-
-**Contents**:
-- 51 files
-- ~280 KB compressed
-- Ready for Shopify upload
+**Contenido del ZIP:**
+- 54 archivos
+- ~399 KB comprimido
+- Incluye imágenes en `/assets`
 
 ---
 
-## 🔮 Future Enhancements (Backlog)
+## 📋 Post-Instalación en Shopify
 
-- [ ] Advanced product gallery with multiple angles/zoom
-- [ ] Color picker integration with product variants
-- [ ] Animated scroll effects
-- [ ] Newsletter signup integration
+### Paso 1: Importar Tema
+1. Admin Shopify → Tienda online → Temas
+2. "Añadir tema" → "Cargar archivo zip"
+3. Seleccionar `lumei-theme.zip`
+
+### Paso 2: Crear Productos
+1. Ir a Productos → Añadir producto
+2. Crear producto con variantes (ej: CALMA, ENFOQUE, PROFUNDO)
+3. Opcional: Añadir metafield `custom.color` a cada variante para el color del glow
+
+### Paso 3: Crear Páginas
+Crear páginas con estos handles exactos:
+- `faq` (plantilla: page.faq)
+- `concepto` (plantilla: page.concepto)
+- `politica-privacidad` (plantilla: page.politica-privacidad)
+- `politica-devoluciones` (plantilla: page.politica-devoluciones)
+- `terminos-condiciones` (plantilla: page.terminos-condiciones)
+
+O alternativamente, usar las políticas nativas de Shopify en Configuración → Políticas.
+
+### Paso 4: Configurar Navegación
+- Editar menú principal con enlaces a páginas creadas
+- El tema auto-detecta páginas y políticas de Shopify
+
+### Paso 5: Personalizar
+- Todo editable desde "Personalizar tema"
+- Colores, tipografías, textos, imágenes
+
+---
+
+## 🔮 Mejoras Futuras (Backlog)
+
+- [ ] Galería de producto con múltiples imágenes y zoom
+- [ ] Integración con reviews nativos de Shopify
+- [ ] Soporte multi-idioma
 - [ ] Instagram feed section
-- [ ] Reviews/ratings integration
-- [ ] Multi-language support
+- [ ] Newsletter con integración Klaviyo/Mailchimp
 
 ---
 
-© 2025 LUMEI - Theme developed for Shopify OS 2.0
+© 2025 LUMEI - Tema Shopify OS 2.0
