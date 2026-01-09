@@ -122,11 +122,11 @@ frontend:
 
   - task: "Hero Section"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/components/sections/HeroSection.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
@@ -137,6 +137,9 @@ frontend:
       - working: "NA"
         agent: "testing"
         comment: "Retesting required for new trust indicators below CTA (Envío gratuito, 30 días devolución, Pago seguro)"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: All trust indicators below CTA are working perfectly. Found 'Envío gratuito', '30 días devolución', and 'Pago seguro' with proper icons and styling."
 
   - task: "Variants Section (Colección)"
     implemented: true
