@@ -1,89 +1,101 @@
 {% comment %}
   LUMEI - Reassurance Section
-  Trust indicators: shipping, returns, security, warranty
 {% endcomment %}
 
-{%- style -%}
-  .reassurance-section {
-    padding: 5rem 1.5rem;
+<style>
+  .reassurance {
+    padding: 60px 20px;
+    background: {{ settings.color_background }};
     border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.05 }};
     border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.05 }};
   }
 
-  .reassurance-section__container {
-    max-width: 64rem;
+  .reassurance__container {
+    max-width: 1200px;
     margin: 0 auto;
   }
 
-  .reassurance-section__grid {
+  .reassurance__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem 3rem;
+    gap: 24px;
   }
 
   @media (min-width: 768px) {
-    .reassurance-section__grid {
+    .reassurance__grid {
       grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
     }
   }
 
-  .reassurance-item {
+  .reassurance__item {
     text-align: center;
   }
 
-  .reassurance-item__icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin: 0 auto 0.75rem;
+  .reassurance__icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: {{ settings.color_lamp_purple | color_modify: 'alpha', 0.1 }};
+    border-radius: 12px;
+    color: {{ settings.color_lamp_purple }};
+  }
+
+  .reassurance__title {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 4px;
+  }
+
+  .reassurance__description {
+    font-size: 0.8125rem;
     color: {{ settings.color_muted }};
   }
+</style>
 
-  .reassurance-item__title {
-    font-size: 0.875rem;
-    font-family: 'Inter', sans-serif;
-    color: {{ settings.color_foreground | color_modify: 'alpha', 0.8 }};
-    margin-bottom: 0.25rem;
-  }
-
-  .reassurance-item__description {
-    font-size: 0.75rem;
-    color: {{ settings.color_muted | color_modify: 'alpha', 0.6 }};
-    font-family: 'Inter', sans-serif;
-  }
-{%- endstyle -%}
-
-<section class="reassurance-section">
-  <div class="reassurance-section__container">
-    <div class="reassurance-section__grid">
+<section class="reassurance">
+  <div class="reassurance__container">
+    <div class="reassurance__grid">
       {%- for block in section.blocks -%}
-        <div class="reassurance-item" {{ block.shopify_attributes }}>
-          {%- case block.settings.icon -%}
-            {%- when 'truck' -%}
-              <svg class="reassurance-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="1" y="3" width="15" height="13"/>
-                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-                <circle cx="5.5" cy="18.5" r="2.5"/>
-                <circle cx="18.5" cy="18.5" r="2.5"/>
-              </svg>
-            {%- when 'rotate' -%}
-              <svg class="reassurance-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="1 4 1 10 7 10"/>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-              </svg>
-            {%- when 'shield' -%}
-              <svg class="reassurance-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            {%- when 'package' -%}
-              <svg class="reassurance-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                <line x1="12" y1="22.08" x2="12" y2="12"/>
-              </svg>
-          {%- endcase -%}
-          <p class="reassurance-item__title">{{ block.settings.title }}</p>
-          <p class="reassurance-item__description">{{ block.settings.description }}</p>
+        <div class="reassurance__item" {{ block.shopify_attributes }}>
+          <div class="reassurance__icon">
+            {%- case block.settings.icon -%}
+              {%- when 'truck' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="1" y="3" width="15" height="13"></rect>
+                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                  <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                  <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                </svg>
+              {%- when 'rotate' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polyline points="23 4 23 10 17 10"></polyline>
+                  <polyline points="1 20 1 14 7 14"></polyline>
+                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg>
+              {%- when 'shield' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              {%- when 'package' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+              {%- else -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            {%- endcase -%}
+          </div>
+          <h3 class="reassurance__title">{{ block.settings.title }}</h3>
+          <p class="reassurance__description">{{ block.settings.description }}</p>
         </div>
       {%- endfor -%}
     </div>
@@ -93,8 +105,6 @@
 {% schema %}
 {
   "name": "Garantías LUMEI",
-  "tag": "section",
-  "class": "section-reassurance",
   "settings": [],
   "blocks": [
     {
@@ -106,12 +116,13 @@
           "id": "icon",
           "label": "Icono",
           "options": [
-            { "value": "truck", "label": "Envío" },
+            { "value": "truck", "label": "Camión" },
             { "value": "rotate", "label": "Devolución" },
-            { "value": "shield", "label": "Seguridad" },
-            { "value": "package", "label": "Paquete" }
+            { "value": "shield", "label": "Escudo" },
+            { "value": "package", "label": "Paquete" },
+            { "value": "check", "label": "Check" }
           ],
-          "default": "truck"
+          "default": "check"
         },
         {
           "type": "text",
