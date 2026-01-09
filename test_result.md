@@ -158,11 +158,11 @@ frontend:
 
   - task: "Product Page"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/frontend/src/pages/ProductPage.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "testing"
@@ -170,6 +170,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED: Variant name 'CALMA' displays prominently in purple. All 3 color selector circles work correctly. 'Añadir al carrito' button functions properly with toast notification appearing ('LUMEI CALMA añadido al carrito'). All accordion sections (Especificaciones, Envío y devoluciones, Cuidado del producto) expand/collapse correctly."
+      - working: "NA"
+        agent: "testing"
+        comment: "Retesting required for new trust elements: security text below Add to Cart, trust indicators grid, payment methods, guarantee message, 'Incluido en tu pedido' section, and collapsible sections"
 
   - task: "Testimonials Section"
     implemented: true
