@@ -77,6 +77,19 @@ LUMEI is a premium e-commerce storefront for amethyst ambient LED lamps. The bra
 - Smooth scroll navigation
 - Animation effects (fade-in, float, pulse glow)
 
+### Trust & Reassurance Elements (NEW) ✅
+- **Hero Section**: Trust indicators below CTA (Envío gratuito, 30 días devolución, Pago seguro)
+- **Reassurance Section**: 4 trust icons between Variants and Context
+- **Variants Section**: Micro-copy "Pago seguro · Devolución en 30 días" below CTA
+- **Product Page**:
+  - "Pago seguro · Datos encriptados" below Add to Cart
+  - Trust grid (Envío 24-48h, 30 días, Garantía 2 años)
+  - Payment icons (Visa, Mastercard, PayPal, Apple Pay)
+  - Guarantee message
+  - "Incluido en tu pedido" checklist
+  - Detailed collapsibles (Especificaciones, Envío y entrega, Devoluciones y garantía, Cuidado)
+- **Footer**: Trust bar with payment icons, guarantee summary
+
 ### Mock Data (Frontend Prototype)
 - Cart functionality (counter only, no backend)
 - Testimonials (static data)
