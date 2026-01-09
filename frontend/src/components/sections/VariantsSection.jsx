@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Shield } from 'lucide-react';
 
 const PRODUCT_IMAGE = "https://customer-assets.emergentagent.com/job_6124748f-9cf1-498a-bc35-1136535c2dc5/artifacts/35uqwoz6_image.png";
 
@@ -142,6 +142,12 @@ export default function VariantsSection() {
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
+              
+              {/* Trust micro-copy */}
+              <div className="flex items-center gap-2 mt-4 text-xs text-muted-foreground/50">
+                <Shield className="w-3 h-3" />
+                <span>Pago seguro · Devolución en 30 días</span>
+              </div>
             </div>
           </div>
         </div>

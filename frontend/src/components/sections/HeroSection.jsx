@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Shield, Truck, RotateCcw } from 'lucide-react';
 
 const PRODUCT_IMAGE = "https://customer-assets.emergentagent.com/job_6124748f-9cf1-498a-bc35-1136535c2dc5/artifacts/35uqwoz6_image.png";
 
@@ -78,6 +78,25 @@ export default function HeroSection() {
                   Ver colección
                 </a>
               </Button>
+            </div>
+
+            {/* Trust indicators below CTA */}
+            <div 
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-6 mt-10 opacity-0 animate-fade-in-up"
+              style={{ animationDelay: '1s', animationFillMode: 'forwards' }}
+            >
+              <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
+                <Truck className="w-4 h-4" />
+                <span>Envío gratuito</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
+                <RotateCcw className="w-4 h-4" />
+                <span>30 días devolución</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground/60">
+                <Shield className="w-4 h-4" />
+                <span>Pago seguro</span>
+              </div>
             </div>
           </div>
 
