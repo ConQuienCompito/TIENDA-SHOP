@@ -1,0 +1,20 @@
+{
+  "general": {
+    "password_page": "Contraseña",
+    "payment_methods": "Métodos de pago"
+  },
+  "products": {
+    "add_to_cart": "Añadir al carrito",
+    "sold_out": "Agotado",
+    "unavailable": "No disponible",
+    "quantity": "Cantidad"
+  },
+  "cart": {
+    "title": "Tu carrito",
+    "empty": "Tu carrito está vacío",
+    "continue_shopping": "Seguir comprando",
+    "checkout": "Finalizar compra",
+    "subtotal": "Subtotal",
+    "remove": "Eliminar"
+  }
+}
