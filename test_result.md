@@ -206,11 +206,11 @@ frontend:
 
   - task: "Footer"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/frontend/src/components/layout/Footer.jsx"
     stuck_count: 0
-    priority: "low"
-    needs_retesting: false
+    priority: "high"
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "testing"
@@ -218,6 +218,21 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED: Footer LUMEI brand visible, all navigation links (Inicio, Colección, Concepto, FAQ) present and functional. Contact email (hola@lumei.es) is clickable. Footer displays proper copyright and legal links."
+      - working: "NA"
+        agent: "testing"
+        comment: "Retesting required for new trust bar with payment icons and 'Política de Devoluciones' link"
+
+  - task: "Reassurance Section"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/sections/ReassuranceSection.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "New section testing required - verify 4 trust icons (Envío gratuito, 30 días, Pago seguro, Garantía 2 años) between Variants and Context sections"
 
 metadata:
   created_by: "testing_agent"
