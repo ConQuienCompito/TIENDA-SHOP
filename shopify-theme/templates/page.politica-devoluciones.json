@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-politica",
+      "settings": {
+        "page_type": "refund"
+      }
+    }
+  },
+  "order": ["main"]
+}

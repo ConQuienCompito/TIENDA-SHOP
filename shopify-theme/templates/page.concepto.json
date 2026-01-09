@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-concepto",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
