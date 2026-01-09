@@ -1,0 +1,47 @@
+<section class="hero">
+  <div class="page-width">
+    <div class="hero__container">
+      <div class="hero__content">
+        <p class="hero__subtitle">Tu luz. Tu elección.</p>
+        <h1 class="hero__title">
+          <span>La luz que eliges</span>
+          <span>dice quién eres.</span>
+        </h1>
+        <p class="hero__description">LUMEI no vende lámparas. LUMEI ofrece identidad a través de la luz.</p>
+        <div class="hero__cta">
+          <a href="/collections/all" class="btn btn--primary btn--large">Elige tu luz</a>
+          <a href="/pages/concepto" class="btn btn--secondary btn--large">Descubre más</a>
+        </div>
+      </div>
+      <div class="hero__image">
+        <div class="hero__image-glow"></div>
+        <img src="{{ 'lumei-product.png' | asset_url }}" alt="LUMEI Lamp">
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 0 60px; }
+.hero__container { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+@media (min-width: 1024px) { .hero__container { grid-template-columns: 1fr 1fr; gap: 80px; } }
+.hero__content { text-align: center; }
+@media (min-width: 1024px) { .hero__content { text-align: left; } }
+.hero__subtitle { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--color-primary); margin-bottom: 24px; }
+.hero__title { font-size: 2.5rem; font-family: var(--font-display); font-weight: 300; line-height: 1.1; color: var(--color-text); margin-bottom: 24px; }
+.hero__title span { display: block; }
+@media (min-width: 768px) { .hero__title { font-size: 3.5rem; } }
+@media (min-width: 1024px) { .hero__title { font-size: 4rem; } }
+.hero__description { font-size: 1.125rem; color: var(--color-text-soft); line-height: 1.7; max-width: 500px; margin: 0 auto 32px; }
+@media (min-width: 1024px) { .hero__description { margin: 0 0 32px; } }
+.hero__cta { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+@media (min-width: 1024px) { .hero__cta { justify-content: flex-start; } }
+.hero__image { position: relative; display: flex; align-items: center; justify-content: center; }
+.hero__image img { position: relative; z-index: 2; max-width: 100%; }
+.hero__image-glow { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, rgba(153, 102, 204, 0.3), transparent 60%); animation: pulse 4s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
+</style>
+
+{% schema %}
+{ "name": "Hero", "settings": [] }
+{% endschema %}
