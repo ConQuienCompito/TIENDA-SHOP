@@ -140,11 +140,11 @@ frontend:
 
   - task: "Variants Section (Colección)"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/frontend/src/components/sections/VariantsSection.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "testing"
@@ -152,6 +152,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED: All variant cards (CALMA, ENFOQUE, PROFUNDO) are visible and clickable. Product image glow changes color when variants are selected. Dynamic 'Elegir [VARIANT]' buttons update correctly for CALMA and ENFOQUE. Minor: PROFUNDO dynamic button selector needs adjustment but core functionality works."
+      - working: "NA"
+        agent: "testing"
+        comment: "Retesting required for new trust micro-copy below CTA (Pago seguro · Devolución en 30 días)"
 
   - task: "Product Page"
     implemented: true
