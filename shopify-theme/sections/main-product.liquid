@@ -1,5 +1,5 @@
 {% comment %}
-  LUMEI - Main Product Section
+  LUMEI - Main Product Section (Refined with Trust Elements)
 {% endcomment %}
 
 {%- style -%}
@@ -75,26 +75,49 @@
     transition: opacity 0.5s ease;
   }
 
-  .product-section__thumbnails {
+  .product-section__included {
+    display: none;
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: {{ settings.color_card | color_modify: 'alpha', 0.5 }};
+    border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.05 }};
+  }
+
+  @media (min-width: 1024px) {
+    .product-section__included {
+      display: block;
+    }
+  }
+
+  .product-section__included-title {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .product-section__included-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .product-section__included-item {
     display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: {{ settings.color_foreground | color_modify: 'alpha', 0.7 }};
+    padding: 0.5rem 0;
   }
 
-  .product-section__thumbnail {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background: {{ settings.color_foreground | color_modify: 'alpha', 0.3 }};
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .product-section__thumbnail.is-active {
-    background: {{ settings.color_foreground }};
-    width: 1.5rem;
+  .product-section__included-icon {
+    width: 1rem;
+    height: 1rem;
+    color: {{ settings.color_muted }};
   }
 
   .product-section__info {
@@ -135,7 +158,7 @@
   }
 
   .product-section__price {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
 
   .product-section__price-value {
@@ -152,7 +175,7 @@
   }
 
   .product-section__variants {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
 
   .product-section__variants-label {
@@ -203,25 +226,106 @@
     opacity: 1;
   }
 
-  .product-section__add-btn {
-    width: 100%;
-    margin-bottom: 1.5rem;
+  .product-section__variant-selected {
+    font-size: 0.75rem;
+    color: {{ settings.color_muted | color_modify: 'alpha', 0.6 }};
+    margin-top: 0.75rem;
   }
 
-  .product-section__trust {
+  .product-section__variant-selected span {
+    color: {{ settings.color_foreground | color_modify: 'alpha', 0.7 }};
+  }
+
+  .product-section__add-btn {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  .product-section__secure {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
-    font-size: 0.875rem;
-    color: {{ settings.color_muted }};
-    margin-bottom: 2.5rem;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: {{ settings.color_muted | color_modify: 'alpha', 0.6 }};
+    margin-bottom: 2rem;
+  }
+
+  .product-section__secure-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .product-section__trust {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.05 }};
+    border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.05 }};
   }
 
   .product-section__trust-item {
+    text-align: center;
+  }
+
+  .product-section__trust-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0 auto 0.5rem;
+    color: {{ settings.color_muted }};
+  }
+
+  .product-section__trust-title {
+    font-size: 0.75rem;
+    color: {{ settings.color_foreground | color_modify: 'alpha', 0.7 }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .product-section__trust-desc {
+    font-size: 0.625rem;
+    color: {{ settings.color_muted | color_modify: 'alpha', 0.6 }};
+  }
+
+  .product-section__payment {
+    margin-bottom: 2rem;
+  }
+
+  .product-section__payment-label {
+    font-size: 0.625rem;
+    text-align: center;
+    color: {{ settings.color_muted | color_modify: 'alpha', 0.5 }};
+    margin-bottom: 0.75rem;
+  }
+
+  .product-section__payment-icons {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 1rem;
+    opacity: 0.4;
+  }
+
+  .product-section__payment-icon {
+    height: 1.25rem;
+    width: auto;
+  }
+
+  .product-section__guarantee {
+    background: {{ settings.color_card | color_modify: 'alpha', 0.3 }};
+    border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.03 }};
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .product-section__guarantee-text {
+    font-size: 0.875rem;
+    color: {{ settings.color_foreground | color_modify: 'alpha', 0.7 }};
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
   }
 
   .product-section__collapsibles {
@@ -266,6 +370,18 @@
     line-height: 1.6;
   }
 
+  .product-section__collapsible-content p {
+    margin-bottom: 0.75rem;
+  }
+
+  .product-section__collapsible-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .product-section__collapsible-content strong {
+    color: {{ settings.color_foreground | color_modify: 'alpha', 0.8 }};
+  }
+
   .product-section__collapsible-content ul {
     list-style: none;
     padding: 0;
@@ -308,14 +424,21 @@
           {%- endif -%}
         </div>
 
-        <div class="product-section__thumbnails">
-          {%- for i in (1..3) -%}
-            <button 
-              class="product-section__thumbnail {% if forloop.first %}is-active{% endif %}"
-              data-index="{{ forloop.index0 }}"
-              aria-label="Ver imagen {{ forloop.index }}"
-            ></button>
-          {%- endfor -%}
+        <!-- What's included -->
+        <div class="product-section__included">
+          <p class="product-section__included-title">{{ section.settings.included_title }}</p>
+          <ul class="product-section__included-list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'included_item' -%}
+                <li class="product-section__included-item" {{ block.shopify_attributes }}>
+                  <svg class="product-section__included-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  {{ block.settings.text }}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
         </div>
       </div>
 
@@ -327,17 +450,17 @@
         </h1>
         
         <p class="product-section__description">
-          {{ product.description | default: 'Una luz que define tu momento, no solo tu espacio.' }}
+          {{ product.description | default: section.settings.default_description }}
         </p>
 
         <div class="product-section__price">
           <p class="product-section__price-value">{{ product.price | money }}</p>
-          <p class="product-section__price-note">{{ 'products.product.free_shipping' | t }}</p>
+          <p class="product-section__price-note">{{ section.settings.shipping_note }}</p>
         </div>
 
         {%- if product.has_only_default_variant == false -%}
           <div class="product-section__variants">
-            <p class="product-section__variants-label">{{ 'products.product.choose_variant' | t }}</p>
+            <p class="product-section__variants-label">{{ section.settings.variants_label }}</p>
             <div class="product-section__variants-options">
               {%- for variant in product.variants -%}
                 <button 
@@ -354,6 +477,9 @@
                 </button>
               {%- endfor -%}
             </div>
+            <p class="product-section__variant-selected">
+              Has elegido: <span id="selectedVariantName">{{ product.selected_or_first_available_variant.title }}</span>
+            </p>
           </div>
         {%- endif -%}
 
@@ -365,25 +491,70 @@
               <line x1="3" y1="6" x2="21" y2="6"/>
               <path d="M16 10a4 4 0 01-8 0"/>
             </svg>
-            {{ 'products.product.add_to_cart' | t }}
+            {{ section.settings.add_to_cart_text }}
           </button>
         </form>
 
-        <div class="product-section__trust">
-          <span class="product-section__trust-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-            Envío 24-48h
-          </span>
-          <span class="product-section__trust-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-            Garantía 2 años
-          </span>
+        <!-- Secure checkout micro-copy -->
+        <div class="product-section__secure">
+          <svg class="product-section__secure-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>{{ section.settings.secure_text }}</span>
         </div>
 
+        <!-- Trust indicators -->
+        <div class="product-section__trust">
+          <div class="product-section__trust-item">
+            <svg class="product-section__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="3" width="15" height="13"/>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+              <circle cx="5.5" cy="18.5" r="2.5"/>
+              <circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+            <p class="product-section__trust-title">{{ section.settings.trust_shipping_title }}</p>
+            <p class="product-section__trust-desc">{{ section.settings.trust_shipping_desc }}</p>
+          </div>
+          <div class="product-section__trust-item">
+            <svg class="product-section__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+            </svg>
+            <p class="product-section__trust-title">{{ section.settings.trust_returns_title }}</p>
+            <p class="product-section__trust-desc">{{ section.settings.trust_returns_desc }}</p>
+          </div>
+          <div class="product-section__trust-item">
+            <svg class="product-section__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <p class="product-section__trust-title">{{ section.settings.trust_warranty_title }}</p>
+            <p class="product-section__trust-desc">{{ section.settings.trust_warranty_desc }}</p>
+          </div>
+        </div>
+
+        <!-- Payment methods -->
+        <div class="product-section__payment">
+          <p class="product-section__payment-label">{{ section.settings.payment_label }}</p>
+          <div class="product-section__payment-icons">
+            <svg class="product-section__payment-icon" viewBox="0 0 48 32" fill="currentColor">
+              <path d="M17.6 11.2l-2.8 9.6h-2.4l-1.4-7.6c-.1-.4-.2-.5-.5-.7-.5-.3-1.4-.5-2.2-.7l.1-.6h3.8c.5 0 .9.3 1 .9l.9 5 2.4-5.9h2.4l.7 9.6h-2.3l-.5-7.2-2.3 7.2h-1.6l-1.3-7.6z"/>
+            </svg>
+            <svg class="product-section__payment-icon" viewBox="0 0 48 32" fill="currentColor">
+              <circle cx="18" cy="16" r="8" fill-opacity="0.6"/>
+              <circle cx="30" cy="16" r="8" fill-opacity="0.6"/>
+            </svg>
+            <svg class="product-section__payment-icon" style="height: 1rem" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .757-.653h6.405c2.108 0 3.582.47 4.388 1.4.72.831.909 1.937.58 3.375l-.009.037v.325l.253.127c.21.106.376.237.504.392.234.282.383.637.448 1.052.066.428.046.937-.061 1.507-.123.654-.326 1.225-.6 1.697a3.77 3.77 0 0 1-.97 1.132c-.389.29-.842.506-1.347.64-.49.13-1.043.197-1.64.197H11.31a.932.932 0 0 0-.921.79l-.014.078-.553 3.512-.012.062a.932.932 0 0 1-.921.79H7.076z"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Guarantee message -->
+        <div class="product-section__guarantee">
+          <p class="product-section__guarantee-text">{{ section.settings.guarantee_text }}</p>
+        </div>
+
+        <!-- Details Accordion -->
         <div class="product-section__collapsibles">
           {%- for block in section.blocks -%}
             {%- if block.type == 'collapsible_tab' -%}
@@ -411,6 +582,7 @@
     const variantBtns = document.querySelectorAll('.product-section__variant-btn');
     const variantIdInput = document.getElementById('variantId');
     const productTitle = document.getElementById('productTitle');
+    const selectedVariantName = document.getElementById('selectedVariantName');
     const productImageGlow = document.getElementById('productImageGlow');
     const productImageMain = document.getElementById('productImageMain');
 
@@ -424,7 +596,7 @@
         const variantColor = this.dataset.variantColor;
         
         variantIdInput.value = variantId;
-        productTitle.textContent = variantTitle;
+        if (selectedVariantName) selectedVariantName.textContent = variantTitle;
         productTitle.style.color = variantColor;
         
         productImageGlow.style.background = `radial-gradient(circle at center, ${variantColor}40, transparent 70%)`;
@@ -449,37 +621,114 @@
   "class": "section-main-product",
   "settings": [
     {
-      "type": "checkbox",
-      "id": "enable_sticky",
-      "label": "Habilitar info sticky",
-      "default": true
+      "type": "header",
+      "content": "Textos principales"
+    },
+    {
+      "type": "text",
+      "id": "default_description",
+      "label": "Descripción por defecto",
+      "default": "Una luz que define tu momento, no solo tu espacio."
+    },
+    {
+      "type": "text",
+      "id": "shipping_note",
+      "label": "Nota de envío",
+      "default": "Envío gratuito a España peninsular"
+    },
+    {
+      "type": "text",
+      "id": "variants_label",
+      "label": "Etiqueta de variantes",
+      "default": "Elige tu luz"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_text",
+      "label": "Texto del botón",
+      "default": "Añadir al carrito"
+    },
+    {
+      "type": "header",
+      "content": "Seguridad y confianza"
+    },
+    {
+      "type": "text",
+      "id": "secure_text",
+      "label": "Texto de pago seguro",
+      "default": "Pago seguro · Datos encriptados"
+    },
+    {
+      "type": "text",
+      "id": "trust_shipping_title",
+      "label": "Título envío",
+      "default": "Envío 24-48h"
+    },
+    {
+      "type": "text",
+      "id": "trust_shipping_desc",
+      "label": "Descripción envío",
+      "default": "Gratis en península"
+    },
+    {
+      "type": "text",
+      "id": "trust_returns_title",
+      "label": "Título devoluciones",
+      "default": "30 días"
+    },
+    {
+      "type": "text",
+      "id": "trust_returns_desc",
+      "label": "Descripción devoluciones",
+      "default": "Devolución fácil"
+    },
+    {
+      "type": "text",
+      "id": "trust_warranty_title",
+      "label": "Título garantía",
+      "default": "Garantía 2 años"
+    },
+    {
+      "type": "text",
+      "id": "trust_warranty_desc",
+      "label": "Descripción garantía",
+      "default": "Sin preocupaciones"
+    },
+    {
+      "type": "text",
+      "id": "payment_label",
+      "label": "Etiqueta métodos de pago",
+      "default": "Métodos de pago aceptados"
+    },
+    {
+      "type": "textarea",
+      "id": "guarantee_text",
+      "label": "Texto de garantía",
+      "default": "Si no encaja en tu espacio, puedes devolverlo. Sin preguntas."
+    },
+    {
+      "type": "header",
+      "content": "Incluido en el pedido"
+    },
+    {
+      "type": "text",
+      "id": "included_title",
+      "label": "Título",
+      "default": "Incluido en tu pedido"
     }
   ],
   "blocks": [
     {
-      "type": "variant_picker",
-      "name": "Selector de variantes",
-      "limit": 1,
-      "settings": []
-    },
-    {
-      "type": "buy_buttons",
-      "name": "Botones de compra",
-      "limit": 1,
+      "type": "included_item",
+      "name": "Artículo incluido",
       "settings": [
         {
-          "type": "checkbox",
-          "id": "show_dynamic_checkout",
-          "label": "Mostrar checkout dinámico",
-          "default": false
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Lámpara LUMEI"
         }
       ]
-    },
-    {
-      "type": "description",
-      "name": "Descripción",
-      "limit": 1,
-      "settings": []
     },
     {
       "type": "collapsible_tab",
@@ -495,17 +744,57 @@
           "type": "richtext",
           "id": "content",
           "label": "Contenido"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Producto LUMEI",
+      "blocks": [
+        {
+          "type": "included_item",
+          "settings": { "text": "Lámpara LUMEI" }
         },
         {
-          "type": "select",
-          "id": "icon",
-          "label": "Icono",
-          "options": [
-            { "value": "none", "label": "Ninguno" },
-            { "value": "box", "label": "Caja" },
-            { "value": "truck", "label": "Envío" }
-          ],
-          "default": "none"
+          "type": "included_item",
+          "settings": { "text": "Cable USB-C de 2 metros" }
+        },
+        {
+          "type": "included_item",
+          "settings": { "text": "Guía de cuidado del cristal" }
+        },
+        {
+          "type": "included_item",
+          "settings": { "text": "Caja de presentación premium" }
+        },
+        {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Especificaciones",
+            "content": "<ul><li>Dimensiones: 28cm x 12cm x 12cm</li><li>Material: Cristal de amatista natural</li><li>LED de bajo consumo incluido</li><li>Cable USB-C de 2m</li><li>3 modos de luz ajustables</li><li>Peso: aproximadamente 1.2kg</li></ul>"
+          }
+        },
+        {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Envío y entrega",
+            "content": "<p><strong>España peninsular:</strong> Envío gratuito. Entrega en 24-48h laborables.</p><p><strong>Baleares y Canarias:</strong> Coste calculado al finalizar. Entrega en 3-5 días.</p><p><strong>Portugal:</strong> Desde 5€. Entrega en 2-4 días.</p>"
+          }
+        },
+        {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Devoluciones y garantía",
+            "content": "<p><strong>30 días para devolver:</strong> Si no es lo que esperabas, contacta con nosotros. Te gestionamos la recogida sin coste adicional.</p><p><strong>Garantía de 2 años:</strong> Cubre defectos de fabricación. El cristal natural puede tener variaciones únicas que no se consideran defectos.</p>"
+          }
+        },
+        {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Cuidado del producto",
+            "content": "<p>Limpia suavemente con un paño seco. Evita productos químicos. El cristal de amatista es natural y cada pieza es única en forma y tonalidad.</p>"
+          }
         }
       ]
     }
