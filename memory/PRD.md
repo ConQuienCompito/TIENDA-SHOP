@@ -3,6 +3,8 @@
 ## Project Overview
 LUMEI is a premium e-commerce storefront for amethyst ambient LED lamps. The brand positioning focuses on "identity through light" - customers choose which light represents them, not which product has better specs.
 
+**Deliverable**: Shopify Theme (OS 2.0 compatible)
+
 ## Brand Identity
 - **Brand Name**: LUMEI
 - **Tagline**: "La luz que eliges dice quién eres." (The light you choose says who you are.)
@@ -12,98 +14,137 @@ LUMEI is a premium e-commerce storefront for amethyst ambient LED lamps. The bra
 ## Design System
 
 ### Color Palette (Dark Mode First)
-- **Background**: Deep black (`0 0% 4%`)
-- **Foreground**: Soft white (`0 0% 92%`)
-- **Card**: Slightly lighter (`0 0% 6%`)
-- **Primary CTA**: Near white (`0 0% 95%`)
-- **Accent**: Amethyst purple (`270 50% 55%`)
+- **Background**: Deep black (`#0a0a0a`)
+- **Card**: Slightly lighter (`#0f0f0f`)
+- **Foreground**: Soft white (`#ebebeb`)
+- **Muted**: Gray (`#808080`)
+- **Accent**: Amethyst purple (`#9966cc`)
 
 ### Lamp Light Colors (Identity Variants)
-- **CALMA** (Purple): `270 60% 60%` - For introspective personalities
-- **ENFOQUE** (Blue): `200 80% 55%` - For focused personalities
-- **PROFUNDO** (Amber): `35 90% 60%` - For warm personalities
+- **CALMA** (Purple): `#9966cc` - For introspective personalities
+- **ENFOQUE** (Blue): `#33aaff` - For focused personalities
+- **PROFUNDO** (Amber): `#f5a623` - For warm personalities
 
 ### Typography
 - **Display Font**: Cormorant Garamond (serif) - Headings
 - **Body Font**: Inter (sans-serif) - Body text
 
-## Site Structure
+---
 
-### Homepage Sections
-1. **Hero Section**: Identity-based headline with product image and CTAs
-2. **Concept Section**: "No todas las luces se sienten igual." - Emotional explanation
-3. **Variants Section**: Interactive variant selector with identity descriptions
-4. **Context Section**: Lifestyle images (desk, bedside, shelf)
-5. **Testimonials Section**: Carousel with customer quotes
-6. **FAQ Section**: Minimal accordion with essential questions
-7. **Footer**: Navigation, contact, legal links
+## ✅ Completed Implementation (January 2025)
 
-### Product Page
-- Variant-first approach (variant name as hero)
-- Emotional description above the fold
-- Color selector with 3 variants
-- Add to cart with toast notification
-- Collapsible specs/shipping/care sections
+### Shopify Theme Structure
 
-## Technical Implementation
+#### Templates Created:
+- `index.json` - Homepage
+- `product.json` - Product page
+- `collection.json` - Collection page
+- `cart.json` - Cart page
+- `page.json` - Default page
+- `page.faq.json` - FAQ page
+- `page.concepto.json` - Concept page
+- `page.politica-privacidad.json` - Privacy policy
+- `page.politica-devoluciones.json` - Returns policy
+- `page.terminos-condiciones.json` - Terms & conditions
+- `404.json` - 404 error page
+- `customers/login.json` - Login page
+- `customers/register.json` - Register page
+- `customers/account.json` - Account page
+- `customers/order.json` - Order details page
 
-### Tech Stack
-- React.js with React Router
-- Tailwind CSS for styling
-- Shadcn/UI components
-- Sonner for toast notifications
+#### Sections Created:
+- `hero-section.liquid` - Identity-based hero with product image
+- `concept-section.liquid` - Emotional concept explanation
+- `variants-section.liquid` - Interactive variant selector
+- `context-section.liquid` - Lifestyle context images
+- `testimonials-section.liquid` - Customer testimonials carousel
+- `faq-section.liquid` - Accordion FAQ
+- `reassurance-section.liquid` - Trust indicators (shipping, returns, security, warranty)
+- `main-product.liquid` - Product page with variant picker and trust elements
+- `main-collection.liquid` - Product grid
+- `main-cart.liquid` - Shopping cart
+- `main-page.liquid` - Default page content
+- `page-faq.liquid` - Full FAQ page with categories
+- `page-concepto.liquid` - Brand concept page
+- `page-politica.liquid` - Policy pages (privacy, terms, refunds)
+- `main-login.liquid` - Customer login
+- `main-register.liquid` - Customer registration
+- `main-account.liquid` - Customer account dashboard
+- `main-order.liquid` - Order details view
+- `main-404.liquid` - 404 error page
+- `header.liquid` - Navigation header
+- `footer.liquid` - Site footer with trust bar
 
-### Key Components
-- `/pages/HomePage.jsx` - Main landing page
-- `/pages/ProductPage.jsx` - Product detail page with variant routing
-- `/components/layout/Header.jsx` - Navigation header
-- `/components/layout/Footer.jsx` - Site footer
-- `/components/sections/*` - Homepage sections
+#### Snippets Created:
+- `payment-icons.liquid` - All payment method icons (Visa, Mastercard, Amex, PayPal, Apple Pay, Google Pay, Shop Pay, Klarna, Bizum, UnionPay)
+- `product-card.liquid` - Product card component
+- `meta-tags.liquid` - SEO meta tags
+- `icon.liquid` - Icon SVGs
 
-### Routes
-- `/` - Homepage
-- `/producto` - Product page (defaults to CALMA)
-- `/producto/:variant` - Variant-specific product page (calma, enfoque, profundo)
+#### Assets:
+- `lumei-base.css` - Base styles and CSS variables
+- `lumei-components.css` - Button and component styles
+- `lumei-scripts.js` - Interactive functionality (cart, toasts)
+- `lumei-product.png` - Product image placeholder
 
-## Features
+#### Configuration:
+- `settings_schema.json` - Theme settings (colors, typography, social)
+- `settings_data.json` - Default settings values
+- `es.default.json` - Spanish translations
 
-### Implemented ✅
-- Dark mode first design
-- Responsive layout (mobile-first)
-- Interactive variant selector with color-changing glow effects
-- Add to cart functionality with toast notifications
-- FAQ accordion
-- Testimonials carousel
-- Smooth scroll navigation
-- Animation effects (fade-in, float, pulse glow)
+### Trust & Reassurance Elements ✅
+- Hero Section trust indicators (free shipping, 30-day returns, secure payment)
+- Reassurance Section with 4 trust icons between sections
+- Product page trust grid (shipping, returns, warranty)
+- Payment method icons on product page and footer
+- Guarantee messages
+- "Included in your order" checklist
 
-### Trust & Reassurance Elements (NEW) ✅
-- **Hero Section**: Trust indicators below CTA (Envío gratuito, 30 días devolución, Pago seguro)
-- **Reassurance Section**: 4 trust icons between Variants and Context
-- **Variants Section**: Micro-copy "Pago seguro · Devolución en 30 días" below CTA
-- **Product Page**:
-  - "Pago seguro · Datos encriptados" below Add to Cart
-  - Trust grid (Envío 24-48h, 30 días, Garantía 2 años)
-  - Payment icons (Visa, Mastercard, PayPal, Apple Pay)
-  - Guarantee message
-  - "Incluido en tu pedido" checklist
-  - Detailed collapsibles (Especificaciones, Envío y entrega, Devoluciones y garantía, Cuidado)
-- **Footer**: Trust bar with payment icons, guarantee summary
+### Payment Methods ✅
+All icons implemented: Visa, Mastercard, American Express, PayPal, Apple Pay, Google Pay, Shop Pay, Klarna, Bizum, UnionPay
 
-### Mock Data (Frontend Prototype)
-- Cart functionality (counter only, no backend)
-- Testimonials (static data)
-- FAQ content (static data)
-- Product variants (static data)
+### Shopify OS 2.0 Features ✅
+- All sections have `{% schema %}` with editable settings
+- JSON templates for all page types
+- Blocks support for dynamic content
+- Full theme customizer compatibility
+- No hardcoded content - everything editable
 
-## Compliance
-- WCAG AA color contrast ratios
-- Semantic HTML structure
-- Accessible navigation
-- Focus states for interactive elements
+---
 
-## Notes
-- This is a **frontend prototype** with mock functionality
-- No backend integration - cart and checkout are simulated
-- Product images use the user-provided amethyst lamp image
-- Context images sourced from Pexels (royalty-free)
+## 📋 User Instructions (Post-Upload)
+
+After uploading the theme to Shopify:
+
+1. **Create Products**: Add LUMEI products with variants (CALMA, ENFOQUE, PROFUNDO)
+2. **Create Pages**: Create pages with handles: `faq`, `concepto`, `politica-privacidad`, `terminos-condiciones`, `politica-devoluciones`
+3. **Configure Navigation**: Set up main menu links
+4. **Upload Images**: Replace placeholder with actual product photos
+5. **Configure Payments**: Set up Shopify Payments with desired methods
+
+---
+
+## 📥 Theme Download
+
+**URL**: `https://lightvibe.preview.emergentagent.com/lumei-theme.zip`
+
+**Contents**:
+- 51 files
+- ~280 KB compressed
+- Ready for Shopify upload
+
+---
+
+## 🔮 Future Enhancements (Backlog)
+
+- [ ] Advanced product gallery with multiple angles/zoom
+- [ ] Color picker integration with product variants
+- [ ] Animated scroll effects
+- [ ] Newsletter signup integration
+- [ ] Instagram feed section
+- [ ] Reviews/ratings integration
+- [ ] Multi-language support
+
+---
+
+© 2025 LUMEI - Theme developed for Shopify OS 2.0
