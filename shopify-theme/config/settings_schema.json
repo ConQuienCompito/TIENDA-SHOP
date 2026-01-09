@@ -1,0 +1,144 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "LUMEI",
+    "theme_version": "1.0.0",
+    "theme_author": "LUMEI",
+    "theme_documentation_url": "https://lumei.es",
+    "theme_support_url": "https://lumei.es/contacto"
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Colores de fondo"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Color de fondo",
+        "default": "#0a0a0a"
+      },
+      {
+        "type": "color",
+        "id": "color_card",
+        "label": "Color de tarjetas",
+        "default": "#0f0f0f"
+      },
+      {
+        "type": "header",
+        "content": "Colores de texto"
+      },
+      {
+        "type": "color",
+        "id": "color_foreground",
+        "label": "Color de texto principal",
+        "default": "#ebebeb"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Color de texto secundario",
+        "default": "#808080"
+      },
+      {
+        "type": "header",
+        "content": "Colores de acento (Variantes de lámpara)"
+      },
+      {
+        "type": "color",
+        "id": "color_lamp_purple",
+        "label": "CALMA (Púrpura)",
+        "default": "#9966cc"
+      },
+      {
+        "type": "color",
+        "id": "color_lamp_blue",
+        "label": "ENFOQUE (Azul)",
+        "default": "#33aaff"
+      },
+      {
+        "type": "color",
+        "id": "color_lamp_warm",
+        "label": "PROFUNDO (Ámbar)",
+        "default": "#f5a623"
+      },
+      {
+        "type": "header",
+        "content": "Colores de botones"
+      },
+      {
+        "type": "color",
+        "id": "color_button_bg",
+        "label": "Fondo de botón principal",
+        "default": "#f2f2f2"
+      },
+      {
+        "type": "color",
+        "id": "color_button_text",
+        "label": "Texto de botón principal",
+        "default": "#0a0a0a"
+      }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Fuente de títulos",
+        "default": "cormorant_garamond_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Fuente de cuerpo",
+        "default": "inter_n4"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Redes sociales",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "placeholder": "https://instagram.com/lumei"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook",
+        "placeholder": "https://facebook.com/lumei"
+      }
+    ]
+  },
+  {
+    "name": "Carrito",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Tipo de carrito",
+        "options": [
+          { "value": "drawer", "label": "Cajón lateral" },
+          { "value": "page", "label": "Página completa" }
+        ],
+        "default": "drawer"
+      }
+    ]
+  }
+]
