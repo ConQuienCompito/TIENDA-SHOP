@@ -1,0 +1,221 @@
+{% comment %}
+  LUMEI - Context Section
+  Sección de contexto/estilo de vida
+{% endcomment %}
+
+{%- style -%}
+  .context-section {
+    position: relative;
+    padding: 8rem 1.5rem;
+    overflow: hidden;
+    background: {{ settings.color_card }};
+  }
+
+  .context-section__container {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  .context-section__header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .context-section__subtitle {
+    font-size: 0.875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: {{ settings.color_muted }};
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .context-section__title {
+    font-size: 1.875rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: {{ settings.color_foreground }};
+  }
+
+  @media (min-width: 640px) {
+    .context-section__title {
+      font-size: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .context-section__title {
+      font-size: 3rem;
+    }
+  }
+
+  .context-section__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .context-section__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .context-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    aspect-ratio: 4 / 5;
+  }
+
+  .context-card__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+
+  .context-card:hover .context-card__image {
+    transform: scale(1.05);
+  }
+
+  .context-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, {{ settings.color_background | color_modify: 'alpha', 0.9 }}, {{ settings.color_background | color_modify: 'alpha', 0.2 }}, transparent);
+  }
+
+  .context-card__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+  }
+
+  .context-card__title {
+    font-size: 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 0.5rem;
+  }
+
+  .context-card__description {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+  }
+{%- endstyle -%}
+
+<section class="context-section">
+  <div class="context-section__container">
+    <div class="context-section__header">
+      <p class="context-section__subtitle">{{ section.settings.subtitle }}</p>
+      <h2 class="context-section__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="context-section__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'context-item' -%}
+          <div class="context-card" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img 
+                src="{{ block.settings.image | image_url: width: 800 }}" 
+                alt="{{ block.settings.title }}"
+                class="context-card__image"
+                loading="lazy"
+              >
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'context-card__image' }}
+            {%- endif -%}
+            
+            <div class="context-card__overlay"></div>
+            
+            <div class="context-card__content">
+              <h3 class="context-card__title">{{ block.settings.title }}</h3>
+              <p class="context-card__description">{{ block.settings.description }}</p>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contexto LUMEI",
+  "tag": "section",
+  "class": "section-context",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "En tu espacio"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Cómo vive en tu vida."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "context-item",
+      "name": "Contexto",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "En tu escritorio"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Donde las ideas toman forma."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contexto LUMEI",
+      "blocks": [
+        {
+          "type": "context-item",
+          "settings": {
+            "title": "En tu escritorio",
+            "description": "Donde las ideas toman forma."
+          }
+        },
+        {
+          "type": "context-item",
+          "settings": {
+            "title": "Junto a tu cama",
+            "description": "Donde el día termina y comienza."
+          }
+        },
+        {
+          "type": "context-item",
+          "settings": {
+            "title": "En tu estante",
+            "description": "Donde lo personal se muestra."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

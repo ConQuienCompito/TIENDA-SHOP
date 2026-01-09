@@ -1,0 +1,385 @@
+{% comment %}
+  LUMEI - Hero Section
+  Sección principal con mensaje de identidad y CTA
+{% endcomment %}
+
+{%- style -%}
+  .hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 8rem 1.5rem;
+  }
+
+  .hero-section__glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-section__glow-purple {
+    position: absolute;
+    top: 33%;
+    left: 25%;
+    width: 24rem;
+    height: 24rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, {{ section.settings.glow_color | default: settings.color_lamp_purple | color_modify: 'alpha', 0.15 }}, transparent 70%);
+    filter: blur(60px);
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+
+  .hero-section__glow-blue {
+    position: absolute;
+    bottom: 25%;
+    right: 25%;
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, {{ settings.color_lamp_blue | color_modify: 'alpha', 0.1 }}, transparent 70%);
+    filter: blur(50px);
+    animation: pulse-glow 4s ease-in-out infinite 0.2s;
+  }
+
+  .hero-section__container {
+    position: relative;
+    z-index: 10;
+    max-width: 80rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero-section__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-section__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .hero-section__content {
+    text-align: center;
+    order: 2;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-section__content {
+      text-align: left;
+      order: 1;
+    }
+  }
+
+  .hero-section__subtitle {
+    font-size: 0.875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: {{ settings.color_muted }};
+    margin-bottom: 1.5rem;
+    font-family: 'Inter', sans-serif;
+    opacity: 0;
+    animation: fade-in-up 0.8s ease-out 0.2s forwards;
+  }
+
+  .hero-section__title {
+    font-size: 2.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    color: {{ settings.color_foreground }};
+    opacity: 0;
+    animation: fade-in-up 0.8s ease-out 0.4s forwards;
+  }
+
+  @media (min-width: 640px) {
+    .hero-section__title {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-section__title {
+      font-size: 4rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .hero-section__title {
+      font-size: 4.5rem;
+    }
+  }
+
+  .hero-section__title-gradient {
+    background: linear-gradient(135deg, {{ settings.color_lamp_purple }}, {{ settings.color_lamp_blue }});
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-section__description {
+    font-size: 1.125rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    max-width: 32rem;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fade-in-up 0.8s ease-out 0.6s forwards;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-section__description {
+      margin: 0 0 2.5rem 0;
+    }
+  }
+
+  .hero-section__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    opacity: 0;
+    animation: fade-in-up 0.8s ease-out 0.8s forwards;
+  }
+
+  @media (min-width: 640px) {
+    .hero-section__buttons {
+      flex-direction: row;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-section__buttons {
+      justify-content: flex-start;
+    }
+  }
+
+  .hero-section__image-wrapper {
+    order: 1;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    animation: fade-in-up 0.8s ease-out 0.3s forwards;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-section__image-wrapper {
+      order: 2;
+    }
+  }
+
+  .hero-section__image-container {
+    position: relative;
+  }
+
+  .hero-section__image-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, {{ settings.color_lamp_purple | color_modify: 'alpha', 0.3 }}, transparent 60%);
+    filter: blur(40px);
+    transform: scale(1.2);
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+
+  .hero-section__image {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 28rem;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-section__image {
+      max-width: 32rem;
+    }
+  }
+
+  .hero-section__scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.5;
+  }
+
+  .hero-section__scroll-text {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    color: {{ settings.color_muted }};
+  }
+
+  .hero-section__scroll-line {
+    width: 1px;
+    height: 2rem;
+    background: linear-gradient(to bottom, {{ settings.color_foreground | color_modify: 'alpha', 0.5 }}, transparent);
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+{%- endstyle -%}
+
+<section class="hero-section">
+  <div class="hero-section__glow">
+    <div class="hero-section__glow-purple"></div>
+    <div class="hero-section__glow-blue"></div>
+  </div>
+
+  <div class="hero-section__container">
+    <div class="hero-section__grid">
+      <div class="hero-section__content">
+        <p class="hero-section__subtitle">{{ section.settings.subtitle }}</p>
+        
+        <h1 class="hero-section__title">
+          {{ section.settings.title_line1 }}<br>
+          <span class="hero-section__title-gradient">{{ section.settings.title_line2 }}</span>
+        </h1>
+        
+        <p class="hero-section__description">
+          {{ section.settings.description }}
+        </p>
+        
+        <div class="hero-section__buttons">
+          <a href="{{ section.settings.cta_primary_link }}" class="button button--primary button--xl">
+            {{ section.settings.cta_primary_text }}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          
+          <a href="{{ section.settings.cta_secondary_link }}" class="button button--outline button--xl">
+            {{ section.settings.cta_secondary_text }}
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-section__image-wrapper">
+        <div class="hero-section__image-container">
+          <div class="hero-section__image-glow"></div>
+          {%- if section.settings.product_image != blank -%}
+            <img 
+              src="{{ section.settings.product_image | image_url: width: 800 }}" 
+              alt="LUMEI Lámpara de Amatista"
+              class="hero-section__image"
+              loading="eager"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'hero-section__image' }}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-section__scroll">
+    <span class="hero-section__scroll-text">Scroll</span>
+    <div class="hero-section__scroll-line"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero LUMEI",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Tu luz. Tu elección."
+    },
+    {
+      "type": "text",
+      "id": "title_line1",
+      "label": "Título línea 1",
+      "default": "La luz que eliges"
+    },
+    {
+      "type": "text",
+      "id": "title_line2",
+      "label": "Título línea 2 (con gradiente)",
+      "default": "dice quién eres."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "LUMEI no vende lámparas. LUMEI ofrece identidad a través de la luz."
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Imagen del producto"
+    },
+    {
+      "type": "header",
+      "content": "Botón principal"
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_text",
+      "label": "Texto del botón principal",
+      "default": "Elige tu luz"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_link",
+      "label": "Enlace del botón principal"
+    },
+    {
+      "type": "header",
+      "content": "Botón secundario"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_text",
+      "label": "Texto del botón secundario",
+      "default": "Ver colección"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_link",
+      "label": "Enlace del botón secundario"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero LUMEI"
+    }
+  ]
+}
+{% endschema %}

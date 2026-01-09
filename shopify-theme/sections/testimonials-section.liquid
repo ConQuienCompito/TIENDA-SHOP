@@ -1,0 +1,378 @@
+{% comment %}
+  LUMEI - Testimonials Section
+  Sección de testimonios
+{% endcomment %}
+
+{%- style -%}
+  .testimonials-section {
+    position: relative;
+    padding: 8rem 1.5rem;
+    overflow: hidden;
+  }
+
+  .testimonials-section__glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 37.5rem;
+    height: 37.5rem;
+    border-radius: 50%;
+    filter: blur(80px);
+    transition: background 0.7s ease;
+  }
+
+  .testimonials-section__container {
+    position: relative;
+    z-index: 10;
+    max-width: 56rem;
+    margin: 0 auto;
+  }
+
+  .testimonials-section__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .testimonials-section__subtitle {
+    font-size: 0.875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: {{ settings.color_muted }};
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .testimonials-section__title {
+    font-size: 1.875rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: {{ settings.color_foreground }};
+  }
+
+  @media (min-width: 640px) {
+    .testimonials-section__title {
+      font-size: 2.25rem;
+    }
+  }
+
+  .testimonials-section__card {
+    position: relative;
+    background: {{ settings.color_card | color_modify: 'alpha', 0.5 }};
+    backdrop-filter: blur(8px);
+    border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    border-radius: 1.5rem;
+    padding: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .testimonials-section__card {
+      padding: 3rem;
+    }
+  }
+
+  .testimonials-section__quote-icon {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 0.1;
+  }
+
+  .testimonials-section__slider {
+    overflow: hidden;
+  }
+
+  .testimonials-section__track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .testimonial-slide {
+    flex: 0 0 100%;
+    text-align: center;
+  }
+
+  .testimonial-slide__quote {
+    font-size: 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: {{ settings.color_foreground | color_modify: 'alpha', 0.9 }};
+  }
+
+  @media (min-width: 768px) {
+    .testimonial-slide__quote {
+      font-size: 1.5rem;
+    }
+  }
+
+  .testimonial-slide__author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .testimonial-slide__color {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+  }
+
+  .testimonial-slide__name {
+    font-size: 0.875rem;
+    font-family: 'Inter', sans-serif;
+    color: {{ settings.color_muted }};
+  }
+
+  .testimonials-section__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .testimonials-section__nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: {{ settings.color_foreground }};
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .testimonials-section__nav-btn:hover {
+    background: {{ settings.color_foreground | color_modify: 'alpha', 0.05 }};
+  }
+
+  .testimonials-section__dots {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .testimonials-section__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: {{ settings.color_foreground | color_modify: 'alpha', 0.3 }};
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .testimonials-section__dot:hover {
+    background: {{ settings.color_foreground | color_modify: 'alpha', 0.5 }};
+  }
+
+  .testimonials-section__dot.is-active {
+    background: {{ settings.color_foreground }};
+    width: 1.5rem;
+  }
+{%- endstyle -%}
+
+<section class="testimonials-section">
+  <div class="testimonials-section__glow" id="testimonialsGlow"></div>
+
+  <div class="testimonials-section__container">
+    <div class="testimonials-section__header">
+      <p class="testimonials-section__subtitle">{{ section.settings.subtitle }}</p>
+      <h2 class="testimonials-section__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="testimonials-section__card">
+      <svg class="testimonials-section__quote-icon" viewBox="0 0 24 24" fill="currentColor" id="quoteIcon">
+        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+      </svg>
+      
+      <div class="testimonials-section__slider">
+        <div class="testimonials-section__track" id="testimonialsTrack">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'testimonial' -%}
+              <div class="testimonial-slide" data-color="{{ block.settings.color }}" {{ block.shopify_attributes }}>
+                <p class="testimonial-slide__quote">"{{ block.settings.quote }}"</p>
+                <div class="testimonial-slide__author">
+                  <div class="testimonial-slide__color" style="background-color: {{ block.settings.color }}"></div>
+                  <span class="testimonial-slide__name">{{ block.settings.author }} — {{ block.settings.variant }}</span>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonials-section__nav">
+      <button class="testimonials-section__nav-btn" id="prevTestimonial" aria-label="Anterior">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      
+      <div class="testimonials-section__dots" id="testimonialDots">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'testimonial' -%}
+            <button 
+              class="testimonials-section__dot {% if forloop.first %}is-active{% endif %}" 
+              data-index="{{ forloop.index0 }}"
+              aria-label="Ir al testimonio {{ forloop.index }}"
+            ></button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      
+      <button class="testimonials-section__nav-btn" id="nextTestimonial" aria-label="Siguiente">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const track = document.getElementById('testimonialsTrack');
+    const slides = track.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.testimonials-section__dot');
+    const glow = document.getElementById('testimonialsGlow');
+    const quoteIcon = document.getElementById('quoteIcon');
+    const prevBtn = document.getElementById('prevTestimonial');
+    const nextBtn = document.getElementById('nextTestimonial');
+    
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    function updateSlide(index) {
+      track.style.transform = `translateX(-${index * 100}%)`;
+      
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('is-active', i === index);
+      });
+
+      const color = slides[index].dataset.color;
+      glow.style.background = `radial-gradient(circle, ${color}1a, transparent 70%)`;
+      quoteIcon.style.color = color;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateSlide(currentIndex);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateSlide(currentIndex);
+    });
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentIndex = parseInt(dot.dataset.index);
+        updateSlide(currentIndex);
+      });
+    });
+
+    // Initialize
+    if (slides.length > 0) {
+      const initialColor = slides[0].dataset.color;
+      glow.style.background = `radial-gradient(circle, ${initialColor}1a, transparent 70%)`;
+      quoteIcon.style.color = initialColor;
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Testimonios LUMEI",
+  "tag": "section",
+  "class": "section-testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Lo que dicen"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Conexiones reales."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonio",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Cita",
+          "default": "No sabía que necesitaba esto hasta que lo tuve."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Autor",
+          "default": "María L."
+        },
+        {
+          "type": "text",
+          "id": "variant",
+          "label": "Variante",
+          "default": "CALMA"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color de variante",
+          "default": "#9966cc"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonios LUMEI",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "No sabía que necesitaba esto hasta que lo tuve. Ahora no concibo mi escritorio sin ella.",
+            "author": "María L.",
+            "variant": "CALMA",
+            "color": "#9966cc"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Elegí ENFOQUE sin pensarlo. Era exactamente lo que buscaba, aunque no sabía cómo describirlo.",
+            "author": "Carlos R.",
+            "variant": "ENFOQUE",
+            "color": "#33aaff"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Mis amigos siempre comentan la luz. No es solo decoración, es parte de quién soy.",
+            "author": "Ana P.",
+            "variant": "PROFUNDO",
+            "color": "#f5a623"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

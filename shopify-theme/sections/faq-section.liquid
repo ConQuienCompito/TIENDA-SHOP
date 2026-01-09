@@ -1,0 +1,207 @@
+{% comment %}
+  LUMEI - FAQ Section
+  Sección de preguntas frecuentes
+{% endcomment %}
+
+{%- style -%}
+  .faq-section {
+    position: relative;
+    padding: 8rem 1.5rem;
+    overflow: hidden;
+    background: {{ settings.color_card }};
+  }
+
+  .faq-section__container {
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  .faq-section__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .faq-section__subtitle {
+    font-size: 0.875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: {{ settings.color_muted }};
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .faq-section__title {
+    font-size: 1.875rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: {{ settings.color_foreground }};
+  }
+
+  @media (min-width: 640px) {
+    .faq-section__title {
+      font-size: 2.25rem;
+    }
+  }
+
+  .faq-section__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .faq-item {
+    border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    border-radius: 0.75rem;
+    padding: 0 1.5rem;
+    transition: background 0.3s ease;
+  }
+
+  .faq-item[open] {
+    background: {{ settings.color_background | color_modify: 'alpha', 0.5 }};
+  }
+
+  .faq-item__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    color: {{ settings.color_foreground }};
+    transition: color 0.3s ease;
+  }
+
+  .faq-item__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item__question:hover {
+    color: {{ settings.color_foreground }};
+  }
+
+  .faq-item__icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    color: {{ settings.color_muted }};
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] .faq-item__icon {
+    transform: rotate(180deg);
+  }
+
+  .faq-item__answer {
+    padding-bottom: 1.25rem;
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+{%- endstyle -%}
+
+<section id="faq" class="faq-section">
+  <div class="faq-section__container">
+    <div class="faq-section__header">
+      <p class="faq-section__subtitle">{{ section.settings.subtitle }}</p>
+      <h2 class="faq-section__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="faq-section__list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'faq' -%}
+          <details class="faq-item" {{ block.shopify_attributes }}>
+            <summary class="faq-item__question">
+              {{ block.settings.question }}
+              <svg class="faq-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </summary>
+            <div class="faq-item__answer">
+              {{ block.settings.answer }}
+            </div>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ LUMEI",
+  "tag": "section",
+  "class": "section-faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Preguntas"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Lo esencial."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Pregunta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "¿Cómo funciona el envío?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Respuesta",
+          "default": "Envío gratuito a toda España peninsular en 24-48h laborables."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ LUMEI",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cómo funciona el envío?",
+            "answer": "Envío gratuito a toda España peninsular en 24-48h laborables. Baleares, Canarias y Portugal tienen un coste adicional calculado al finalizar la compra."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué fuente de alimentación necesita?",
+            "answer": "LUMEI funciona mediante conexión USB-C. Incluye un cable de 2 metros. Puedes conectarla a cualquier puerto USB, adaptador de corriente o powerbank."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Puedo devolver el producto?",
+            "answer": "Sí, tienes 30 días desde la recepción para devolver tu LUMEI sin usar y en su embalaje original. Contacta con nosotros para iniciar el proceso."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cada pieza es única?",
+            "answer": "Sí. Cada LUMEI está hecha con cristales de amatista naturales, por lo que cada pieza tiene variaciones únicas en forma y tonalidad."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
