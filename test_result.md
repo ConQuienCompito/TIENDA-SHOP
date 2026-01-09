@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the LUMEI e-commerce storefront for amethyst LED lamps"
+user_problem_statement: "Test the refined LUMEI e-commerce storefront focusing on new trust and reassurance elements"
 
 frontend:
   - task: "Homepage Navigation"
