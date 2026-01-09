@@ -1,6 +1,6 @@
 {% comment %}
   LUMEI - Hero Section
-  Sección principal con mensaje de identidad y CTA
+  Con imagen de producto incluida y enlaces corregidos
 {% endcomment %}
 
 {%- style -%}
@@ -27,7 +27,7 @@
     width: 24rem;
     height: 24rem;
     border-radius: 50%;
-    background: radial-gradient(circle, {{ section.settings.glow_color | default: settings.color_lamp_purple | color_modify: 'alpha', 0.15 }}, transparent 70%);
+    background: radial-gradient(circle, {{ settings.color_lamp_purple | color_modify: 'alpha', 0.15 }}, transparent 70%);
     filter: blur(60px);
     animation: pulse-glow 4s ease-in-out infinite;
   }
@@ -111,12 +111,6 @@
     }
   }
 
-  @media (min-width: 1280px) {
-    .hero-section__title {
-      font-size: 4.5rem;
-    }
-  }
-
   .hero-section__title-gradient {
     background: linear-gradient(135deg, {{ settings.color_lamp_purple }}, {{ settings.color_lamp_blue }});
     -webkit-background-clip: text;
@@ -161,6 +155,36 @@
     .hero-section__buttons {
       justify-content: flex-start;
     }
+  }
+
+  .hero-section__trust {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    opacity: 0;
+    animation: fade-in-up 0.8s ease-out 1s forwards;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-section__trust {
+      justify-content: flex-start;
+    }
+  }
+
+  .hero-section__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: {{ settings.color_muted | color_modify: 'alpha', 0.6 }};
+  }
+
+  .hero-section__trust-icon {
+    width: 1rem;
+    height: 1rem;
   }
 
   .hero-section__image-wrapper {
@@ -273,16 +297,41 @@
         </p>
         
         <div class="hero-section__buttons">
-          <a href="{{ section.settings.cta_primary_link }}" class="button button--primary button--xl">
+          <a href="{{ section.settings.cta_primary_link | default: routes.all_products_collection_url }}" class="button button--primary button--xl">
             {{ section.settings.cta_primary_text }}
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
           
-          <a href="{{ section.settings.cta_secondary_link }}" class="button button--outline button--xl">
+          <a href="#variantes" class="button button--outline button--xl">
             {{ section.settings.cta_secondary_text }}
           </a>
+        </div>
+
+        <div class="hero-section__trust">
+          <div class="hero-section__trust-item">
+            <svg class="hero-section__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="3" width="15" height="13"/>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+              <circle cx="5.5" cy="18.5" r="2.5"/>
+              <circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+            <span>Envío gratuito</span>
+          </div>
+          <div class="hero-section__trust-item">
+            <svg class="hero-section__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+            </svg>
+            <span>30 días devolución</span>
+          </div>
+          <div class="hero-section__trust-item">
+            <svg class="hero-section__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Pago seguro</span>
+          </div>
         </div>
       </div>
 
@@ -297,7 +346,12 @@
               loading="eager"
             >
           {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'hero-section__image' }}
+            <img 
+              src="{{ 'lumei-product.png' | asset_url }}" 
+              alt="LUMEI Lámpara de Amatista"
+              class="hero-section__image"
+              loading="eager"
+            >
           {%- endif -%}
         </div>
       </div>
@@ -369,11 +423,6 @@
       "id": "cta_secondary_text",
       "label": "Texto del botón secundario",
       "default": "Ver colección"
-    },
-    {
-      "type": "url",
-      "id": "cta_secondary_link",
-      "label": "Enlace del botón secundario"
     }
   ],
   "presets": [

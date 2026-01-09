@@ -1,6 +1,6 @@
 {% comment %}
   LUMEI - Variants Section
-  Sección de variantes como identidad
+  Sección de variantes como identidad - con enlaces a productos reales
 {% endcomment %}
 
 {%- style -%}
@@ -193,6 +193,20 @@
   .variants-section__cta {
     padding-top: 1.5rem;
   }
+
+  .variants-section__trust {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: {{ settings.color_muted | color_modify: 'alpha', 0.5 }};
+  }
+
+  .variants-section__trust-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
 {%- endstyle -%}
 
 <section id="variantes" class="variants-section">
@@ -216,7 +230,12 @@
               loading="lazy"
             >
           {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'variants-section__image' }}
+            <img 
+              src="{{ 'lumei-product.png' | asset_url }}" 
+              alt="LUMEI"
+              class="variants-section__image"
+              loading="lazy"
+            >
           {%- endif -%}
         </div>
       </div>
@@ -227,7 +246,8 @@
             <button 
               class="variant-card {% if forloop.first %}is-active{% endif %}" 
               data-variant-color="{{ block.settings.color }}"
-              data-variant-link="{{ block.settings.product_link }}"
+              data-variant-link="{{ block.settings.product_link | default: routes.all_products_collection_url }}"
+              data-variant-name="{{ block.settings.name }}"
               {{ block.shopify_attributes }}
               style="--variant-color: {{ block.settings.color }}"
             >
@@ -249,12 +269,19 @@
         {%- endfor -%}
 
         <div class="variants-section__cta">
-          <a href="#" class="button button--primary button--lg" id="variantsCta">
-            Elegir {{ section.blocks[0].settings.name }}
+          <a href="{{ routes.all_products_collection_url }}" class="button button--primary button--lg" id="variantsCta">
+            Ver todos los productos
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
+          
+          <div class="variants-section__trust">
+            <svg class="variants-section__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Pago seguro · Devolución en 30 días</span>
+          </div>
         </div>
       </div>
     </div>
@@ -275,21 +302,23 @@
         
         const color = this.dataset.variantColor;
         const link = this.dataset.variantLink;
-        const name = this.querySelector('.variant-card__name').textContent;
+        const name = this.dataset.variantName;
         
-        glow.style.background = `radial-gradient(circle, ${color}26, transparent 60%)`;
-        imageGlow.style.background = `radial-gradient(circle at center, ${color}66, transparent 60%)`;
+        if (glow) glow.style.background = `radial-gradient(circle, ${color}26, transparent 60%)`;
+        if (imageGlow) imageGlow.style.background = `radial-gradient(circle at center, ${color}66, transparent 60%)`;
         
-        cta.href = link;
-        cta.innerHTML = `Elegir ${name} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+        if (cta && link) {
+          cta.href = link;
+          cta.innerHTML = `Elegir ${name} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+        }
       });
     });
 
     // Initialize with first variant
     if (cards.length > 0) {
       const firstColor = cards[0].dataset.variantColor;
-      glow.style.background = `radial-gradient(circle, ${firstColor}26, transparent 60%)`;
-      imageGlow.style.background = `radial-gradient(circle at center, ${firstColor}66, transparent 60%)`;
+      if (glow) glow.style.background = `radial-gradient(circle, ${firstColor}26, transparent 60%)`;
+      if (imageGlow) imageGlow.style.background = `radial-gradient(circle at center, ${firstColor}66, transparent 60%)`;
     }
   });
 </script>
