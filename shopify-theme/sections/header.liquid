@@ -240,6 +240,9 @@
     const mobileMenu = document.getElementById('mobileMenu');
     const menuIcon = document.getElementById('menuIcon');
     const closeIcon = document.getElementById('closeIcon');
+    const cartToggle = document.getElementById('cart-toggle');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartOverlay = document.getElementById('cart-overlay');
 
     window.addEventListener('scroll', () => {
       header.classList.toggle('is-scrolled', window.scrollY > 20);
@@ -250,6 +253,14 @@
       menuIcon.style.display = isOpen ? 'none' : 'block';
       closeIcon.style.display = isOpen ? 'block' : 'none';
     });
+    
+    if (cartToggle) {
+      cartToggle.addEventListener('click', function() {
+        if (cartDrawer) cartDrawer.classList.add('is-open');
+        if (cartOverlay) cartOverlay.classList.add('is-visible');
+        document.body.style.overflow = 'hidden';
+      });
+    }
   });
 </script>
 
