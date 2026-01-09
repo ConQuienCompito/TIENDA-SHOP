@@ -1,5 +1,6 @@
 {% comment %}
   LUMEI - Página Concepto
+  100% editable desde Shopify Theme Editor
 {% endcomment %}
 
 {%- style -%}
@@ -31,68 +32,78 @@
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
     color: {{ settings.color_foreground }};
-    margin-bottom: 1.5rem;
   }
 
-  @media (min-width: 640px) {
-    .page-concepto__title {
-      font-size: 3rem;
+  .page-concepto__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .page-concepto__block {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .page-concepto__block {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .page-concepto__block--reverse {
+      direction: rtl;
+    }
+
+    .page-concepto__block--reverse > * {
+      direction: ltr;
     }
   }
 
-  .page-concepto__intro {
-    font-size: 1.25rem;
-    color: {{ settings.color_foreground | color_modify: 'alpha', 0.8 }};
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    line-height: 1.7;
+  .page-concepto__image-container {
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: {{ settings.color_card }};
   }
 
-  .page-concepto__section {
-    margin-bottom: 4rem;
+  .page-concepto__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
-  .page-concepto__section-title {
+  .page-concepto__text {
+    padding: 1rem 0;
+  }
+
+  .page-concepto__block-title {
     font-size: 1.5rem;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
     color: {{ settings.color_foreground }};
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
-  .page-concepto__text {
+  .page-concepto__block-text {
     font-size: 1rem;
     color: {{ settings.color_muted }};
     font-family: 'Inter', sans-serif;
     line-height: 1.8;
-    margin-bottom: 1.5rem;
-  }
-
-  .page-concepto__highlight {
-    background: {{ settings.color_card }};
-    border-left: 3px solid {{ settings.color_lamp_purple }};
-    padding: 1.5rem 2rem;
-    margin: 2rem 0;
-    border-radius: 0 0.5rem 0.5rem 0;
-  }
-
-  .page-concepto__highlight-text {
-    font-size: 1.125rem;
-    color: {{ settings.color_foreground | color_modify: 'alpha', 0.9 }};
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    line-height: 1.6;
   }
 
   .page-concepto__cta {
     text-align: center;
-    padding: 3rem 0;
-    border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    margin-top: 4rem;
+    padding: 3rem;
+    background: {{ settings.color_card }};
+    border-radius: 1rem;
   }
 
   .page-concepto__cta-text {
-    font-size: 1.125rem;
-    color: {{ settings.color_muted }};
+    font-size: 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    color: {{ settings.color_foreground }};
     margin-bottom: 1.5rem;
   }
 {%- endstyle -%}
@@ -102,138 +113,141 @@
     <div class="page-concepto__header">
       <p class="page-concepto__subtitle">{{ section.settings.subtitle }}</p>
       <h1 class="page-concepto__title">{{ section.settings.title }}</h1>
-      <p class="page-concepto__intro">{{ section.settings.intro }}</p>
     </div>
 
-    <div class="page-concepto__section">
-      <h2 class="page-concepto__section-title">{{ section.settings.section1_title }}</h2>
-      <p class="page-concepto__text">{{ section.settings.section1_text }}</p>
-      
-      <div class="page-concepto__highlight">
-        <p class="page-concepto__highlight-text">{{ section.settings.quote1 }}</p>
+    <div class="page-concepto__content">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'content_block' -%}
+          <div class="page-concepto__block {% if forloop.index0 | modulo: 2 == 1 %}page-concepto__block--reverse{% endif %}" {{ block.shopify_attributes }}>
+            <div class="page-concepto__image-container">
+              {%- if block.settings.image != blank -%}
+                <img 
+                  src="{{ block.settings.image | image_url: width: 800 }}" 
+                  alt="{{ block.settings.image.alt | default: block.settings.block_title }}"
+                  class="page-concepto__image"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'page-concepto__image' }}
+              {%- endif -%}
+            </div>
+            <div class="page-concepto__text">
+              <h2 class="page-concepto__block-title">{{ block.settings.block_title }}</h2>
+              <p class="page-concepto__block-text">{{ block.settings.block_text }}</p>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_cta -%}
+      <div class="page-concepto__cta">
+        <p class="page-concepto__cta-text">{{ section.settings.cta_text }}</p>
+        <a href="{{ section.settings.cta_link }}" class="button button--primary button--lg">
+          {{ section.settings.cta_button }}
+        </a>
       </div>
-    </div>
-
-    <div class="page-concepto__section">
-      <h2 class="page-concepto__section-title">{{ section.settings.section2_title }}</h2>
-      <p class="page-concepto__text">{{ section.settings.section2_text }}</p>
-    </div>
-
-    <div class="page-concepto__section">
-      <h2 class="page-concepto__section-title">{{ section.settings.section3_title }}</h2>
-      <p class="page-concepto__text">{{ section.settings.section3_text }}</p>
-      
-      <div class="page-concepto__highlight">
-        <p class="page-concepto__highlight-text">{{ section.settings.quote2 }}</p>
-      </div>
-    </div>
-
-    <div class="page-concepto__cta">
-      <p class="page-concepto__cta-text">{{ section.settings.cta_text }}</p>
-      <a href="{{ routes.all_products_collection_url }}" class="button button--primary button--lg">
-        {{ section.settings.cta_button }}
-      </a>
-    </div>
+    {%- endif -%}
   </div>
 </section>
 
 {% schema %}
 {
   "name": "Página Concepto",
+  "tag": "section",
+  "class": "section-page-concepto",
   "settings": [
     {
       "type": "text",
       "id": "subtitle",
       "label": "Subtítulo",
-      "default": "Nuestra filosofía"
+      "default": "Filosofía LUMEI"
     },
     {
       "type": "text",
       "id": "title",
       "label": "Título",
-      "default": "El concepto LUMEI"
-    },
-    {
-      "type": "textarea",
-      "id": "intro",
-      "label": "Introducción",
-      "default": "LUMEI nace de una idea simple pero profunda: la luz que eliges dice mucho más sobre ti de lo que imaginas. No vendemos lámparas. Ofrecemos identidad a través de la luz."
+      "default": "No vendemos lámparas. Vendemos luz que te define."
     },
     {
       "type": "header",
-      "content": "Sección 1"
+      "content": "Llamada a la acción"
     },
     {
-      "type": "text",
-      "id": "section1_title",
-      "label": "Título sección 1",
-      "default": "No todas las luces se sienten igual"
-    },
-    {
-      "type": "textarea",
-      "id": "section1_text",
-      "label": "Texto sección 1",
-      "default": "Hay quienes encuentran calma en el púrpura. Hay quienes piensan mejor rodeados de azul. Hay quienes necesitan la calidez del ámbar para sentirse en casa. Cada persona tiene una relación única con la luz, y esa relación habla de quién eres."
-    },
-    {
-      "type": "textarea",
-      "id": "quote1",
-      "label": "Cita destacada 1",
-      "default": "Tu elección de luz no es decoración. Es una declaración silenciosa de quién eres."
-    },
-    {
-      "type": "header",
-      "content": "Sección 2"
-    },
-    {
-      "type": "text",
-      "id": "section2_title",
-      "label": "Título sección 2",
-      "default": "Cristal de amatista natural"
-    },
-    {
-      "type": "textarea",
-      "id": "section2_text",
-      "label": "Texto sección 2",
-      "default": "Cada LUMEI está creada con cristales de amatista natural, lo que hace que cada pieza sea absolutamente única. Las variaciones en forma, tonalidad y textura no son defectos: son la firma de la naturaleza que hace de tu LUMEI algo irrepetible, exactamente como tú."
-    },
-    {
-      "type": "header",
-      "content": "Sección 3"
-    },
-    {
-      "type": "text",
-      "id": "section3_title",
-      "label": "Título sección 3",
-      "default": "Diseño intencionado"
-    },
-    {
-      "type": "textarea",
-      "id": "section3_text",
-      "label": "Texto sección 3",
-      "default": "Cada detalle de LUMEI ha sido pensado para integrarse en tu vida sin llamar la atención de forma excesiva, pero dejando una impresión duradera. La forma ovalada, el LED de bajo consumo, el cable USB-C de 2 metros: todo está diseñado para que LUMEI simplemente encaje en tu espacio."
-    },
-    {
-      "type": "textarea",
-      "id": "quote2",
-      "label": "Cita destacada 2",
-      "default": "La mejor luz es la que no notas, pero que cambiaría todo si desapareciera."
-    },
-    {
-      "type": "header",
-      "content": "CTA"
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Mostrar CTA",
+      "default": true
     },
     {
       "type": "text",
       "id": "cta_text",
       "label": "Texto CTA",
-      "default": "¿Listo para elegir tu luz?"
+      "default": "¿Listo para encontrar tu luz?"
     },
     {
       "type": "text",
       "id": "cta_button",
-      "label": "Botón CTA",
+      "label": "Texto botón",
       "default": "Ver colección"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Enlace botón"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content_block",
+      "name": "Bloque de contenido",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "block_title",
+          "label": "Título",
+          "default": "Título del bloque"
+        },
+        {
+          "type": "textarea",
+          "id": "block_text",
+          "label": "Texto",
+          "default": "Descripción del bloque de contenido."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Página Concepto",
+      "blocks": [
+        {
+          "type": "content_block",
+          "settings": {
+            "block_title": "Cada luz, una identidad",
+            "block_text": "No elegimos la luz que mejor ilumina. Elegimos la luz que mejor nos representa. CALMA para los que buscan paz interior. ENFOQUE para los que necesitan claridad. PROFUNDO para los que abrazan la calidez."
+          }
+        },
+        {
+          "type": "content_block",
+          "settings": {
+            "block_title": "Cristal natural, luz única",
+            "block_text": "Cada LUMEI está hecha con cristal de amatista natural. No hay dos iguales. Las variaciones son la firma de la naturaleza, no imperfecciones."
+          }
+        },
+        {
+          "type": "content_block",
+          "settings": {
+            "block_title": "Diseñado para vivir contigo",
+            "block_text": "LUMEI no es solo un objeto. Es un compañero de escritorio, de mesilla, de momentos. Se adapta a tu ritmo, a tu espacio, a tu día."
+          }
+        }
+      ]
     }
   ]
 }
