@@ -1,0 +1,192 @@
+{% comment %}
+  LUMEI - Main Cart Section
+{% endcomment %}
+
+{%- style -%}
+  .cart-section {
+    padding: 6rem 1.5rem 5rem;
+    min-height: 60vh;
+  }
+
+  .cart-section__container {
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  .cart-section__title {
+    font-size: 2.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .cart-section__empty {
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  .cart-section__empty-text {
+    font-size: 1.125rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 2rem;
+  }
+
+  .cart-section__items {
+    margin-bottom: 2rem;
+  }
+
+  .cart-item {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  }
+
+  .cart-item__image {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 0.5rem;
+    background: {{ settings.color_card }};
+    object-fit: contain;
+    padding: 0.5rem;
+  }
+
+  .cart-item__content {
+    flex: 1;
+  }
+
+  .cart-item__title {
+    font-size: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 0.25rem;
+  }
+
+  .cart-item__variant {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .cart-item__price {
+    font-size: 1rem;
+    color: {{ settings.color_foreground }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .cart-item__remove {
+    font-size: 0.75rem;
+    color: {{ settings.color_muted }};
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+  }
+
+  .cart-item__remove:hover {
+    color: {{ settings.color_foreground }};
+  }
+
+  .cart-section__footer {
+    border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    padding-top: 1.5rem;
+  }
+
+  .cart-section__subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .cart-section__subtotal-label {
+    font-size: 1rem;
+    color: {{ settings.color_foreground }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .cart-section__subtotal-value {
+    font-size: 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    color: {{ settings.color_foreground }};
+  }
+
+  .cart-section__note {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 1.5rem;
+  }
+
+  .cart-section__checkout {
+    width: 100%;
+  }
+{%- endstyle -%}
+
+<section class="cart-section">
+  <div class="cart-section__container">
+    <h1 class="cart-section__title">{{ 'cart.general.title' | t }}</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post">
+        <div class="cart-section__items">
+          {%- for item in cart.items -%}
+            <div class="cart-item">
+              {%- if item.image != blank -%}
+                <img 
+                  src="{{ item.image | image_url: width: 200 }}" 
+                  alt="{{ item.title }}"
+                  class="cart-item__image"
+                >
+              {%- endif -%}
+              <div class="cart-item__content">
+                <h3 class="cart-item__title">{{ item.product.title }}</h3>
+                {%- if item.variant.title != 'Default Title' -%}
+                  <p class="cart-item__variant">{{ item.variant.title }}</p>
+                {%- endif -%}
+                <p class="cart-item__price">{{ item.final_line_price | money }}</p>
+                <button 
+                  type="button"
+                  class="cart-item__remove"
+                  onclick="window.location.href='/cart/change?id={{ item.key }}&quantity=0'"
+                >
+                  {{ 'cart.general.remove' | t }}
+                </button>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="cart-section__footer">
+          <div class="cart-section__subtotal">
+            <span class="cart-section__subtotal-label">{{ 'cart.general.subtotal' | t }}</span>
+            <span class="cart-section__subtotal-value">{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart-section__note">{{ 'cart.general.taxes_and_shipping_at_checkout' | t }}</p>
+          <button type="submit" name="checkout" class="button button--primary button--xl cart-section__checkout">
+            {{ 'cart.general.checkout' | t }}
+          </button>
+        </div>
+      </form>
+    {%- else -%}
+      <div class="cart-section__empty">
+        <p class="cart-section__empty-text">{{ 'cart.general.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button button--primary button--lg">
+          {{ 'cart.general.continue_shopping' | t }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Carrito LUMEI",
+  "tag": "section",
+  "class": "section-main-cart"
+}
+{% endschema %}

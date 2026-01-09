@@ -1,0 +1,198 @@
+{% comment %}
+  LUMEI - Main Collection Section
+{% endcomment %}
+
+{%- style -%}
+  .collection-section {
+    padding: 6rem 1.5rem 5rem;
+  }
+
+  .collection-section__container {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  .collection-section__header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .collection-section__title {
+    font-size: 2.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .collection-section__title {
+      font-size: 3rem;
+    }
+  }
+
+  .collection-section__description {
+    font-size: 1rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    max-width: 32rem;
+    margin: 0 auto;
+  }
+
+  .collection-section__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .collection-section__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .collection-section__grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    }
+  }
+
+  .product-card {
+    position: relative;
+    background: {{ settings.color_card }};
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .product-card__image-wrapper {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+
+  .product-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1.5rem;
+    transition: transform 0.5s ease;
+  }
+
+  .product-card:hover .product-card__image {
+    transform: scale(1.05);
+  }
+
+  .product-card__content {
+    padding: 1.5rem;
+  }
+
+  .product-card__title {
+    font-size: 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 0.5rem;
+  }
+
+  .product-card__price {
+    font-size: 1rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .product-card__link {
+    position: absolute;
+    inset: 0;
+  }
+
+  .collection-section__empty {
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  .collection-section__empty-text {
+    font-size: 1.125rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+  }
+{%- endstyle -%}
+
+<section class="collection-section">
+  <div class="collection-section__container">
+    <div class="collection-section__header">
+      <h1 class="collection-section__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <p class="collection-section__description">{{ collection.description }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {%- if collection.products.size > 0 -%}
+        <div class="collection-section__grid">
+          {%- for product in collection.products -%}
+            <div class="product-card">
+              <div class="product-card__image-wrapper">
+                {%- if product.featured_image != blank -%}
+                  <img 
+                    src="{{ product.featured_image | image_url: width: 600 }}" 
+                    alt="{{ product.title }}"
+                    class="product-card__image"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'product-card__image' }}
+                {%- endif -%}
+              </div>
+              <div class="product-card__content">
+                <h3 class="product-card__title">{{ product.title }}</h3>
+                <p class="product-card__price">{{ product.price | money }}</p>
+              </div>
+              <a href="{{ product.url }}" class="product-card__link" aria-label="{{ product.title }}"></a>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          {{ paginate | default_pagination }}
+        {%- endif -%}
+      {%- else -%}
+        <div class="collection-section__empty">
+          <p class="collection-section__empty-text">No hay productos en esta colección.</p>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Colección LUMEI",
+  "tag": "section",
+  "class": "section-main-collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12,
+      "label": "Productos por página"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "Columnas en escritorio"
+    }
+  ]
+}
+{% endschema %}

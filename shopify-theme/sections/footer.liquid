@@ -1,0 +1,239 @@
+{% comment %}
+  LUMEI - Footer Section
+{% endcomment %}
+
+{%- style -%}
+  .footer {
+    background: {{ settings.color_card }};
+    border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  }
+
+  .footer__container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer__grid {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+
+  .footer__brand {
+    max-width: 20rem;
+  }
+
+  .footer__logo {
+    font-size: 1.875rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: {{ settings.color_foreground }};
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .footer__tagline {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  .footer__column-title {
+    font-size: 0.875rem;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 1rem;
+  }
+
+  .footer__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer__link {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer__link:hover {
+    color: {{ settings.color_foreground }};
+  }
+
+  .footer__divider {
+    height: 1px;
+    background: {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    margin-bottom: 2rem;
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer__bottom {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .footer__copyright {
+    font-size: 0.75rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .footer__legal {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer__legal-link {
+    font-size: 0.75rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer__legal-link:hover {
+    color: {{ settings.color_foreground }};
+  }
+{%- endstyle -%}
+
+<footer class="footer">
+  <div class="footer__container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="{{ routes.root_url }}" class="footer__logo">
+          {{ section.settings.logo_text | default: shop.name }}
+        </a>
+        <p class="footer__tagline">{{ section.settings.tagline }}</p>
+      </div>
+
+      <div class="footer__column">
+        <h4 class="footer__column-title">{{ section.settings.nav_title }}</h4>
+        <nav class="footer__nav">
+          {%- for link in section.settings.footer_menu.links -%}
+            <a href="{{ link.url }}" class="footer__link">{{ link.title }}</a>
+          {%- endfor -%}
+        </nav>
+      </div>
+
+      <div class="footer__column">
+        <h4 class="footer__column-title">{{ section.settings.contact_title }}</h4>
+        <nav class="footer__nav">
+          {%- if section.settings.contact_email != blank -%}
+            <a href="mailto:{{ section.settings.contact_email }}" class="footer__link">
+              {{ section.settings.contact_email }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.contact_location != blank -%}
+            <span class="footer__link">{{ section.settings.contact_location }}</span>
+          {%- endif -%}
+        </nav>
+      </div>
+    </div>
+
+    <div class="footer__divider"></div>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">
+        © {{ 'now' | date: '%Y' }} {{ shop.name }}. Todos los derechos reservados.
+      </p>
+      <div class="footer__legal">
+        {%- for link in section.settings.legal_menu.links -%}
+          <a href="{{ link.url }}" class="footer__legal-link">{{ link.title }}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Texto del logo",
+      "default": "LUMEI"
+    },
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Identidad a través de la luz. Cada LUMEI es único, como quien lo elige."
+    },
+    {
+      "type": "header",
+      "content": "Navegación"
+    },
+    {
+      "type": "text",
+      "id": "nav_title",
+      "label": "Título de navegación",
+      "default": "Navegación"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_menu",
+      "label": "Menú del footer",
+      "default": "footer"
+    },
+    {
+      "type": "header",
+      "content": "Contacto"
+    },
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Título de contacto",
+      "default": "Contacto"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email de contacto",
+      "default": "hola@lumei.es"
+    },
+    {
+      "type": "text",
+      "id": "contact_location",
+      "label": "Ubicación",
+      "default": "España"
+    },
+    {
+      "type": "header",
+      "content": "Legal"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Menú legal",
+      "default": "footer"
+    }
+  ]
+}
+{% endschema %}

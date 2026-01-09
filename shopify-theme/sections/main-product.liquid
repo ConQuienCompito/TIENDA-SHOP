@@ -1,0 +1,514 @@
+{% comment %}
+  LUMEI - Main Product Section
+{% endcomment %}
+
+{%- style -%}
+  .product-section {
+    padding: 6rem 1.5rem 5rem;
+  }
+
+  .product-section__container {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  .product-section__breadcrumb {
+    margin-bottom: 2rem;
+  }
+
+  .product-section__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .product-section__back:hover {
+    color: {{ settings.color_foreground }};
+  }
+
+  .product-section__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 1024px) {
+    .product-section__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .product-section__gallery {
+    position: relative;
+  }
+
+  .product-section__image-main {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: {{ settings.color_card }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-section__image-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.3;
+    transition: opacity 0.7s ease;
+  }
+
+  .product-section__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 2rem;
+    transition: opacity 0.5s ease;
+  }
+
+  .product-section__thumbnails {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .product-section__thumbnail {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: {{ settings.color_foreground | color_modify: 'alpha', 0.3 }};
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .product-section__thumbnail.is-active {
+    background: {{ settings.color_foreground }};
+    width: 1.5rem;
+  }
+
+  .product-section__info {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .product-section__brand {
+    font-size: 0.875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: {{ settings.color_muted }};
+    margin-bottom: 0.75rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .product-section__title {
+    font-size: 3rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    transition: color 0.5s ease;
+  }
+
+  @media (min-width: 640px) {
+    .product-section__title {
+      font-size: 3.75rem;
+    }
+  }
+
+  .product-section__description {
+    font-size: 1.25rem;
+    color: {{ settings.color_foreground | color_modify: 'alpha', 0.8 }};
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .product-section__price {
+    margin-bottom: 2.5rem;
+  }
+
+  .product-section__price-value {
+    font-size: 1.875rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: {{ settings.color_foreground }};
+  }
+
+  .product-section__price-note {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    margin-top: 0.25rem;
+  }
+
+  .product-section__variants {
+    margin-bottom: 2.5rem;
+  }
+
+  .product-section__variants-label {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .product-section__variants-options {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .product-section__variant-btn {
+    position: relative;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .product-section__variant-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .product-section__variant-btn.is-selected {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px {{ settings.color_foreground }}, 0 0 0 4px {{ settings.color_background }};
+  }
+
+  .product-section__variant-check {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: {{ settings.color_background }};
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .product-section__variant-btn.is-selected .product-section__variant-check {
+    opacity: 1;
+  }
+
+  .product-section__add-btn {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .product-section__trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    margin-bottom: 2.5rem;
+  }
+
+  .product-section__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .product-section__collapsibles {
+    border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  }
+
+  .product-section__collapsible {
+    border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  }
+
+  .product-section__collapsible-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.25rem 0;
+    background: transparent;
+    border: none;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    color: {{ settings.color_foreground }};
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .product-section__collapsible-icon {
+    width: 1rem;
+    height: 1rem;
+    color: {{ settings.color_muted }};
+    transition: transform 0.3s ease;
+  }
+
+  .product-section__collapsible[open] .product-section__collapsible-icon {
+    transform: rotate(180deg);
+  }
+
+  .product-section__collapsible-content {
+    padding-bottom: 1.25rem;
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  .product-section__collapsible-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .product-section__collapsible-content li {
+    padding: 0.25rem 0;
+  }
+
+  .product-section__collapsible-content li::before {
+    content: '• ';
+  }
+{%- endstyle -%}
+
+<section class="product-section">
+  <div class="product-section__container">
+    <nav class="product-section__breadcrumb">
+      <a href="{{ routes.root_url }}" class="product-section__back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Volver
+      </a>
+    </nav>
+
+    <div class="product-section__grid">
+      <div class="product-section__gallery">
+        <div class="product-section__image-main" id="productImageMain">
+          <div class="product-section__image-glow" id="productImageGlow"></div>
+          {%- if product.featured_image != blank -%}
+            <img 
+              src="{{ product.featured_image | image_url: width: 1000 }}" 
+              alt="{{ product.title }}"
+              class="product-section__image"
+              id="productImage"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'product-section__image' }}
+          {%- endif -%}
+        </div>
+
+        <div class="product-section__thumbnails">
+          {%- for i in (1..3) -%}
+            <button 
+              class="product-section__thumbnail {% if forloop.first %}is-active{% endif %}"
+              data-index="{{ forloop.index0 }}"
+              aria-label="Ver imagen {{ forloop.index }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="product-section__info">
+        <p class="product-section__brand">LUMEI</p>
+        
+        <h1 class="product-section__title" id="productTitle">
+          {{ product.title }}
+        </h1>
+        
+        <p class="product-section__description">
+          {{ product.description | default: 'Una luz que define tu momento, no solo tu espacio.' }}
+        </p>
+
+        <div class="product-section__price">
+          <p class="product-section__price-value">{{ product.price | money }}</p>
+          <p class="product-section__price-note">{{ 'products.product.free_shipping' | t }}</p>
+        </div>
+
+        {%- if product.has_only_default_variant == false -%}
+          <div class="product-section__variants">
+            <p class="product-section__variants-label">{{ 'products.product.choose_variant' | t }}</p>
+            <div class="product-section__variants-options">
+              {%- for variant in product.variants -%}
+                <button 
+                  class="product-section__variant-btn {% if forloop.first %}is-selected{% endif %}"
+                  data-variant-id="{{ variant.id }}"
+                  data-variant-title="{{ variant.title }}"
+                  data-variant-color="{{ variant.metafields.custom.color | default: settings.color_lamp_purple }}"
+                  style="background-color: {{ variant.metafields.custom.color | default: settings.color_lamp_purple }}"
+                  aria-label="Seleccionar {{ variant.title }}"
+                >
+                  <svg class="product-section__variant-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        <form method="post" action="/cart/add">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variantId">
+          <button type="submit" class="button button--primary button--xl product-section__add-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            {{ 'products.product.add_to_cart' | t }}
+          </button>
+        </form>
+
+        <div class="product-section__trust">
+          <span class="product-section__trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Envío 24-48h
+          </span>
+          <span class="product-section__trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Garantía 2 años
+          </span>
+        </div>
+
+        <div class="product-section__collapsibles">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'collapsible_tab' -%}
+              <details class="product-section__collapsible" {{ block.shopify_attributes }}>
+                <summary class="product-section__collapsible-trigger">
+                  {{ block.settings.heading }}
+                  <svg class="product-section__collapsible-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 9l6 6 6-6"/>
+                  </svg>
+                </summary>
+                <div class="product-section__collapsible-content">
+                  {{ block.settings.content }}
+                </div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const variantBtns = document.querySelectorAll('.product-section__variant-btn');
+    const variantIdInput = document.getElementById('variantId');
+    const productTitle = document.getElementById('productTitle');
+    const productImageGlow = document.getElementById('productImageGlow');
+    const productImageMain = document.getElementById('productImageMain');
+
+    variantBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        variantBtns.forEach(b => b.classList.remove('is-selected'));
+        this.classList.add('is-selected');
+        
+        const variantId = this.dataset.variantId;
+        const variantTitle = this.dataset.variantTitle;
+        const variantColor = this.dataset.variantColor;
+        
+        variantIdInput.value = variantId;
+        productTitle.textContent = variantTitle;
+        productTitle.style.color = variantColor;
+        
+        productImageGlow.style.background = `radial-gradient(circle at center, ${variantColor}40, transparent 70%)`;
+        productImageMain.style.boxShadow = `0 0 100px 20px ${variantColor}40`;
+      });
+    });
+
+    // Initialize with first variant
+    if (variantBtns.length > 0) {
+      const firstColor = variantBtns[0].dataset.variantColor;
+      productTitle.style.color = firstColor;
+      productImageGlow.style.background = `radial-gradient(circle at center, ${firstColor}40, transparent 70%)`;
+      productImageMain.style.boxShadow = `0 0 100px 20px ${firstColor}40`;
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Producto LUMEI",
+  "tag": "section",
+  "class": "section-main-product",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "Habilitar info sticky",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "variant_picker",
+      "name": "Selector de variantes",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Botones de compra",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "Mostrar checkout dinámico",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Descripción",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "collapsible_tab",
+      "name": "Pestaña colapsable",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "Especificaciones"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Contenido"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "none", "label": "Ninguno" },
+            { "value": "box", "label": "Caja" },
+            { "value": "truck", "label": "Envío" }
+          ],
+          "default": "none"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
