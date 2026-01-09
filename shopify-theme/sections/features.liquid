@@ -1,0 +1,40 @@
+<section class="features">
+  <div class="page-width">
+    <div class="features__grid">
+      <div class="feature">
+        <div class="feature__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>
+        <h3 class="feature__title">Envío gratuito</h3>
+        <p class="feature__text">España peninsular 24-48h</p>
+      </div>
+      <div class="feature">
+        <div class="feature__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></div>
+        <h3 class="feature__title">30 días</h3>
+        <p class="feature__text">Devolución sin preguntas</p>
+      </div>
+      <div class="feature">
+        <div class="feature__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+        <h3 class="feature__title">Pago seguro</h3>
+        <p class="feature__text">Datos encriptados</p>
+      </div>
+      <div class="feature">
+        <div class="feature__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>
+        <h3 class="feature__title">Garantía 2 años</h3>
+        <p class="feature__text">Tranquilidad total</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.features { padding: 60px 0; border-top: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light); }
+.features__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+@media (min-width: 768px) { .features__grid { grid-template-columns: repeat(4, 1fr); gap: 40px; } }
+.feature { text-align: center; }
+.feature__icon { width: 48px; height: 48px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; background: rgba(153, 102, 204, 0.1); border-radius: 12px; color: var(--color-primary); }
+.feature__title { font-size: 0.9375rem; font-weight: 500; color: var(--color-text); margin-bottom: 4px; font-family: var(--font-main); }
+.feature__text { font-size: 0.8125rem; color: var(--color-text-muted); }
+</style>
+
+{% schema %}
+{ "name": "Features", "settings": [] }
+{% endschema %}
