@@ -1,103 +1,70 @@
 {% comment %}
   LUMEI - Concept Section
-  Sección de concepto emocional
 {% endcomment %}
 
-{%- style -%}
-  .concept-section {
-    position: relative;
-    padding: 8rem 1.5rem;
-    overflow: hidden;
+<style>
+  .concept {
+    padding: 100px 20px;
+    background: {{ settings.color_background }};
   }
 
-  .concept-section__glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 37.5rem;
-    height: 37.5rem;
-    border-radius: 50%;
-    background: radial-gradient(circle, {{ settings.color_lamp_purple | color_modify: 'alpha', 0.1 }}, transparent 70%);
-    filter: blur(80px);
-    opacity: 0.2;
-  }
-
-  .concept-section__container {
-    position: relative;
-    z-index: 10;
-    max-width: 56rem;
+  .concept__container {
+    max-width: 800px;
     margin: 0 auto;
     text-align: center;
   }
 
-  .concept-section__subtitle {
-    font-size: 0.875rem;
+  .concept__subtitle {
+    font-size: 0.75rem;
+    font-weight: 500;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: {{ settings.color_muted }};
-    margin-bottom: 2rem;
-    font-family: 'Inter', sans-serif;
+    color: {{ settings.color_lamp_purple }};
+    margin-bottom: 24px;
   }
 
-  .concept-section__title {
-    font-size: 1.875rem;
+  .concept__title {
+    font-size: 2rem;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
-    line-height: 1.3;
-    margin-bottom: 2rem;
+    line-height: 1.2;
     color: {{ settings.color_foreground }};
+    margin-bottom: 32px;
   }
 
-  @media (min-width: 640px) {
-    .concept-section__title {
-      font-size: 2.25rem;
+  @media (min-width: 768px) {
+    .concept__title {
+      font-size: 2.5rem;
     }
   }
 
-  @media (min-width: 1024px) {
-    .concept-section__title {
-      font-size: 3rem;
-    }
+  .concept__title-line {
+    display: block;
   }
 
-  .concept-section__title-muted {
-    color: {{ settings.color_muted }};
-  }
-
-  .concept-section__description {
+  .concept__description {
     font-size: 1.125rem;
     color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    max-width: 42rem;
+    line-height: 1.8;
+    max-width: 600px;
     margin: 0 auto;
-    line-height: 1.7;
   }
-{%- endstyle -%}
+</style>
 
-<section id="concepto" class="concept-section">
-  <div class="concept-section__glow"></div>
-
-  <div class="concept-section__container">
-    <p class="concept-section__subtitle">{{ section.settings.subtitle }}</p>
-    
-    <h2 class="concept-section__title">
-      {{ section.settings.title_line1 }}<br>
-      <span class="concept-section__title-muted">{{ section.settings.title_line2 }}</span>
+<section class="concept" id="concepto">
+  <div class="concept__container">
+    <p class="concept__subtitle">{{ section.settings.subtitle }}</p>
+    <h2 class="concept__title">
+      <span class="concept__title-line">{{ section.settings.title_line1 }}</span>
+      <span class="concept__title-line">{{ section.settings.title_line2 }}</span>
     </h2>
-    
-    <p class="concept-section__description">
-      {{ section.settings.description }}
-    </p>
+    <p class="concept__description">{{ section.settings.description }}</p>
   </div>
 </section>
 
 {% schema %}
 {
   "name": "Concepto LUMEI",
-  "tag": "section",
-  "class": "section-concept",
   "settings": [
     {
       "type": "text",
@@ -114,7 +81,7 @@
     {
       "type": "text",
       "id": "title_line2",
-      "label": "Título línea 2 (atenuado)",
+      "label": "Título línea 2",
       "default": "se sienten igual."
     },
     {
