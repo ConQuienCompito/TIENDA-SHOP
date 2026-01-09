@@ -1,5 +1,6 @@
 {% comment %}
   LUMEI - Página FAQ completa
+  100% editable desde Shopify Theme Editor usando bloques
 {% endcomment %}
 
 {%- style -%}
@@ -40,24 +41,11 @@
     font-family: 'Inter', sans-serif;
   }
 
-  .page-faq__category {
-    margin-bottom: 3rem;
-  }
-
-  .page-faq__category-title {
-    font-size: 1.25rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    color: {{ settings.color_foreground }};
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
-  }
-
   .page-faq__list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    margin-bottom: 2rem;
   }
 
   .page-faq__item {
@@ -127,15 +115,6 @@
     color: {{ settings.color_muted }};
     margin-bottom: 1.5rem;
   }
-
-  .page-faq__contact-link {
-    color: {{ settings.color_lamp_purple }};
-    text-decoration: none;
-  }
-
-  .page-faq__contact-link:hover {
-    text-decoration: underline;
-  }
 {%- endstyle -%}
 
 <section class="page-faq">
@@ -146,153 +125,25 @@
       <p class="page-faq__intro">{{ section.settings.intro }}</p>
     </div>
 
-    <!-- Producto -->
-    <div class="page-faq__category">
-      <h2 class="page-faq__category-title">Sobre el producto</h2>
+    {%- if section.blocks.size > 0 -%}
       <div class="page-faq__list">
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Qué es exactamente LUMEI?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            LUMEI es una lámpara ambiental de cristal de amatista natural con iluminación LED. Cada pieza es única debido a las variaciones naturales del cristal. Disponible en tres modos de luz: CALMA (púrpura), ENFOQUE (azul) y PROFUNDO (ámbar).
-          </div>
-        </details>
-        
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Cada pieza es realmente única?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            Sí. Cada LUMEI está hecha con cristales de amatista naturales, por lo que cada pieza tiene variaciones únicas en forma, color y tonalidad. Estas variaciones no son defectos, son la firma de la naturaleza.
-          </div>
-        </details>
-        
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Qué dimensiones tiene?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            Las dimensiones aproximadas son 28cm de alto x 12cm de ancho x 12cm de profundidad. El peso es de aproximadamente 1.2kg. Debido a la naturaleza del cristal, puede haber pequeñas variaciones.
-          </div>
-        </details>
-        
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Qué fuente de alimentación necesita?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            LUMEI funciona mediante conexión USB-C. Incluye un cable de 2 metros. Puedes conectarla a cualquier puerto USB, adaptador de corriente (no incluido) o powerbank para mayor flexibilidad.
-          </div>
-        </details>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            <details class="page-faq__item" {{ block.shopify_attributes }}>
+              <summary class="page-faq__question">
+                {{ block.settings.question }}
+                <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 9l6 6 6-6"/>
+                </svg>
+              </summary>
+              <div class="page-faq__answer">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
-    </div>
-
-    <!-- Envío -->
-    <div class="page-faq__category">
-      <h2 class="page-faq__category-title">Envío y entrega</h2>
-      <div class="page-faq__list">
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Cuánto cuesta el envío?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            El envío es gratuito a toda España peninsular. Para Baleares, Canarias y Portugal, el coste se calcula al finalizar la compra según la ubicación.
-          </div>
-        </details>
-        
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Cuánto tarda en llegar?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            <strong>España peninsular:</strong> 24-48h laborables.<br>
-            <strong>Baleares:</strong> 3-5 días laborables.<br>
-            <strong>Canarias:</strong> 5-7 días laborables.<br>
-            <strong>Portugal:</strong> 2-4 días laborables.<br>
-            Recibirás un email con el número de seguimiento cuando tu pedido sea enviado.
-          </div>
-        </details>
-        
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Cómo viene empaquetado?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            Cada LUMEI viene en una caja de presentación premium con protección especial para el cristal. Incluye la lámpara, cable USB-C de 2 metros y una guía de cuidado del cristal.
-          </div>
-        </details>
-      </div>
-    </div>
-
-    <!-- Devoluciones -->
-    <div class="page-faq__category">
-      <h2 class="page-faq__category-title">Devoluciones y garantía</h2>
-      <div class="page-faq__list">
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Puedo devolver el producto?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            Sí. Tienes 30 días desde la recepción para devolver tu LUMEI sin usar y en su embalaje original. Contacta con nosotros en hola@lumei.es y te gestionamos la recogida sin coste adicional. No hacemos preguntas.
-          </div>
-        </details>
-        
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Qué garantía tiene?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            LUMEI tiene una garantía de 2 años que cubre defectos de fabricación del LED y componentes eléctricos. Las variaciones naturales del cristal (forma, color, inclusiones) no se consideran defectos.
-          </div>
-        </details>
-        
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Qué pasa si llega dañada?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            Si tu LUMEI llega dañada durante el transporte, contacta con nosotros inmediatamente con fotos del daño. Te enviaremos una nueva unidad sin coste alguno.
-          </div>
-        </details>
-      </div>
-    </div>
-
-    <!-- Cuidado -->
-    <div class="page-faq__category">
-      <h2 class="page-faq__category-title">Cuidado y mantenimiento</h2>
-      <div class="page-faq__list">
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Cómo limpio mi LUMEI?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            Limpia suavemente con un paño seco y suave. Evita productos químicos, agua y limpiadores abrasivos que puedan dañar el cristal natural.
-          </div>
-        </details>
-        
-        <details class="page-faq__item">
-          <summary class="page-faq__question">
-            ¿Puedo dejarla encendida todo el tiempo?
-            <svg class="page-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-          </summary>
-          <div class="page-faq__answer">
-            Sí. El LED de bajo consumo está diseñado para un uso prolongado y genera muy poco calor. Sin embargo, como con cualquier dispositivo eléctrico, recomendamos apagarla cuando no estés en casa por períodos largos.
-          </div>
-        </details>
-      </div>
-    </div>
+    {%- endif -%}
 
     <div class="page-faq__contact">
       <h3 class="page-faq__contact-title">{{ section.settings.contact_title }}</h3>
@@ -307,6 +158,8 @@
 {% schema %}
 {
   "name": "Página FAQ",
+  "tag": "section",
+  "class": "section-page-faq",
   "settings": [
     {
       "type": "text",
@@ -321,10 +174,10 @@
       "default": "Todo lo que necesitas saber"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "intro",
       "label": "Introducción",
-      "default": "Respuestas a las preguntas más comunes sobre LUMEI."
+      "default": "Respuestas a las preguntas más comunes."
     },
     {
       "type": "header",
@@ -337,7 +190,7 @@
       "default": "¿No encuentras lo que buscas?"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "contact_text",
       "label": "Texto contacto",
       "default": "Escríbenos y te responderemos en menos de 24h laborables."
@@ -353,6 +206,61 @@
       "id": "contact_button",
       "label": "Botón contacto",
       "default": "Contactar"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "Pregunta FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "¿Cuál es tu pregunta?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Respuesta",
+          "default": "Escribe aquí la respuesta a esta pregunta."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Página FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cómo funciona el envío?",
+            "answer": "Envío gratuito a toda España peninsular en 24-48h laborables. Baleares, Canarias y Portugal tienen un coste adicional calculado al finalizar la compra."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Qué fuente de alimentación necesita?",
+            "answer": "Funciona mediante conexión USB-C. Incluye un cable de 2 metros. Puedes conectarla a cualquier puerto USB, adaptador de corriente o powerbank."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Puedo devolver el producto?",
+            "answer": "Sí, tienes 30 días desde la recepción para devolver el producto sin usar y en su embalaje original. Contacta con nosotros para iniciar el proceso."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cada pieza es única?",
+            "answer": "Sí. Cada pieza está hecha con cristales naturales, por lo que tiene variaciones únicas en forma y tonalidad."
+          }
+        }
+      ]
     }
   ]
 }
