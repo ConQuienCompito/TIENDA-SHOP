@@ -1,0 +1,18 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "logo_text": "LUMEI",
+        "tagline": "Identidad a través de la luz. Cada LUMEI es único, como quien lo elige.",
+        "nav_title": "Navegación",
+        "contact_title": "Contacto",
+        "contact_email": "hola@lumei.es",
+        "contact_location": "España"
+      }
+    }
+  },
+  "order": ["footer"]
+}

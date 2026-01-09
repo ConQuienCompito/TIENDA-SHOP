@@ -1,0 +1,13 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo_text": "LUMEI"
+      }
+    }
+  },
+  "order": ["header"]
+}
