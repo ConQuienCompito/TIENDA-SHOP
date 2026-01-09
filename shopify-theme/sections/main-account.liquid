@@ -1,0 +1,192 @@
+{% comment %}
+  LUMEI - Main Account Section
+{% endcomment %}
+
+{%- style -%}
+  .account-section {
+    padding: 8rem 1.5rem 5rem;
+    min-height: 70vh;
+  }
+
+  .account-section__container {
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+
+  .account-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .account-section__title {
+    font-size: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: {{ settings.color_foreground }};
+  }
+
+  .account-section__logout {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .account-section__logout:hover {
+    color: {{ settings.color_foreground }};
+  }
+
+  .account-section__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .account-section__grid {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+
+  .account-section__card {
+    background: {{ settings.color_card }};
+    border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  .account-section__card-title {
+    font-size: 1.125rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 1rem;
+  }
+
+  .account-section__info {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  .account-section__orders-empty {
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+
+  .account-section__orders-empty-text {
+    font-size: 1rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 1.5rem;
+  }
+
+  .account-section__order {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .account-section__order:last-child {
+    border-bottom: none;
+  }
+
+  .account-section__order-number {
+    font-size: 0.875rem;
+    color: {{ settings.color_lamp_purple }};
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .account-section__order-number:hover {
+    text-decoration: underline;
+  }
+
+  .account-section__order-date {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .account-section__order-total {
+    font-size: 0.875rem;
+    color: {{ settings.color_foreground }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .account-section__order-status {
+    font-size: 0.75rem;
+    color: {{ settings.color_foreground }};
+    background: {{ settings.color_lamp_purple | color_modify: 'alpha', 0.2 }};
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-family: 'Inter', sans-serif;
+  }
+{%- endstyle -%}
+
+<section class="account-section">
+  <div class="account-section__container">
+    <div class="account-section__header">
+      <h1 class="account-section__title">Hola, {{ customer.first_name }}</h1>
+      <a href="{{ routes.account_logout_url }}" class="account-section__logout">Cerrar sesión</a>
+    </div>
+
+    <div class="account-section__grid">
+      <div class="account-section__card">
+        <h2 class="account-section__card-title">Tu información</h2>
+        <div class="account-section__info">
+          <p>{{ customer.email }}</p>
+          {%- if customer.default_address -%}
+            <p style="margin-top: 1rem;">
+              {{ customer.default_address.address1 }}<br>
+              {%- if customer.default_address.address2 != blank -%}
+                {{ customer.default_address.address2 }}<br>
+              {%- endif -%}
+              {{ customer.default_address.city }}, {{ customer.default_address.zip }}<br>
+              {{ customer.default_address.country }}
+            </p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="account-section__card">
+        <h2 class="account-section__card-title">Tus pedidos</h2>
+        
+        {%- if customer.orders.size > 0 -%}
+          {%- for order in customer.orders -%}
+            <div class="account-section__order">
+              <a href="{{ order.customer_url }}" class="account-section__order-number">{{ order.name }}</a>
+              <span class="account-section__order-date">{{ order.created_at | date: '%d/%m/%Y' }}</span>
+              <span class="account-section__order-total">{{ order.total_price | money }}</span>
+              <span class="account-section__order-status">{{ order.financial_status_label }}</span>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="account-section__orders-empty">
+            <p class="account-section__orders-empty-text">Aún no has realizado ningún pedido.</p>
+            <a href="{{ routes.all_products_collection_url }}" class="button button--primary button--lg">
+              Ver colección
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cuenta LUMEI",
+  "tag": "section",
+  "class": "section-main-account"
+}
+{% endschema %}

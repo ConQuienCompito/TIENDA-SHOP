@@ -1,0 +1,190 @@
+{% comment %}
+  LUMEI - Main Login Section
+{% endcomment %}
+
+{%- style -%}
+  .login-section {
+    padding: 8rem 1.5rem 5rem;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .login-section__container {
+    max-width: 28rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .login-section__header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .login-section__title {
+    font-size: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 0.5rem;
+  }
+
+  .login-section__subtitle {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .login-section__form {
+    background: {{ settings.color_card }};
+    border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    border-radius: 1rem;
+    padding: 2rem;
+  }
+
+  .login-section__field {
+    margin-bottom: 1.5rem;
+  }
+
+  .login-section__label {
+    display: block;
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 0.5rem;
+  }
+
+  .login-section__input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: {{ settings.color_background }};
+    border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    border-radius: 0.5rem;
+    color: {{ settings.color_foreground }};
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .login-section__input:focus {
+    outline: none;
+    border-color: {{ settings.color_lamp_purple }};
+  }
+
+  .login-section__submit {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .login-section__forgot {
+    display: block;
+    text-align: center;
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    text-decoration: none;
+  }
+
+  .login-section__forgot:hover {
+    color: {{ settings.color_lamp_purple }};
+  }
+
+  .login-section__register {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  }
+
+  .login-section__register-text {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .login-section__register-link {
+    color: {{ settings.color_lamp_purple }};
+    text-decoration: none;
+  }
+
+  .login-section__register-link:hover {
+    text-decoration: underline;
+  }
+
+  .login-section__errors {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .login-section__error {
+    color: #ef4444;
+    font-size: 0.875rem;
+    font-family: 'Inter', sans-serif;
+  }
+{%- endstyle -%}
+
+<section class="login-section">
+  <div class="login-section__container">
+    <div class="login-section__header">
+      <h1 class="login-section__title">Iniciar sesión</h1>
+      <p class="login-section__subtitle">Accede a tu cuenta LUMEI</p>
+    </div>
+
+    <div class="login-section__form">
+      {%- form 'customer_login' -%}
+        {%- if form.errors -%}
+          <div class="login-section__errors">
+            <p class="login-section__error">{{ form.errors | default_errors }}</p>
+          </div>
+        {%- endif -%}
+
+        <div class="login-section__field">
+          <label for="CustomerEmail" class="login-section__label">Email</label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="CustomerEmail"
+            class="login-section__input"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            required
+          >
+        </div>
+
+        <div class="login-section__field">
+          <label for="CustomerPassword" class="login-section__label">Contraseña</label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="CustomerPassword"
+            class="login-section__input"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <button type="submit" class="button button--primary button--xl login-section__submit">
+          Entrar
+        </button>
+
+        <a href="#recover" class="login-section__forgot">¿Olvidaste tu contraseña?</a>
+      {%- endform -%}
+    </div>
+
+    <div class="login-section__register">
+      <p class="login-section__register-text">
+        ¿No tienes cuenta? <a href="{{ routes.account_register_url }}" class="login-section__register-link">Crear cuenta</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Login LUMEI",
+  "tag": "section",
+  "class": "section-main-login"
+}
+{% endschema %}

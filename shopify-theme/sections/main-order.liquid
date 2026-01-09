@@ -1,0 +1,207 @@
+{% comment %}
+  LUMEI - Main Order Section
+{% endcomment %}
+
+{%- style -%}
+  .order-section {
+    padding: 8rem 1.5rem 5rem;
+    min-height: 70vh;
+  }
+
+  .order-section__container {
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  .order-section__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+    margin-bottom: 2rem;
+  }
+
+  .order-section__back:hover {
+    color: {{ settings.color_foreground }};
+  }
+
+  .order-section__header {
+    margin-bottom: 2rem;
+  }
+
+  .order-section__title {
+    font-size: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 0.5rem;
+  }
+
+  .order-section__date {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .order-section__card {
+    background: {{ settings.color_card }};
+    border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .order-section__card-title {
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: {{ settings.color_foreground }};
+    margin-bottom: 1rem;
+  }
+
+  .order-section__item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  }
+
+  .order-section__item:last-child {
+    border-bottom: none;
+  }
+
+  .order-section__item-image {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    background: {{ settings.color_background }};
+    object-fit: contain;
+  }
+
+  .order-section__item-info {
+    flex: 1;
+  }
+
+  .order-section__item-title {
+    font-size: 0.875rem;
+    color: {{ settings.color_foreground }};
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 0.25rem;
+  }
+
+  .order-section__item-variant {
+    font-size: 0.75rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .order-section__item-price {
+    font-size: 0.875rem;
+    color: {{ settings.color_foreground }};
+    font-family: 'Inter', sans-serif;
+  }
+
+  .order-section__total {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+    margin-top: 1rem;
+  }
+
+  .order-section__total-label {
+    font-size: 1rem;
+    color: {{ settings.color_foreground }};
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+
+  .order-section__total-value {
+    font-size: 1rem;
+    color: {{ settings.color_foreground }};
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .order-section__info-text {
+    font-size: 0.875rem;
+    color: {{ settings.color_muted }};
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+{%- endstyle -%}
+
+<section class="order-section">
+  <div class="order-section__container">
+    <a href="{{ routes.account_url }}" class="order-section__back">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+      Volver a mi cuenta
+    </a>
+
+    <div class="order-section__header">
+      <h1 class="order-section__title">Pedido {{ order.name }}</h1>
+      <p class="order-section__date">Realizado el {{ order.created_at | date: '%d de %B de %Y' }}</p>
+    </div>
+
+    <div class="order-section__card">
+      <h2 class="order-section__card-title">Productos</h2>
+      {%- for line_item in order.line_items -%}
+        <div class="order-section__item">
+          {%- if line_item.image -%}
+            <img 
+              src="{{ line_item.image | image_url: width: 200 }}" 
+              alt="{{ line_item.title }}"
+              class="order-section__item-image"
+            >
+          {%- endif -%}
+          <div class="order-section__item-info">
+            <p class="order-section__item-title">{{ line_item.title }}</p>
+            {%- if line_item.variant.title != 'Default Title' -%}
+              <p class="order-section__item-variant">{{ line_item.variant.title }}</p>
+            {%- endif -%}
+            <p class="order-section__item-variant">Cantidad: {{ line_item.quantity }}</p>
+          </div>
+          <p class="order-section__item-price">{{ line_item.final_line_price | money }}</p>
+        </div>
+      {%- endfor -%}
+
+      <div class="order-section__total">
+        <span class="order-section__total-label">Total</span>
+        <span class="order-section__total-value">{{ order.total_price | money }}</span>
+      </div>
+    </div>
+
+    <div class="order-section__card">
+      <h2 class="order-section__card-title">Dirección de envío</h2>
+      <p class="order-section__info-text">
+        {{ order.shipping_address.name }}<br>
+        {{ order.shipping_address.address1 }}<br>
+        {%- if order.shipping_address.address2 != blank -%}
+          {{ order.shipping_address.address2 }}<br>
+        {%- endif -%}
+        {{ order.shipping_address.city }}, {{ order.shipping_address.zip }}<br>
+        {{ order.shipping_address.country }}
+      </p>
+    </div>
+
+    <div class="order-section__card">
+      <h2 class="order-section__card-title">Estado del pedido</h2>
+      <p class="order-section__info-text">
+        Estado del pago: {{ order.financial_status_label }}<br>
+        Estado del envío: {{ order.fulfillment_status_label | default: 'Pendiente de envío' }}
+      </p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pedido LUMEI",
+  "tag": "section",
+  "class": "section-main-order"
+}
+{% endschema %}
