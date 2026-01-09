@@ -1,178 +1,17 @@
 {%- comment -%}
-  LUMEI - Página de Producto Principal
-  100% funcional con carrito AJAX
+  LUMEI - Página de Producto
 {%- endcomment -%}
-
-<section class="product-page">
-  <div class="page-width">
-    <div class="product-page__container">
-      <!-- Gallery -->
-      <div class="product-page__gallery animate-fade-in">
-        <div class="product-page__main-image" id="productMainImage">
-          {%- if product.featured_image -%}
-            <img id="product-main-img" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}">
-          {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
-          <div class="product-page__glow" id="productGlow"></div>
-        </div>
-        {%- if product.images.size > 1 -%}
-          <div class="product-page__thumbs">
-            {%- for image in product.images limit: 5 -%}
-              <button class="product-page__thumb {% if forloop.first %}active{% endif %}" data-image="{{ image | image_url: width: 800 }}" type="button">
-                <img src="{{ image | image_url: width: 100 }}" alt="" loading="lazy">
-              </button>
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
-      </div>
-      
-      <!-- Product Info -->
-      <div class="product-page__info">
-        <div class="product-page__badges-top">
-          <span class="badge badge--success">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            En stock
-          </span>
-          <span class="badge badge--info">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon></svg>
-            Envío rápido
-          </span>
-        </div>
-        
-        <p class="product-page__brand">LUMEI</p>
-        <h1 class="product-page__title" id="productTitle">{{ product.title }}</h1>
-        
-        <!-- Reviews placeholder -->
-        <div class="product-page__rating">
-          <div class="stars">
-            {%- for i in (1..5) -%}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-            {%- endfor -%}
-          </div>
-          <span class="product-page__rating-text">4.9/5 (23 reseñas)</span>
-        </div>
-        
-        <!-- Price -->
-        <div class="product-page__price">
-          {%- if product.compare_at_price > product.price -%}
-            <span class="product-page__price-compare">{{ product.compare_at_price | money }}</span>
-          {%- endif -%}
-          <span class="product-page__price-current">{{ product.price | money }}</span>
-          {%- if product.compare_at_price > product.price -%}
-            {%- assign savings = product.compare_at_price | minus: product.price | money -%}
-            <span class="product-page__price-badge">¡Ahorras {{ savings }}!</span>
-          {%- endif -%}
-        </div>
-        
-        <!-- Trust line -->
-        <div class="product-page__trust-line">
-          <span class="product-page__trust-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            Pago seguro
-          </span>
-          <span class="product-page__trust-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            Garantía 30 días
-          </span>
-          <span class="product-page__trust-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            Pieza única
-          </span>
-        </div>
-        
-        <!-- Variants -->
-        {%- if product.has_only_default_variant == false -%}
-          <div class="product-page__variants">
-            {%- for option in product.options_with_values -%}
-              <div class="product-page__option">
-                <label class="product-page__option-label">{{ option.name }}</label>
-                <div class="product-page__option-btns">
-                  {%- for value in option.values -%}
-                    <label class="product-page__option-item {% if option.selected_value == value %}active{% endif %}">
-                      <input type="radio" name="option-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
-                      <span>{{ value }}</span>
-                    </label>
-                  {%- endfor -%}
-                </div>
-              </div>
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
-        
-        <input type="hidden" id="product-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
-        
-        <!-- Add to cart -->
-        <button type="button" id="add-to-cart-btn" class="product-page__submit" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-          Añadir al carrito — {{ product.price | money }}
-        </button>
-        
-        <!-- Payment Trust -->
-        <div class="product-page__payment-trust">
-          <p class="product-page__payment-label">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            Pago 100% seguro
-          </p>
-          <div class="product-page__payment-badges">
-            {%- for type in shop.enabled_payment_types -%}
-              <div class="payment-badge">{{ type | payment_type_svg_tag: class: 'payment-icon' }}</div>
-            {%- endfor -%}
-          </div>
-          <p class="product-page__payment-note">Datos protegidos · Transacciones cifradas</p>
-        </div>
-        
-        <!-- Benefits -->
-        <div class="product-page__benefits-box">
-          <div class="benefit-item">
-            <div class="benefit-item__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-            </div>
-            <div class="benefit-item__text">
-              <strong>Envío gratuito</strong>
-              <span>España peninsular 24-48h</span>
-            </div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-item__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            </div>
-            <div class="benefit-item__text">
-              <strong>Garantía de satisfacción</strong>
-              <span>30 días para devolución</span>
-            </div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-item__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </div>
-            <div class="benefit-item__text">
-              <strong>Pieza única</strong>
-              <span>Cada cristal es irrepetible</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Description -->
-    {%- if product.description != blank -%}
-      <div class="product-page__details">
-        <div class="product-detail-block">
-          <h3>Sobre esta pieza</h3>
-          <div class="product-detail-block__content">{{ product.description }}</div>
-        </div>
-      </div>
-    {%- endif -%}
-  </div>
-</section>
 
 <style>
 .product-page {
-  padding: 100px 0 80px;
+  padding: 100px 20px 80px;
+  background: {{ settings.color_background }};
+  min-height: 100vh;
 }
 
 .product-page__container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
   gap: 48px;
@@ -193,8 +32,8 @@
 
 .product-page__main-image {
   position: relative;
-  background: var(--color-bg-card);
-  border-radius: var(--radius-lg);
+  background: {{ settings.color_card }};
+  border-radius: 16px;
   overflow: hidden;
   margin-bottom: 16px;
   aspect-ratio: 1;
@@ -213,9 +52,8 @@
 .product-page__glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(153, 102, 204, 0.3), transparent 60%);
+  background: radial-gradient(circle at center, {{ settings.color_lamp_purple | color_modify: 'alpha', 0.25 }}, transparent 60%);
   pointer-events: none;
-  transition: background 0.5s ease;
 }
 
 .product-page__thumbs {
@@ -226,17 +64,18 @@
 .product-page__thumb {
   width: 72px;
   height: 72px;
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border: 2px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
   padding: 0;
-  background: var(--color-bg-card);
+  background: {{ settings.color_card }};
   transition: all 0.2s ease;
 }
 
-.product-page__thumb.active {
-  border-color: var(--color-primary);
+.product-page__thumb.active,
+.product-page__thumb:hover {
+  border-color: {{ settings.color_lamp_purple }};
 }
 
 .product-page__thumb img {
@@ -245,29 +84,48 @@
   object-fit: cover;
 }
 
-.product-page__badges-top {
+.product-page__badges {
   display: flex;
   gap: 10px;
   margin-bottom: 16px;
   flex-wrap: wrap;
 }
 
+.product-page__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.product-page__badge--success {
+  background: rgba(5, 150, 105, 0.2);
+  color: #34d399;
+}
+
+.product-page__badge--info {
+  background: rgba(51, 170, 255, 0.2);
+  color: #33aaff;
+}
+
 .product-page__brand {
   font-size: 0.875rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
+  color: {{ settings.color_muted }};
   margin-bottom: 8px;
-  font-family: var(--font-main);
 }
 
 .product-page__title {
   font-size: 2.5rem;
+  font-family: 'Cormorant Garamond', serif;
   font-weight: 300;
   margin-bottom: 16px;
   line-height: 1.2;
-  color: var(--color-text);
-  transition: color 0.5s ease;
+  color: {{ settings.color_foreground }};
 }
 
 @media (min-width: 768px) {
@@ -283,9 +141,18 @@
   margin-bottom: 20px;
 }
 
+.product-page__rating .stars {
+  display: flex;
+  gap: 2px;
+}
+
+.product-page__rating .stars svg {
+  color: #fbbf24;
+}
+
 .product-page__rating-text {
   font-size: 0.875rem;
-  color: var(--color-text-soft);
+  color: {{ settings.color_muted }};
 }
 
 .product-page__price {
@@ -298,24 +165,24 @@
 
 .product-page__price-compare {
   font-size: 1.125rem;
-  color: var(--color-text-muted);
+  color: {{ settings.color_muted }};
   text-decoration: line-through;
 }
 
 .product-page__price-current {
   font-size: 2rem;
   font-weight: 300;
-  font-family: var(--font-display);
-  color: var(--color-text);
+  font-family: 'Cormorant Garamond', serif;
+  color: {{ settings.color_foreground }};
 }
 
 .product-page__price-badge {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-success);
+  color: #34d399;
   background: rgba(5, 150, 105, 0.2);
   padding: 6px 12px;
-  border-radius: var(--radius-full);
+  border-radius: 100px;
 }
 
 .product-page__trust-line {
@@ -325,9 +192,9 @@
   margin-bottom: 24px;
   flex-wrap: wrap;
   padding: 16px 20px;
-  background: var(--color-bg-card);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
+  background: {{ settings.color_card }};
+  border-radius: 10px;
+  border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
 }
 
 .product-page__trust-item {
@@ -335,11 +202,11 @@
   align-items: center;
   gap: 6px;
   font-size: 0.8125rem;
-  color: var(--color-text-soft);
+  color: {{ settings.color_muted }};
 }
 
 .product-page__trust-item svg {
-  color: var(--color-success);
+  color: #34d399;
 }
 
 .product-page__variants {
@@ -355,7 +222,7 @@
   font-weight: 500;
   margin-bottom: 10px;
   display: block;
-  color: var(--color-text-soft);
+  color: {{ settings.color_muted }};
 }
 
 .product-page__option-btns {
@@ -375,22 +242,22 @@
 .product-page__option-item span {
   display: inline-block;
   padding: 12px 24px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  border-radius: 10px;
   font-size: 0.9375rem;
   font-weight: 500;
   transition: all 0.2s ease;
-  background: var(--color-bg-card);
-  color: var(--color-text);
+  background: {{ settings.color_card }};
+  color: {{ settings.color_foreground }};
 }
 
 .product-page__option-item:hover span {
-  border-color: var(--color-primary);
+  border-color: {{ settings.color_lamp_purple }};
 }
 
 .product-page__option-item.active span {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
+  background: {{ settings.color_lamp_purple }};
+  border-color: {{ settings.color_lamp_purple }};
   color: white;
 }
 
@@ -400,35 +267,35 @@
   justify-content: center;
   gap: 10px;
   width: 100%;
-  background: var(--color-primary);
+  background: {{ settings.color_lamp_purple }};
   color: white;
   border: none;
   padding: 20px 32px;
   font-size: 1.0625rem;
   font-weight: 600;
-  border-radius: var(--radius-md);
+  border-radius: 10px;
   cursor: pointer;
   margin-bottom: 20px;
   transition: all 0.2s ease;
 }
 
 .product-page__submit:hover {
-  background: var(--color-primary-dark);
-  box-shadow: var(--shadow-glow);
+  opacity: 0.9;
+  box-shadow: 0 0 40px {{ settings.color_lamp_purple | color_modify: 'alpha', 0.4 }};
 }
 
 .product-page__submit:disabled {
-  background: var(--color-text-muted);
+  background: {{ settings.color_muted }};
   cursor: not-allowed;
 }
 
-.product-page__payment-trust {
-  background: var(--color-bg-card);
-  border-radius: var(--radius-lg);
+.product-page__payment {
+  background: {{ settings.color_card }};
+  border-radius: 16px;
   padding: 24px;
   text-align: center;
   margin-bottom: 20px;
-  border: 1px solid var(--color-border);
+  border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
 }
 
 .product-page__payment-label {
@@ -438,102 +305,107 @@
   gap: 6px;
   font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--color-text);
+  color: {{ settings.color_foreground }};
   margin-bottom: 16px;
 }
 
 .product-page__payment-label svg {
-  color: var(--color-success);
+  color: #34d399;
 }
 
 .product-page__payment-badges {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 12px;
   flex-wrap: wrap;
 }
 
-.product-page__payment-note {
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  margin: 0;
+.product-page__payment-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: {{ settings.color_background }};
+  border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  border-radius: 6px;
+  padding: 6px 10px;
+  height: 36px;
 }
 
-.product-page__benefits-box {
+.product-page__payment-badge .payment-icon {
+  height: 20px;
+  width: auto;
+}
+
+.product-page__benefits {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  border-radius: 16px;
   overflow: hidden;
 }
 
-.benefit-item {
+.product-page__benefit {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 16px 20px;
-  background: var(--color-bg-card);
-  border-bottom: 1px solid var(--color-border);
+  background: {{ settings.color_card }};
+  border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
 }
 
-.benefit-item:last-child {
+.product-page__benefit:last-child {
   border-bottom: none;
 }
 
-.benefit-item__icon {
+.product-page__benefit-icon {
   flex-shrink: 0;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(153, 102, 204, 0.2);
-  border-radius: var(--radius-md);
-  color: var(--color-primary);
+  background: {{ settings.color_lamp_purple | color_modify: 'alpha', 0.2 }};
+  border-radius: 10px;
+  color: {{ settings.color_lamp_purple }};
 }
 
-.benefit-item__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.benefit-item__text strong {
+.product-page__benefit-text strong {
+  display: block;
   font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--color-text);
+  color: {{ settings.color_foreground }};
+  margin-bottom: 2px;
 }
 
-.benefit-item__text span {
+.product-page__benefit-text span {
   font-size: 0.8125rem;
-  color: var(--color-text-soft);
+  color: {{ settings.color_muted }};
 }
 
-.product-page__details {
-  max-width: 800px;
+.product-page__description {
+  max-width: 1200px;
   margin: 60px auto 0;
+  padding: 0 20px;
 }
 
-.product-detail-block {
+.product-page__description-box {
   padding: 32px;
-  background: var(--color-bg-card);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
+  background: {{ settings.color_card }};
+  border-radius: 16px;
+  border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
 }
 
-.product-detail-block h3 {
+.product-page__description-title {
   font-size: 1.25rem;
   font-weight: 400;
   margin-bottom: 16px;
-  color: var(--color-text);
+  color: {{ settings.color_foreground }};
 }
 
-.product-detail-block__content {
+.product-page__description-content {
   font-size: 0.9375rem;
   line-height: 1.8;
-  color: var(--color-text-soft);
+  color: {{ settings.color_muted }};
 }
 
 @media (max-width: 1023px) {
@@ -541,22 +413,167 @@
     position: relative;
     top: 0;
   }
-  
   .product-page__title {
     font-size: 2rem;
-  }
-  
-  .product-page__trust-line {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
   }
 }
 </style>
 
+<section class="product-page">
+  <div class="product-page__container">
+    <!-- Gallery -->
+    <div class="product-page__gallery">
+      <div class="product-page__main-image">
+        {%- if product.featured_image -%}
+          <img id="product-main-img" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+        <div class="product-page__glow"></div>
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="product-page__thumbs">
+          {%- for image in product.images limit: 5 -%}
+            <button class="product-page__thumb {% if forloop.first %}active{% endif %}" data-image="{{ image | image_url: width: 800 }}" type="button">
+              <img src="{{ image | image_url: width: 100 }}" alt="" loading="lazy">
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    
+    <!-- Product Info -->
+    <div class="product-page__info">
+      <div class="product-page__badges">
+        <span class="product-page__badge product-page__badge--success">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          En stock
+        </span>
+        <span class="product-page__badge product-page__badge--info">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon></svg>
+          Envío rápido
+        </span>
+      </div>
+      
+      <p class="product-page__brand">LUMEI</p>
+      <h1 class="product-page__title">{{ product.title }}</h1>
+      
+      <div class="product-page__rating">
+        <div class="stars">
+          {%- for i in (1..5) -%}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          {%- endfor -%}
+        </div>
+        <span class="product-page__rating-text">4.9/5 (23 reseñas)</span>
+      </div>
+      
+      <div class="product-page__price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="product-page__price-compare">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+        <span class="product-page__price-current">{{ product.price | money }}</span>
+        {%- if product.compare_at_price > product.price -%}
+          {%- assign savings = product.compare_at_price | minus: product.price | money -%}
+          <span class="product-page__price-badge">¡Ahorras {{ savings }}!</span>
+        {%- endif -%}
+      </div>
+      
+      <div class="product-page__trust-line">
+        <span class="product-page__trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Pago seguro
+        </span>
+        <span class="product-page__trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Garantía 30 días
+        </span>
+        <span class="product-page__trust-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Pieza única
+        </span>
+      </div>
+      
+      {%- if product.has_only_default_variant == false -%}
+        <div class="product-page__variants">
+          {%- for option in product.options_with_values -%}
+            <div class="product-page__option">
+              <label class="product-page__option-label">{{ option.name }}</label>
+              <div class="product-page__option-btns">
+                {%- for value in option.values -%}
+                  <label class="product-page__option-item {% if option.selected_value == value %}active{% endif %}">
+                    <input type="radio" name="option-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
+                    <span>{{ value }}</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      
+      <input type="hidden" id="product-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+      
+      <button type="button" id="add-to-cart-btn" class="product-page__submit" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        Añadir al carrito — {{ product.price | money }}
+      </button>
+      
+      <div class="product-page__payment">
+        <p class="product-page__payment-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Pago 100% seguro
+        </p>
+        <div class="product-page__payment-badges">
+          {%- for type in shop.enabled_payment_types -%}
+            <div class="product-page__payment-badge">{{ type | payment_type_svg_tag: class: 'payment-icon' }}</div>
+          {%- endfor -%}
+        </div>
+      </div>
+      
+      <div class="product-page__benefits">
+        <div class="product-page__benefit">
+          <div class="product-page__benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          </div>
+          <div class="product-page__benefit-text">
+            <strong>Envío gratuito</strong>
+            <span>España peninsular 24-48h</span>
+          </div>
+        </div>
+        <div class="product-page__benefit">
+          <div class="product-page__benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div class="product-page__benefit-text">
+            <strong>Garantía de satisfacción</strong>
+            <span>30 días para devolución</span>
+          </div>
+        </div>
+        <div class="product-page__benefit">
+          <div class="product-page__benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </div>
+          <div class="product-page__benefit-text">
+            <strong>Pieza única</strong>
+            <span>Cada cristal es irrepetible</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {%- if product.description != blank -%}
+    <div class="product-page__description">
+      <div class="product-page__description-box">
+        <h3 class="product-page__description-title">Sobre esta pieza</h3>
+        <div class="product-page__description-content">{{ product.description }}</div>
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
 <script>
 (function() {
-  // Thumbnail gallery
   document.querySelectorAll('.product-page__thumb').forEach(function(thumb) {
     thumb.onclick = function() {
       document.getElementById('product-main-img').src = this.dataset.image;
@@ -565,7 +582,6 @@
     };
   });
   
-  // Variant selection
   var variants = {{ product.variants | json }};
   var variantInput = document.getElementById('product-variant-id');
   var addBtn = document.getElementById('add-to-cart-btn');
@@ -593,7 +609,6 @@
     };
   });
   
-  // Add to cart AJAX
   if (addBtn) {
     addBtn.onclick = function(e) {
       e.preventDefault();
@@ -625,10 +640,6 @@
           if (drawer) drawer.classList.add('is-open');
           if (overlay) overlay.classList.add('is-visible');
           document.body.style.overflow = 'hidden';
-          
-          if (typeof window.refreshCartDrawer === 'function') {
-            window.refreshCartDrawer();
-          }
         });
         
         btn.innerHTML = '¡Añadido!';
