@@ -1,783 +1,657 @@
-{% comment %}
-  LUMEI - Main Product Section (Refined with Trust Elements)
-{% endcomment %}
+{%- comment -%}
+  LUMEI - Página de Producto Principal
+  100% funcional con carrito AJAX
+{%- endcomment -%}
 
-{%- style -%}
-  .product-section {
-    padding: 6rem 1.5rem 5rem;
-  }
-
-  .product-section__container {
-    max-width: 80rem;
-    margin: 0 auto;
-  }
-
-  .product-section__breadcrumb {
-    margin-bottom: 2rem;
-  }
-
-  .product-section__back {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-  .product-section__back:hover {
-    color: {{ settings.color_foreground }};
-  }
-
-  .product-section__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 4rem;
-    align-items: flex-start;
-  }
-
-  @media (min-width: 1024px) {
-    .product-section__grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  .product-section__gallery {
-    position: relative;
-  }
-
-  .product-section__image-main {
-    position: relative;
-    aspect-ratio: 1;
-    border-radius: 1.5rem;
-    overflow: hidden;
-    background: {{ settings.color_card }};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .product-section__image-glow {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.3;
-    transition: opacity 0.7s ease;
-  }
-
-  .product-section__image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 2rem;
-    transition: opacity 0.5s ease;
-  }
-
-  .product-section__included {
-    display: none;
-    margin-top: 2.5rem;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    background: {{ settings.color_card | color_modify: 'alpha', 0.5 }};
-    border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.05 }};
-  }
-
-  @media (min-width: 1024px) {
-    .product-section__included {
-      display: block;
-    }
-  }
-
-  .product-section__included-title {
-    font-size: 0.875rem;
-    color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 1rem;
-  }
-
-  .product-section__included-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .product-section__included-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.875rem;
-    color: {{ settings.color_foreground | color_modify: 'alpha', 0.7 }};
-    padding: 0.5rem 0;
-  }
-
-  .product-section__included-icon {
-    width: 1rem;
-    height: 1rem;
-    color: {{ settings.color_muted }};
-  }
-
-  .product-section__info {
-    position: sticky;
-    top: 6rem;
-  }
-
-  .product-section__brand {
-    font-size: 0.875rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: {{ settings.color_muted }};
-    margin-bottom: 0.75rem;
-    font-family: 'Inter', sans-serif;
-  }
-
-  .product-section__title {
-    font-size: 3rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    margin-bottom: 1rem;
-    transition: color 0.5s ease;
-  }
-
-  @media (min-width: 640px) {
-    .product-section__title {
-      font-size: 3.75rem;
-    }
-  }
-
-  .product-section__description {
-    font-size: 1.25rem;
-    color: {{ settings.color_foreground | color_modify: 'alpha', 0.8 }};
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-  }
-
-  .product-section__price {
-    margin-bottom: 2rem;
-  }
-
-  .product-section__price-value {
-    font-size: 1.875rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    color: {{ settings.color_foreground }};
-  }
-
-  .product-section__price-note {
-    font-size: 0.875rem;
-    color: {{ settings.color_muted }};
-    margin-top: 0.25rem;
-  }
-
-  .product-section__variants {
-    margin-bottom: 2rem;
-  }
-
-  .product-section__variants-label {
-    font-size: 0.875rem;
-    color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 1rem;
-  }
-
-  .product-section__variants-options {
-    display: flex;
-    gap: 0.75rem;
-  }
-
-  .product-section__variant-btn {
-    position: relative;
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .product-section__variant-btn:hover {
-    transform: scale(1.05);
-  }
-
-  .product-section__variant-btn.is-selected {
-    transform: scale(1.1);
-    box-shadow: 0 0 0 2px {{ settings.color_foreground }}, 0 0 0 4px {{ settings.color_background }};
-  }
-
-  .product-section__variant-check {
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    width: 1.25rem;
-    height: 1.25rem;
-    color: {{ settings.color_background }};
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .product-section__variant-btn.is-selected .product-section__variant-check {
-    opacity: 1;
-  }
-
-  .product-section__variant-selected {
-    font-size: 0.75rem;
-    color: {{ settings.color_muted | color_modify: 'alpha', 0.6 }};
-    margin-top: 0.75rem;
-  }
-
-  .product-section__variant-selected span {
-    color: {{ settings.color_foreground | color_modify: 'alpha', 0.7 }};
-  }
-
-  .product-section__add-btn {
-    width: 100%;
-    margin-bottom: 0.75rem;
-  }
-
-  .product-section__secure {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    color: {{ settings.color_muted | color_modify: 'alpha', 0.6 }};
-    margin-bottom: 2rem;
-  }
-
-  .product-section__secure-icon {
-    width: 0.875rem;
-    height: 0.875rem;
-  }
-
-  .product-section__trust {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 2rem;
-    padding: 1.5rem 0;
-    border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.05 }};
-    border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.05 }};
-  }
-
-  .product-section__trust-item {
-    text-align: center;
-  }
-
-  .product-section__trust-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin: 0 auto 0.5rem;
-    color: {{ settings.color_muted }};
-  }
-
-  .product-section__trust-title {
-    font-size: 0.75rem;
-    color: {{ settings.color_foreground | color_modify: 'alpha', 0.7 }};
-    font-family: 'Inter', sans-serif;
-  }
-
-  .product-section__trust-desc {
-    font-size: 0.625rem;
-    color: {{ settings.color_muted | color_modify: 'alpha', 0.6 }};
-  }
-
-  .product-section__payment {
-    margin-bottom: 2rem;
-  }
-
-  .product-section__payment-label {
-    font-size: 0.625rem;
-    text-align: center;
-    color: {{ settings.color_muted | color_modify: 'alpha', 0.5 }};
-    margin-bottom: 0.75rem;
-  }
-
-  .product-section__payment .payment-icons {
-    justify-content: center;
-  }
-
-  .product-section__guarantee {
-    background: {{ settings.color_card | color_modify: 'alpha', 0.3 }};
-    border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.03 }};
-    border-radius: 0.75rem;
-    padding: 1.25rem;
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-
-  .product-section__guarantee-text {
-    font-size: 0.875rem;
-    color: {{ settings.color_foreground | color_modify: 'alpha', 0.7 }};
-    font-family: 'Inter', sans-serif;
-    line-height: 1.5;
-  }
-
-  .product-section__collapsibles {
-    border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
-  }
-
-  .product-section__collapsible {
-    border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
-  }
-
-  .product-section__collapsible-trigger {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 1.25rem 0;
-    background: transparent;
-    border: none;
-    font-size: 1rem;
-    font-family: 'Inter', sans-serif;
-    color: {{ settings.color_foreground }};
-    cursor: pointer;
-    text-align: left;
-  }
-
-  .product-section__collapsible-icon {
-    width: 1rem;
-    height: 1rem;
-    color: {{ settings.color_muted }};
-    transition: transform 0.3s ease;
-  }
-
-  .product-section__collapsible[open] .product-section__collapsible-icon {
-    transform: rotate(180deg);
-  }
-
-  .product-section__collapsible-content {
-    padding-bottom: 1.25rem;
-    font-size: 0.875rem;
-    color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-  }
-
-  .product-section__collapsible-content p {
-    margin-bottom: 0.75rem;
-  }
-
-  .product-section__collapsible-content p:last-child {
-    margin-bottom: 0;
-  }
-
-  .product-section__collapsible-content strong {
-    color: {{ settings.color_foreground | color_modify: 'alpha', 0.8 }};
-  }
-
-  .product-section__collapsible-content ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .product-section__collapsible-content li {
-    padding: 0.25rem 0;
-  }
-
-  .product-section__collapsible-content li::before {
-    content: '• ';
-  }
-{%- endstyle -%}
-
-<section class="product-section">
-  <div class="product-section__container">
-    <nav class="product-section__breadcrumb">
-      <a href="{{ routes.root_url }}" class="product-section__back">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M15 18l-6-6 6-6"/>
-        </svg>
-        Volver
-      </a>
-    </nav>
-
-    <div class="product-section__grid">
-      <div class="product-section__gallery">
-        <div class="product-section__image-main" id="productImageMain">
-          <div class="product-section__image-glow" id="productImageGlow"></div>
-          {%- if product.featured_image != blank -%}
-            <img 
-              src="{{ product.featured_image | image_url: width: 1000 }}" 
-              alt="{{ product.title }}"
-              class="product-section__image"
-              id="productImage"
-            >
+<section class="product-page">
+  <div class="page-width">
+    <div class="product-page__container">
+      <!-- Gallery -->
+      <div class="product-page__gallery animate-fade-in">
+        <div class="product-page__main-image" id="productMainImage">
+          {%- if product.featured_image -%}
+            <img id="product-main-img" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}">
           {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'product-section__image' }}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
           {%- endif -%}
+          <div class="product-page__glow" id="productGlow"></div>
         </div>
-
-        <!-- What's included -->
-        <div class="product-section__included">
-          <p class="product-section__included-title">{{ section.settings.included_title }}</p>
-          <ul class="product-section__included-list">
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'included_item' -%}
-                <li class="product-section__included-item" {{ block.shopify_attributes }}>
-                  <svg class="product-section__included-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
-                  {{ block.settings.text }}
-                </li>
-              {%- endif -%}
+        {%- if product.images.size > 1 -%}
+          <div class="product-page__thumbs">
+            {%- for image in product.images limit: 5 -%}
+              <button class="product-page__thumb {% if forloop.first %}active{% endif %}" data-image="{{ image | image_url: width: 800 }}" type="button">
+                <img src="{{ image | image_url: width: 100 }}" alt="" loading="lazy">
+              </button>
             {%- endfor -%}
-          </ul>
-        </div>
-      </div>
-
-      <div class="product-section__info">
-        <p class="product-section__brand">LUMEI</p>
-        
-        <h1 class="product-section__title" id="productTitle">
-          {{ product.title }}
-        </h1>
-        
-        <p class="product-section__description">
-          {{ product.description | default: section.settings.default_description }}
-        </p>
-
-        <div class="product-section__price">
-          <p class="product-section__price-value">{{ product.price | money }}</p>
-          <p class="product-section__price-note">{{ section.settings.shipping_note }}</p>
-        </div>
-
-        {%- if product.has_only_default_variant == false -%}
-          <div class="product-section__variants">
-            <p class="product-section__variants-label">{{ section.settings.variants_label }}</p>
-            <div class="product-section__variants-options">
-              {%- for variant in product.variants -%}
-                <button 
-                  class="product-section__variant-btn {% if forloop.first %}is-selected{% endif %}"
-                  data-variant-id="{{ variant.id }}"
-                  data-variant-title="{{ variant.title }}"
-                  data-variant-color="{{ variant.metafields.custom.color | default: settings.color_lamp_purple }}"
-                  style="background-color: {{ variant.metafields.custom.color | default: settings.color_lamp_purple }}"
-                  aria-label="Seleccionar {{ variant.title }}"
-                >
-                  <svg class="product-section__variant-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
-                </button>
-              {%- endfor -%}
-            </div>
-            <p class="product-section__variant-selected">
-              Has elegido: <span id="selectedVariantName">{{ product.selected_or_first_available_variant.title }}</span>
-            </p>
           </div>
         {%- endif -%}
-
-        <form method="post" action="/cart/add">
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variantId">
-          <button type="submit" class="button button--primary button--xl product-section__add-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <path d="M16 10a4 4 0 01-8 0"/>
-            </svg>
-            {{ section.settings.add_to_cart_text }}
-          </button>
-        </form>
-
-        <!-- Secure checkout micro-copy -->
-        <div class="product-section__secure">
-          <svg class="product-section__secure-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-          <span>{{ section.settings.secure_text }}</span>
+      </div>
+      
+      <!-- Product Info -->
+      <div class="product-page__info">
+        <div class="product-page__badges-top">
+          <span class="badge badge--success">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            En stock
+          </span>
+          <span class="badge badge--info">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon></svg>
+            Envío rápido
+          </span>
         </div>
-
-        <!-- Trust indicators -->
-        <div class="product-section__trust">
-          <div class="product-section__trust-item">
-            <svg class="product-section__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="1" y="3" width="15" height="13"/>
-              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-              <circle cx="5.5" cy="18.5" r="2.5"/>
-              <circle cx="18.5" cy="18.5" r="2.5"/>
-            </svg>
-            <p class="product-section__trust-title">{{ section.settings.trust_shipping_title }}</p>
-            <p class="product-section__trust-desc">{{ section.settings.trust_shipping_desc }}</p>
+        
+        <p class="product-page__brand">LUMEI</p>
+        <h1 class="product-page__title" id="productTitle">{{ product.title }}</h1>
+        
+        <!-- Reviews placeholder -->
+        <div class="product-page__rating">
+          <div class="stars">
+            {%- for i in (1..5) -%}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            {%- endfor -%}
           </div>
-          <div class="product-section__trust-item">
-            <svg class="product-section__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="1 4 1 10 7 10"/>
-              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-            </svg>
-            <p class="product-section__trust-title">{{ section.settings.trust_returns_title }}</p>
-            <p class="product-section__trust-desc">{{ section.settings.trust_returns_desc }}</p>
-          </div>
-          <div class="product-section__trust-item">
-            <svg class="product-section__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-            <p class="product-section__trust-title">{{ section.settings.trust_warranty_title }}</p>
-            <p class="product-section__trust-desc">{{ section.settings.trust_warranty_desc }}</p>
-          </div>
+          <span class="product-page__rating-text">4.9/5 (23 reseñas)</span>
         </div>
-
-        <!-- Payment methods -->
-        <div class="product-section__payment">
-          <p class="product-section__payment-label">{{ section.settings.payment_label }}</p>
-          {% render 'payment-icons', opacity: 0.5 %}
+        
+        <!-- Price -->
+        <div class="product-page__price">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="product-page__price-compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+          <span class="product-page__price-current">{{ product.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            {%- assign savings = product.compare_at_price | minus: product.price | money -%}
+            <span class="product-page__price-badge">¡Ahorras {{ savings }}!</span>
+          {%- endif -%}
         </div>
-
-        <!-- Guarantee message -->
-        <div class="product-section__guarantee">
-          <p class="product-section__guarantee-text">{{ section.settings.guarantee_text }}</p>
+        
+        <!-- Trust line -->
+        <div class="product-page__trust-line">
+          <span class="product-page__trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Pago seguro
+          </span>
+          <span class="product-page__trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Garantía 30 días
+          </span>
+          <span class="product-page__trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            Pieza única
+          </span>
         </div>
-
-        <!-- Details Accordion -->
-        <div class="product-section__collapsibles">
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'collapsible_tab' -%}
-              <details class="product-section__collapsible" {{ block.shopify_attributes }}>
-                <summary class="product-section__collapsible-trigger">
-                  {{ block.settings.heading }}
-                  <svg class="product-section__collapsible-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9l6 6 6-6"/>
-                  </svg>
-                </summary>
-                <div class="product-section__collapsible-content">
-                  {{ block.settings.content }}
+        
+        <!-- Variants -->
+        {%- if product.has_only_default_variant == false -%}
+          <div class="product-page__variants">
+            {%- for option in product.options_with_values -%}
+              <div class="product-page__option">
+                <label class="product-page__option-label">{{ option.name }}</label>
+                <div class="product-page__option-btns">
+                  {%- for value in option.values -%}
+                    <label class="product-page__option-item {% if option.selected_value == value %}active{% endif %}">
+                      <input type="radio" name="option-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
+                      <span>{{ value }}</span>
+                    </label>
+                  {%- endfor -%}
                 </div>
-              </details>
-            {%- endif -%}
-          {%- endfor -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        
+        <input type="hidden" id="product-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+        
+        <!-- Add to cart -->
+        <button type="button" id="add-to-cart-btn" class="product-page__submit" data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          Añadir al carrito — {{ product.price | money }}
+        </button>
+        
+        <!-- Payment Trust -->
+        <div class="product-page__payment-trust">
+          <p class="product-page__payment-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Pago 100% seguro
+          </p>
+          <div class="product-page__payment-badges">
+            {%- for type in shop.enabled_payment_types -%}
+              <div class="payment-badge">{{ type | payment_type_svg_tag: class: 'payment-icon' }}</div>
+            {%- endfor -%}
+          </div>
+          <p class="product-page__payment-note">Datos protegidos · Transacciones cifradas</p>
+        </div>
+        
+        <!-- Benefits -->
+        <div class="product-page__benefits-box">
+          <div class="benefit-item">
+            <div class="benefit-item__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            </div>
+            <div class="benefit-item__text">
+              <strong>Envío gratuito</strong>
+              <span>España peninsular 24-48h</span>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-item__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div class="benefit-item__text">
+              <strong>Garantía de satisfacción</strong>
+              <span>30 días para devolución</span>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-item__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </div>
+            <div class="benefit-item__text">
+              <strong>Pieza única</strong>
+              <span>Cada cristal es irrepetible</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    
+    <!-- Description -->
+    {%- if product.description != blank -%}
+      <div class="product-page__details">
+        <div class="product-detail-block">
+          <h3>Sobre esta pieza</h3>
+          <div class="product-detail-block__content">{{ product.description }}</div>
+        </div>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
+<style>
+.product-page {
+  padding: 100px 0 80px;
+}
+
+.product-page__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .product-page__container {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+}
+
+.product-page__gallery {
+  position: sticky;
+  top: 100px;
+}
+
+.product-page__main-image {
+  position: relative;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 16px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-page__main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 24px;
+}
+
+.product-page__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(153, 102, 204, 0.3), transparent 60%);
+  pointer-events: none;
+  transition: background 0.5s ease;
+}
+
+.product-page__thumbs {
+  display: flex;
+  gap: 12px;
+}
+
+.product-page__thumb {
+  width: 72px;
+  height: 72px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  background: var(--color-bg-card);
+  transition: all 0.2s ease;
+}
+
+.product-page__thumb.active {
+  border-color: var(--color-primary);
+}
+
+.product-page__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-page__badges-top {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.product-page__brand {
+  font-size: 0.875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+  font-family: var(--font-main);
+}
+
+.product-page__title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 16px;
+  line-height: 1.2;
+  color: var(--color-text);
+  transition: color 0.5s ease;
+}
+
+@media (min-width: 768px) {
+  .product-page__title {
+    font-size: 3rem;
+  }
+}
+
+.product-page__rating {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.product-page__rating-text {
+  font-size: 0.875rem;
+  color: var(--color-text-soft);
+}
+
+.product-page__price {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.product-page__price-compare {
+  font-size: 1.125rem;
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+.product-page__price-current {
+  font-size: 2rem;
+  font-weight: 300;
+  font-family: var(--font-display);
+  color: var(--color-text);
+}
+
+.product-page__price-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-success);
+  background: rgba(5, 150, 105, 0.2);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+}
+
+.product-page__trust-line {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.product-page__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--color-text-soft);
+}
+
+.product-page__trust-item svg {
+  color: var(--color-success);
+}
+
+.product-page__variants {
+  margin-bottom: 24px;
+}
+
+.product-page__option {
+  margin-bottom: 16px;
+}
+
+.product-page__option-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  display: block;
+  color: var(--color-text-soft);
+}
+
+.product-page__option-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.product-page__option-item {
+  cursor: pointer;
+}
+
+.product-page__option-item input {
+  display: none;
+}
+
+.product-page__option-item span {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background: var(--color-bg-card);
+  color: var(--color-text);
+}
+
+.product-page__option-item:hover span {
+  border-color: var(--color-primary);
+}
+
+.product-page__option-item.active span {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.product-page__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 20px 32px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
+}
+
+.product-page__submit:hover {
+  background: var(--color-primary-dark);
+  box-shadow: var(--shadow-glow);
+}
+
+.product-page__submit:disabled {
+  background: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.product-page__payment-trust {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  border: 1px solid var(--color-border);
+}
+
+.product-page__payment-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 16px;
+}
+
+.product-page__payment-label svg {
+  color: var(--color-success);
+}
+
+.product-page__payment-badges {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.product-page__payment-note {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.product-page__benefits-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--color-bg-card);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.benefit-item:last-child {
+  border-bottom: none;
+}
+
+.benefit-item__icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(153, 102, 204, 0.2);
+  border-radius: var(--radius-md);
+  color: var(--color-primary);
+}
+
+.benefit-item__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.benefit-item__text strong {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.benefit-item__text span {
+  font-size: 0.8125rem;
+  color: var(--color-text-soft);
+}
+
+.product-page__details {
+  max-width: 800px;
+  margin: 60px auto 0;
+}
+
+.product-detail-block {
+  padding: 32px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.product-detail-block h3 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 16px;
+  color: var(--color-text);
+}
+
+.product-detail-block__content {
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: var(--color-text-soft);
+}
+
+@media (max-width: 1023px) {
+  .product-page__gallery {
+    position: relative;
+    top: 0;
+  }
+  
+  .product-page__title {
+    font-size: 2rem;
+  }
+  
+  .product-page__trust-line {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+</style>
+
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const variantBtns = document.querySelectorAll('.product-section__variant-btn');
-    const variantIdInput = document.getElementById('variantId');
-    const productTitle = document.getElementById('productTitle');
-    const selectedVariantName = document.getElementById('selectedVariantName');
-    const productImageGlow = document.getElementById('productImageGlow');
-    const productImageMain = document.getElementById('productImageMain');
-
-    variantBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        variantBtns.forEach(b => b.classList.remove('is-selected'));
-        this.classList.add('is-selected');
-        
-        const variantId = this.dataset.variantId;
-        const variantTitle = this.dataset.variantTitle;
-        const variantColor = this.dataset.variantColor;
-        
-        variantIdInput.value = variantId;
-        if (selectedVariantName) selectedVariantName.textContent = variantTitle;
-        productTitle.style.color = variantColor;
-        
-        productImageGlow.style.background = `radial-gradient(circle at center, ${variantColor}40, transparent 70%)`;
-        productImageMain.style.boxShadow = `0 0 100px 20px ${variantColor}40`;
-      });
-    });
-
-    // Initialize with first variant
-    if (variantBtns.length > 0) {
-      const firstColor = variantBtns[0].dataset.variantColor;
-      productTitle.style.color = firstColor;
-      productImageGlow.style.background = `radial-gradient(circle at center, ${firstColor}40, transparent 70%)`;
-      productImageMain.style.boxShadow = `0 0 100px 20px ${firstColor}40`;
-    }
+(function() {
+  // Thumbnail gallery
+  document.querySelectorAll('.product-page__thumb').forEach(function(thumb) {
+    thumb.onclick = function() {
+      document.getElementById('product-main-img').src = this.dataset.image;
+      document.querySelectorAll('.product-page__thumb').forEach(function(t) { t.classList.remove('active'); });
+      this.classList.add('active');
+    };
   });
+  
+  // Variant selection
+  var variants = {{ product.variants | json }};
+  var variantInput = document.getElementById('product-variant-id');
+  var addBtn = document.getElementById('add-to-cart-btn');
+  
+  document.querySelectorAll('.product-page__option-item input').forEach(function(radio) {
+    radio.onchange = function() {
+      var parent = this.closest('.product-page__option-btns');
+      parent.querySelectorAll('.product-page__option-item').forEach(function(item) { item.classList.remove('active'); });
+      this.closest('.product-page__option-item').classList.add('active');
+      
+      var selected = [];
+      document.querySelectorAll('.product-page__option').forEach(function(opt, i) {
+        var checked = opt.querySelector('input:checked');
+        if (checked) selected[i] = checked.value;
+      });
+      
+      var match = variants.find(function(v) {
+        return v.options.every(function(o, i) { return o === selected[i]; });
+      });
+      
+      if (match) {
+        variantInput.value = match.id;
+        if (addBtn) addBtn.dataset.variantId = match.id;
+      }
+    };
+  });
+  
+  // Add to cart AJAX
+  if (addBtn) {
+    addBtn.onclick = function(e) {
+      e.preventDefault();
+      var btn = this;
+      var originalHTML = btn.innerHTML;
+      var variantId = btn.dataset.variantId || variantInput.value;
+      
+      btn.innerHTML = 'Añadiendo...';
+      btn.disabled = true;
+      
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: parseInt(variantId), quantity: 1 })
+      })
+      .then(function(r) {
+        if (!r.ok) throw new Error('Error');
+        return r.json();
+      })
+      .then(function() {
+        fetch('/cart.js')
+        .then(function(r) { return r.json(); })
+        .then(function(cart) {
+          var count = document.getElementById('cart-count');
+          if (count) count.textContent = cart.item_count;
+          
+          var drawer = document.getElementById('cart-drawer');
+          var overlay = document.getElementById('cart-overlay');
+          if (drawer) drawer.classList.add('is-open');
+          if (overlay) overlay.classList.add('is-visible');
+          document.body.style.overflow = 'hidden';
+          
+          if (typeof window.refreshCartDrawer === 'function') {
+            window.refreshCartDrawer();
+          }
+        });
+        
+        btn.innerHTML = '¡Añadido!';
+        setTimeout(function() {
+          btn.innerHTML = originalHTML;
+          btn.disabled = false;
+        }, 2000);
+      })
+      .catch(function() {
+        btn.innerHTML = 'Error';
+        setTimeout(function() {
+          btn.innerHTML = originalHTML;
+          btn.disabled = false;
+        }, 2000);
+      });
+    };
+  }
+})();
 </script>
 
 {% schema %}
 {
   "name": "Producto LUMEI",
-  "tag": "section",
-  "class": "section-main-product",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Textos principales"
-    },
-    {
-      "type": "text",
-      "id": "default_description",
-      "label": "Descripción por defecto",
-      "default": "Una luz que define tu momento, no solo tu espacio."
-    },
-    {
-      "type": "text",
-      "id": "shipping_note",
-      "label": "Nota de envío",
-      "default": "Envío gratuito a España peninsular"
-    },
-    {
-      "type": "text",
-      "id": "variants_label",
-      "label": "Etiqueta de variantes",
-      "default": "Elige tu luz"
-    },
-    {
-      "type": "text",
-      "id": "add_to_cart_text",
-      "label": "Texto del botón",
-      "default": "Añadir al carrito"
-    },
-    {
-      "type": "header",
-      "content": "Seguridad y confianza"
-    },
-    {
-      "type": "text",
-      "id": "secure_text",
-      "label": "Texto de pago seguro",
-      "default": "Pago seguro · Datos encriptados"
-    },
-    {
-      "type": "text",
-      "id": "trust_shipping_title",
-      "label": "Título envío",
-      "default": "Envío 24-48h"
-    },
-    {
-      "type": "text",
-      "id": "trust_shipping_desc",
-      "label": "Descripción envío",
-      "default": "Gratis en península"
-    },
-    {
-      "type": "text",
-      "id": "trust_returns_title",
-      "label": "Título devoluciones",
-      "default": "30 días"
-    },
-    {
-      "type": "text",
-      "id": "trust_returns_desc",
-      "label": "Descripción devoluciones",
-      "default": "Devolución fácil"
-    },
-    {
-      "type": "text",
-      "id": "trust_warranty_title",
-      "label": "Título garantía",
-      "default": "Garantía 2 años"
-    },
-    {
-      "type": "text",
-      "id": "trust_warranty_desc",
-      "label": "Descripción garantía",
-      "default": "Sin preocupaciones"
-    },
-    {
-      "type": "text",
-      "id": "payment_label",
-      "label": "Etiqueta métodos de pago",
-      "default": "Métodos de pago aceptados"
-    },
-    {
-      "type": "textarea",
-      "id": "guarantee_text",
-      "label": "Texto de garantía",
-      "default": "Si no encaja en tu espacio, puedes devolverlo. Sin preguntas."
-    },
-    {
-      "type": "header",
-      "content": "Incluido en el pedido"
-    },
-    {
-      "type": "text",
-      "id": "included_title",
-      "label": "Título",
-      "default": "Incluido en tu pedido"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "included_item",
-      "name": "Artículo incluido",
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Texto",
-          "default": "Lámpara LUMEI"
-        }
-      ]
-    },
-    {
-      "type": "collapsible_tab",
-      "name": "Pestaña colapsable",
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Título",
-          "default": "Especificaciones"
-        },
-        {
-          "type": "richtext",
-          "id": "content",
-          "label": "Contenido"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Producto LUMEI",
-      "blocks": [
-        {
-          "type": "included_item",
-          "settings": { "text": "Lámpara LUMEI" }
-        },
-        {
-          "type": "included_item",
-          "settings": { "text": "Cable USB-C de 2 metros" }
-        },
-        {
-          "type": "included_item",
-          "settings": { "text": "Guía de cuidado del cristal" }
-        },
-        {
-          "type": "included_item",
-          "settings": { "text": "Caja de presentación premium" }
-        },
-        {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Especificaciones",
-            "content": "<ul><li>Dimensiones: 28cm x 12cm x 12cm</li><li>Material: Cristal de amatista natural</li><li>LED de bajo consumo incluido</li><li>Cable USB-C de 2m</li><li>3 modos de luz ajustables</li><li>Peso: aproximadamente 1.2kg</li></ul>"
-          }
-        },
-        {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Envío y entrega",
-            "content": "<p><strong>España peninsular:</strong> Envío gratuito. Entrega en 24-48h laborables.</p><p><strong>Baleares y Canarias:</strong> Coste calculado al finalizar. Entrega en 3-5 días.</p><p><strong>Portugal:</strong> Desde 5€. Entrega en 2-4 días.</p>"
-          }
-        },
-        {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Devoluciones y garantía",
-            "content": "<p><strong>30 días para devolver:</strong> Si no es lo que esperabas, contacta con nosotros. Te gestionamos la recogida sin coste adicional.</p><p><strong>Garantía de 2 años:</strong> Cubre defectos de fabricación. El cristal natural puede tener variaciones únicas que no se consideran defectos.</p>"
-          }
-        },
-        {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Cuidado del producto",
-            "content": "<p>Limpia suavemente con un paño seco. Evita productos químicos. El cristal de amatista es natural y cada pieza es única en forma y tonalidad.</p>"
-          }
-        }
-      ]
-    }
-  ]
+  "settings": []
 }
 {% endschema %}
