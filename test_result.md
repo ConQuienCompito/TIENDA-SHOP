@@ -143,11 +143,11 @@ frontend:
 
   - task: "Variants Section (Colección)"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/components/sections/VariantsSection.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
@@ -158,6 +158,9 @@ frontend:
       - working: "NA"
         agent: "testing"
         comment: "Retesting required for new trust micro-copy below CTA (Pago seguro · Devolución en 30 días)"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: Trust micro-copy 'Pago seguro · Devolución en 30 días' is present below CTA button. Variant selection functionality works correctly with button text updating to 'Elegir ENFOQUE' when ENFOQUE variant is selected."
 
   - task: "Product Page"
     implemented: true
