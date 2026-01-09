@@ -1,129 +1,123 @@
 {% comment %}
   LUMEI - FAQ Section
-  Sección de preguntas frecuentes
 {% endcomment %}
 
-{%- style -%}
-  .faq-section {
-    position: relative;
-    padding: 8rem 1.5rem;
-    overflow: hidden;
-    background: {{ settings.color_card }};
+<style>
+  .faq {
+    padding: 100px 20px;
+    background: {{ settings.color_background }};
   }
 
-  .faq-section__container {
-    max-width: 48rem;
+  .faq__container {
+    max-width: 800px;
     margin: 0 auto;
   }
 
-  .faq-section__header {
+  .faq__header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 60px;
   }
 
-  .faq-section__subtitle {
-    font-size: 0.875rem;
+  .faq__subtitle {
+    font-size: 0.75rem;
+    font-weight: 500;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: {{ settings.color_muted }};
-    margin-bottom: 1rem;
-    font-family: 'Inter', sans-serif;
+    color: {{ settings.color_lamp_purple }};
+    margin-bottom: 16px;
   }
 
-  .faq-section__title {
-    font-size: 1.875rem;
+  .faq__title {
+    font-size: 2rem;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
     color: {{ settings.color_foreground }};
   }
 
-  @media (min-width: 640px) {
-    .faq-section__title {
-      font-size: 2.25rem;
+  @media (min-width: 768px) {
+    .faq__title {
+      font-size: 2.5rem;
     }
   }
 
-  .faq-section__list {
+  .faq__list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 12px;
   }
 
-  .faq-item {
+  .faq__item {
     border: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
-    border-radius: 0.75rem;
-    padding: 0 1.5rem;
-    transition: background 0.3s ease;
+    border-radius: 12px;
+    background: {{ settings.color_card }};
+    overflow: hidden;
+    transition: all 0.2s ease;
   }
 
-  .faq-item[open] {
-    background: {{ settings.color_background | color_modify: 'alpha', 0.5 }};
+  .faq__item[open] {
+    border-color: {{ settings.color_lamp_purple | color_modify: 'alpha', 0.3 }};
   }
 
-  .faq-item__question {
+  .faq__question {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.25rem 0;
+    padding: 20px 24px;
     cursor: pointer;
     list-style: none;
     font-size: 1rem;
-    font-family: 'Inter', sans-serif;
+    font-weight: 500;
     color: {{ settings.color_foreground }};
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
   }
 
-  .faq-item__question::-webkit-details-marker {
+  .faq__question::-webkit-details-marker {
     display: none;
   }
 
-  .faq-item__question:hover {
-    color: {{ settings.color_foreground }};
+  .faq__question:hover {
+    color: {{ settings.color_lamp_purple }};
   }
 
-  .faq-item__icon {
-    width: 1rem;
-    height: 1rem;
+  .faq__icon {
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
     color: {{ settings.color_muted }};
     transition: transform 0.3s ease;
   }
 
-  .faq-item[open] .faq-item__icon {
+  .faq__item[open] .faq__icon {
     transform: rotate(180deg);
+    color: {{ settings.color_lamp_purple }};
   }
 
-  .faq-item__answer {
-    padding-bottom: 1.25rem;
-    font-size: 0.875rem;
+  .faq__answer {
+    padding: 0 24px 20px;
+    font-size: 0.9375rem;
     color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
+    line-height: 1.7;
   }
-{%- endstyle -%}
+</style>
 
-<section id="faq" class="faq-section">
-  <div class="faq-section__container">
-    <div class="faq-section__header">
-      <p class="faq-section__subtitle">{{ section.settings.subtitle }}</p>
-      <h2 class="faq-section__title">{{ section.settings.title }}</h2>
+<section class="faq" id="faq">
+  <div class="faq__container">
+    <div class="faq__header">
+      <p class="faq__subtitle">{{ section.settings.subtitle }}</p>
+      <h2 class="faq__title">{{ section.settings.title }}</h2>
     </div>
 
-    <div class="faq-section__list">
+    <div class="faq__list">
       {%- for block in section.blocks -%}
-        {%- if block.type == 'faq' -%}
-          <details class="faq-item" {{ block.shopify_attributes }}>
-            <summary class="faq-item__question">
-              {{ block.settings.question }}
-              <svg class="faq-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M6 9l6 6 6-6"/>
-              </svg>
-            </summary>
-            <div class="faq-item__answer">
-              {{ block.settings.answer }}
-            </div>
-          </details>
-        {%- endif -%}
+        <details class="faq__item" {{ block.shopify_attributes }}>
+          <summary class="faq__question">
+            {{ block.settings.question }}
+            <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="faq__answer">{{ block.settings.answer }}</div>
+        </details>
       {%- endfor -%}
     </div>
   </div>
@@ -132,8 +126,6 @@
 {% schema %}
 {
   "name": "FAQ LUMEI",
-  "tag": "section",
-  "class": "section-faq",
   "settings": [
     {
       "type": "text",
@@ -157,13 +149,13 @@
           "type": "text",
           "id": "question",
           "label": "Pregunta",
-          "default": "¿Cómo funciona el envío?"
+          "default": "¿Pregunta frecuente?"
         },
         {
           "type": "textarea",
           "id": "answer",
           "label": "Respuesta",
-          "default": "Envío gratuito a toda España peninsular en 24-48h laborables."
+          "default": "Aquí va la respuesta a la pregunta."
         }
       ]
     }
@@ -184,20 +176,6 @@
           "settings": {
             "question": "¿Qué fuente de alimentación necesita?",
             "answer": "LUMEI funciona mediante conexión USB-C. Incluye un cable de 2 metros. Puedes conectarla a cualquier puerto USB, adaptador de corriente o powerbank."
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "¿Puedo devolver el producto?",
-            "answer": "Sí, tienes 30 días desde la recepción para devolver tu LUMEI sin usar y en su embalaje original. Contacta con nosotros para iniciar el proceso."
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "¿Cada pieza es única?",
-            "answer": "Sí. Cada LUMEI está hecha con cristales de amatista naturales, por lo que cada pieza tiene variaciones únicas en forma y tonalidad."
           }
         }
       ]
