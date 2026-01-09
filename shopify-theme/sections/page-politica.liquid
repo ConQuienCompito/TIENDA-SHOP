@@ -1,5 +1,6 @@
 {% comment %}
-  LUMEI - Páginas de Políticas (Privacidad, Términos, Devoluciones)
+  LUMEI - Página de Política genérica
+  Muestra el contenido de la página de Shopify - 100% editable desde Pages
 {% endcomment %}
 
 {%- style -%}
@@ -60,7 +61,8 @@
     color: {{ settings.color_muted }};
   }
 
-  .page-politica__content ul {
+  .page-politica__content ul,
+  .page-politica__content ol {
     margin: 1rem 0;
     padding-left: 1.5rem;
   }
@@ -109,130 +111,78 @@
 <section class="page-politica">
   <div class="page-politica__container">
     <div class="page-politica__header">
-      {%- case section.settings.page_type -%}
-        {%- when 'privacy' -%}
-          <h1 class="page-politica__title">Política de Privacidad</h1>
-        {%- when 'terms' -%}
-          <h1 class="page-politica__title">Términos y Condiciones</h1>
-        {%- when 'refund' -%}
-          <h1 class="page-politica__title">Política de Devoluciones</h1>
-      {%- endcase -%}
-      <p class="page-politica__updated">Última actualización: {{ 'now' | date: '%d de %B de %Y' }}</p>
+      <h1 class="page-politica__title">{{ page.title }}</h1>
+      {%- if section.settings.show_date -%}
+        <p class="page-politica__updated">{{ section.settings.date_label }}: {{ page.updated_at | date: section.settings.date_format }}</p>
+      {%- endif -%}
     </div>
 
     <div class="page-politica__content">
-      {%- case section.settings.page_type -%}
-        {%- when 'privacy' -%}
-          <h2>1. Información que recopilamos</h2>
-          <p>En LUMEI, respetamos tu privacidad. Recopilamos la información mínima necesaria para procesar tu pedido:</p>
-          <ul>
-            <li>Nombre y apellidos</li>
-            <li>Dirección de envío</li>
-            <li>Email de contacto</li>
-            <li>Teléfono (opcional, para facilitar la entrega)</li>
-          </ul>
-
-          <h2>2. Cómo usamos tu información</h2>
-          <p>Tu información se utiliza exclusivamente para:</p>
-          <ul>
-            <li>Procesar y enviar tu pedido</li>
-            <li>Comunicarnos contigo sobre el estado de tu pedido</li>
-            <li>Gestionar devoluciones o garantías si fuera necesario</li>
-          </ul>
-          <p>No vendemos ni compartimos tu información personal con terceros, excepto con los servicios de mensajería necesarios para la entrega.</p>
-
-          <h2>3. Seguridad de los datos</h2>
-          <p>Utilizamos Shopify como plataforma de comercio electrónico, que cumple con los estándares de seguridad PCI DSS. Tus datos de pago nunca se almacenan en nuestros servidores.</p>
-
-          <h2>4. Cookies</h2>
-          <p>Utilizamos cookies esenciales para el funcionamiento de la tienda y cookies analíticas para entender cómo los visitantes usan nuestra web. Puedes desactivar las cookies en tu navegador.</p>
-
-          <h2>5. Tus derechos</h2>
-          <p>Tienes derecho a acceder, rectificar o eliminar tus datos personales. Contacta con nosotros en <a href="mailto:hola@lumei.es">hola@lumei.es</a> para ejercer estos derechos.</p>
-
-        {%- when 'terms' -%}
-          <h2>1. Identificación</h2>
-          <p>Esta tienda online es operada por LUMEI. Al realizar una compra, aceptas estos términos y condiciones.</p>
-
-          <h2>2. Productos</h2>
-          <p>LUMEI fabrica lámparas de cristal de amatista natural. Debido a la naturaleza del material, cada pieza es única. Las variaciones en color, forma y textura son características naturales del producto y no se consideran defectos.</p>
-
-          <h2>3. Precios y pagos</h2>
-          <p>Todos los precios están indicados en euros (EUR) e incluyen IVA. Aceptamos los métodos de pago mostrados al finalizar la compra: Visa, Mastercard, American Express, PayPal, Apple Pay, Google Pay, Shop Pay.</p>
-
-          <h2>4. Envíos</h2>
-          <p>El envío es gratuito a España peninsular. Los tiempos de entrega son estimados y pueden variar según la ubicación y disponibilidad del servicio de mensajería.</p>
-
-          <h2>5. Garantía</h2>
-          <p>LUMEI ofrece una garantía de 2 años que cubre defectos de fabricación en los componentes eléctricos. Las variaciones naturales del cristal no están cubiertas por la garantía.</p>
-
-          <h2>6. Limitación de responsabilidad</h2>
-          <p>LUMEI no se hace responsable de daños indirectos derivados del uso del producto. Nuestra responsabilidad se limita al valor del producto adquirido.</p>
-
-          <h2>7. Ley aplicable</h2>
-          <p>Estos términos se rigen por la legislación española. Cualquier disputa se someterá a los juzgados y tribunales de España.</p>
-
-        {%- when 'refund' -%}
-          <h2>Nuestra política de devoluciones</h2>
-          <p>En LUMEI creemos en nuestro producto. Por eso, te ofrecemos 30 días para decidir si es lo que buscabas.</p>
-
-          <h2>Cómo devolver tu LUMEI</h2>
-          <h3>Plazo</h3>
-          <p>Tienes 30 días naturales desde la recepción del producto para solicitar la devolución.</p>
-
-          <h3>Condiciones</h3>
-          <ul>
-            <li>El producto debe estar sin usar y en su embalaje original</li>
-            <li>Debe incluir todos los accesorios (cable USB-C, guía de cuidado)</li>
-            <li>No debe presentar daños causados por el cliente</li>
-          </ul>
-
-          <h3>Proceso</h3>
-          <ol>
-            <li>Escríbenos a <a href="mailto:hola@lumei.es">hola@lumei.es</a> indicando tu número de pedido</li>
-            <li>Te enviaremos una etiqueta de devolución prepagada</li>
-            <li>Empaqueta el producto de forma segura</li>
-            <li>Entrega el paquete en el punto indicado</li>
-            <li>Una vez recibido y verificado, procesaremos el reembolso en 5-7 días laborables</li>
-          </ol>
-
-          <h3>Coste</h3>
-          <p>La devolución es gratuita para España peninsular. Para otros destinos, el coste de devolución corre a cargo del cliente.</p>
-
-          <h2>Reembolsos</h2>
-          <p>El reembolso se realizará por el mismo método de pago utilizado en la compra. El plazo para ver el reembolso reflejado depende de tu entidad bancaria (generalmente 5-10 días).</p>
-
-          <h2>Productos dañados</h2>
-          <p>Si tu LUMEI llega dañada, contacta con nosotros inmediatamente con fotos del daño. Te enviaremos una nueva unidad sin coste alguno.</p>
-
-          <h2>Excepciones</h2>
-          <p>Las variaciones naturales del cristal (diferencias de color, forma, inclusiones) son características del producto y no se consideran motivo de devolución por defecto.</p>
-      {%- endcase -%}
+      {{ page.content }}
     </div>
 
-    <div class="page-politica__contact">
-      <h3 class="page-politica__contact-title">¿Tienes alguna pregunta?</h3>
-      <p class="page-politica__contact-text">
-        Escríbenos a <a href="mailto:hola@lumei.es" class="page-politica__contact-email">hola@lumei.es</a> y te responderemos en menos de 24h laborables.
-      </p>
-    </div>
+    {%- if section.settings.show_contact -%}
+      <div class="page-politica__contact">
+        <h3 class="page-politica__contact-title">{{ section.settings.contact_title }}</h3>
+        <p class="page-politica__contact-text">
+          {{ section.settings.contact_text }} <a href="mailto:{{ section.settings.contact_email }}" class="page-politica__contact-email">{{ section.settings.contact_email }}</a>
+        </p>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
 {% schema %}
 {
   "name": "Página Política",
+  "tag": "section",
+  "class": "section-page-politica",
   "settings": [
     {
-      "type": "select",
-      "id": "page_type",
-      "label": "Tipo de página",
-      "options": [
-        { "value": "privacy", "label": "Política de Privacidad" },
-        { "value": "terms", "label": "Términos y Condiciones" },
-        { "value": "refund", "label": "Política de Devoluciones" }
-      ],
-      "default": "privacy"
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Mostrar fecha de actualización",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "date_label",
+      "label": "Etiqueta de fecha",
+      "default": "Última actualización"
+    },
+    {
+      "type": "text",
+      "id": "date_format",
+      "label": "Formato de fecha",
+      "default": "%d de %B de %Y"
+    },
+    {
+      "type": "header",
+      "content": "Sección de contacto"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact",
+      "label": "Mostrar sección de contacto",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Título",
+      "default": "¿Tienes alguna pregunta?"
+    },
+    {
+      "type": "text",
+      "id": "contact_text",
+      "label": "Texto",
+      "default": "Escríbenos a"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email",
+      "default": "hola@lumei.es"
     }
   ]
 }
