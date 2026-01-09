@@ -122,11 +122,11 @@ frontend:
 
   - task: "Hero Section"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/frontend/src/components/sections/HeroSection.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "testing"
@@ -134,6 +134,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED: Hero text 'La luz que eliges dice quién eres.' displays correctly, both 'Elige tu luz' and 'Ver colección' buttons are visible and clickable, product image renders properly with glow effects."
+      - working: "NA"
+        agent: "testing"
+        comment: "Retesting required for new trust indicators below CTA (Envío gratuito, 30 días devolución, Pago seguro)"
 
   - task: "Variants Section (Colección)"
     implemented: true
