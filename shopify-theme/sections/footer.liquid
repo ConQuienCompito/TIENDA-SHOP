@@ -1,59 +1,25 @@
 {% comment %}
-  LUMEI - Footer Section (con todos los métodos de pago)
+  LUMEI - Footer
 {% endcomment %}
 
-{%- style -%}
+<style>
   .footer {
     background: {{ settings.color_card }};
     border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
-  }
-
-  .footer__trust-bar {
-    border-bottom: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.05 }};
-  }
-
-  .footer__trust-inner {
-    max-width: 80rem;
-    margin: 0 auto;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  @media (min-width: 768px) {
-    .footer__trust-inner {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  }
-
-  .footer__trust-secure {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
-  }
-
-  .footer__trust-icon {
-    width: 1rem;
-    height: 1rem;
+    padding: 60px 0 24px;
   }
 
   .footer__container {
-    max-width: 80rem;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 1.5rem;
+    padding: 0 20px;
   }
 
   .footer__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
-    margin-bottom: 3rem;
+    gap: 40px;
+    margin-bottom: 40px;
   }
 
   @media (min-width: 768px) {
@@ -62,199 +28,167 @@
     }
   }
 
-  .footer__brand {
-    max-width: 20rem;
-  }
-
-  .footer__logo {
-    font-size: 1.875rem;
+  .footer__brand-logo {
+    font-size: 1.5rem;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     color: {{ settings.color_foreground }};
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
+    display: block;
   }
 
   .footer__tagline {
     font-size: 0.875rem;
     color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    max-width: 280px;
   }
 
-  .footer__guarantee {
-    background: {{ settings.color_background | color_modify: 'alpha', 0.3 }};
-    border-radius: 0.5rem;
-    padding: 1rem;
-  }
-
-  .footer__guarantee-text {
+  .footer__title {
     font-size: 0.75rem;
-    color: {{ settings.color_muted | color_modify: 'alpha', 0.7 }};
-    line-height: 1.5;
-  }
-
-  .footer__column-title {
-    font-size: 0.875rem;
-    font-family: 'Inter', sans-serif;
-    text-transform: uppercase;
+    font-weight: 600;
     letter-spacing: 0.1em;
-    color: {{ settings.color_foreground }};
-    margin-bottom: 1rem;
+    text-transform: uppercase;
+    color: {{ settings.color_muted }};
+    margin-bottom: 20px;
   }
 
-  .footer__nav {
+  .footer__links {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 12px;
   }
 
   .footer__link {
-    font-size: 0.875rem;
-    color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
+    font-size: 0.9375rem;
+    color: {{ settings.color_foreground | color_modify: 'alpha', 0.7 }};
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
   }
 
   .footer__link:hover {
     color: {{ settings.color_foreground }};
   }
 
-  .footer__support {
-    margin-top: 1.5rem;
+  .footer__contact-item {
+    font-size: 0.9375rem;
+    color: {{ settings.color_foreground | color_modify: 'alpha', 0.7 }};
+    margin-bottom: 8px;
   }
 
-  .footer__support-title {
-    font-size: 0.875rem;
-    font-family: 'Inter', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: {{ settings.color_foreground }};
-    margin-bottom: 0.75rem;
+  .footer__contact-item a {
+    color: {{ settings.color_lamp_purple }};
+    text-decoration: none;
   }
 
-  .footer__support-text {
-    font-size: 0.75rem;
-    color: {{ settings.color_muted | color_modify: 'alpha', 0.7 }};
-    line-height: 1.5;
-  }
-
-  .footer__divider {
-    height: 1px;
-    background: {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
-    margin-bottom: 2rem;
+  .footer__contact-item a:hover {
+    text-decoration: underline;
   }
 
   .footer__bottom {
+    padding-top: 24px;
+    border-top: 1px solid {{ settings.color_foreground | color_modify: 'alpha', 0.1 }};
+  }
+
+  .footer__bottom-inner {
     display: flex;
     flex-direction: column;
+    gap: 20px;
     align-items: center;
-    gap: 1rem;
+    text-align: center;
   }
 
   @media (min-width: 768px) {
-    .footer__bottom {
+    .footer__bottom-inner {
       flex-direction: row;
       justify-content: space-between;
+      text-align: left;
     }
   }
 
   .footer__copyright {
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
   }
 
-  .footer__legal {
+  .footer__payment {
     display: flex;
+    align-items: center;
+    gap: 8px;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    justify-content: center;
   }
 
-  .footer__legal-link {
-    font-size: 0.75rem;
+  .footer__payment-icon {
+    height: 24px;
+    width: auto;
+    opacity: 0.6;
+  }
+
+  .footer__policies {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer__policy-link {
+    font-size: 0.8125rem;
     color: {{ settings.color_muted }};
-    font-family: 'Inter', sans-serif;
     text-decoration: none;
-    transition: color 0.3s ease;
   }
 
-  .footer__legal-link:hover {
+  .footer__policy-link:hover {
     color: {{ settings.color_foreground }};
   }
-{%- endstyle -%}
+</style>
 
 <footer class="footer">
-  <!-- Trust Bar -->
-  <div class="footer__trust-bar">
-    <div class="footer__trust-inner">
-      <div class="footer__trust-secure">
-        <svg class="footer__trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
-        <span>{{ section.settings.secure_text }}</span>
-      </div>
-      {% render 'payment-icons', opacity: 0.6 %}
-    </div>
-  </div>
-
   <div class="footer__container">
     <div class="footer__grid">
+      <!-- Brand -->
       <div class="footer__brand">
-        <a href="{{ routes.root_url }}" class="footer__logo">
-          {{ section.settings.logo_text | default: shop.name }}
-        </a>
-        <p class="footer__tagline">{{ section.settings.tagline }}</p>
-        
-        <div class="footer__guarantee">
-          <p class="footer__guarantee-text">{{ section.settings.guarantee_text }}</p>
-        </div>
+        <span class="footer__brand-logo">{{ section.settings.logo_text | default: 'LUMEI' }}</span>
+        <p class="footer__tagline">{{ section.settings.tagline | default: 'Identidad a través de la luz. Cada LUMEI es único, como quien lo elige.' }}</p>
       </div>
 
-      <div class="footer__column">
-        <h4 class="footer__column-title">{{ section.settings.nav_title }}</h4>
-        <nav class="footer__nav">
-          <a href="{{ routes.root_url }}" class="footer__link">Inicio</a>
-          <a href="{{ routes.all_products_collection_url }}" class="footer__link">Colección</a>
-          <a href="{{ pages['concepto'].url | default: '#concepto' }}" class="footer__link">Concepto</a>
-          <a href="{{ pages['faq'].url | default: '#faq' }}" class="footer__link">FAQ</a>
+      <!-- Navigation -->
+      <div class="footer__nav">
+        <h4 class="footer__title">{{ section.settings.nav_title | default: 'Navegación' }}</h4>
+        <nav class="footer__links">
+          <a href="/" class="footer__link">Inicio</a>
+          <a href="/collections/all" class="footer__link">Colección</a>
+          <a href="/pages/concepto" class="footer__link">Concepto</a>
+          <a href="/pages/faq" class="footer__link">FAQ</a>
         </nav>
       </div>
 
-      <div class="footer__column">
-        <h4 class="footer__column-title">{{ section.settings.contact_title }}</h4>
-        <nav class="footer__nav">
-          {%- if section.settings.contact_email != blank -%}
-            <a href="mailto:{{ section.settings.contact_email }}" class="footer__link">
-              {{ section.settings.contact_email }}
-            </a>
-          {%- endif -%}
-          {%- if section.settings.contact_location != blank -%}
-            <span class="footer__link">{{ section.settings.contact_location }}</span>
-          {%- endif -%}
-        </nav>
-        
-        <div class="footer__support">
-          <h4 class="footer__support-title">{{ section.settings.support_title }}</h4>
-          <p class="footer__support-text">{{ section.settings.support_text }}</p>
-        </div>
+      <!-- Contact -->
+      <div class="footer__contact">
+        <h4 class="footer__title">{{ section.settings.contact_title | default: 'Contacto' }}</h4>
+        <p class="footer__contact-item">
+          <a href="mailto:{{ section.settings.contact_email | default: 'hola@lumei.es' }}">{{ section.settings.contact_email | default: 'hola@lumei.es' }}</a>
+        </p>
+        <p class="footer__contact-item">{{ section.settings.contact_location | default: 'España' }}</p>
       </div>
     </div>
 
-    <div class="footer__divider"></div>
-
     <div class="footer__bottom">
-      <p class="footer__copyright">
-        © {{ 'now' | date: '%Y' }} {{ shop.name }}. Todos los derechos reservados.
-      </p>
-      <div class="footer__legal">
-        <a href="{{ pages['politica-privacidad'].url | default: policies.privacy_policy.url | default: '#' }}" class="footer__legal-link">Política de Privacidad</a>
-        <a href="{{ pages['terminos-condiciones'].url | default: policies.terms_of_service.url | default: '#' }}" class="footer__legal-link">Términos y Condiciones</a>
-        <a href="{{ pages['politica-devoluciones'].url | default: policies.refund_policy.url | default: '#' }}" class="footer__legal-link">Política de Devoluciones</a>
+      <div class="footer__bottom-inner">
+        <p class="footer__copyright">© {{ 'now' | date: '%Y' }} {{ shop.name }}. Todos los derechos reservados.</p>
+        
+        <div class="footer__payment">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'footer__payment-icon' }}
+          {%- endfor -%}
+        </div>
+
+        <div class="footer__policies">
+          <a href="/policies/privacy-policy" class="footer__policy-link">Privacidad</a>
+          <a href="/policies/terms-of-service" class="footer__policy-link">Términos</a>
+          <a href="/policies/refund-policy" class="footer__policy-link">Devoluciones</a>
+        </div>
       </div>
     </div>
   </div>
@@ -263,7 +197,6 @@
 {% schema %}
 {
   "name": "Footer",
-  "class": "section-footer",
   "settings": [
     {
       "type": "text",
@@ -279,40 +212,20 @@
     },
     {
       "type": "text",
-      "id": "secure_text",
-      "label": "Texto de pago seguro",
-      "default": "Pago seguro · Datos encriptados"
-    },
-    {
-      "type": "text",
-      "id": "guarantee_text",
-      "label": "Texto de garantías",
-      "default": "30 días para devoluciones · Garantía de 2 años · Envío gratuito en península"
-    },
-    {
-      "type": "header",
-      "content": "Navegación"
-    },
-    {
-      "type": "text",
       "id": "nav_title",
-      "label": "Título de navegación",
+      "label": "Título navegación",
       "default": "Navegación"
-    },
-    {
-      "type": "header",
-      "content": "Contacto"
     },
     {
       "type": "text",
       "id": "contact_title",
-      "label": "Título de contacto",
+      "label": "Título contacto",
       "default": "Contacto"
     },
     {
       "type": "text",
       "id": "contact_email",
-      "label": "Email de contacto",
+      "label": "Email",
       "default": "hola@lumei.es"
     },
     {
@@ -320,22 +233,6 @@
       "id": "contact_location",
       "label": "Ubicación",
       "default": "España"
-    },
-    {
-      "type": "header",
-      "content": "Soporte"
-    },
-    {
-      "type": "text",
-      "id": "support_title",
-      "label": "Título de soporte",
-      "default": "Soporte"
-    },
-    {
-      "type": "text",
-      "id": "support_text",
-      "label": "Texto de soporte",
-      "default": "Respondemos en menos de 24h laborables"
     }
   ]
 }
