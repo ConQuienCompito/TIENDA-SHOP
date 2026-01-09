@@ -2,50 +2,7 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {
-        "enable_sticky": true
-      },
-      "blocks": {
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {}
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": false
-          }
-        },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
-        "collapsible-1": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Especificaciones",
-            "content": "<ul><li>Dimensiones: 28cm x 12cm x 12cm</li><li>Material: Cristal de amatista natural</li><li>LED de bajo consumo incluido</li><li>Cable USB-C de 2m</li><li>3 modos de luz ajustables</li></ul>",
-            "icon": "none"
-          }
-        },
-        "collapsible-2": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Envío y devoluciones",
-            "content": "<p>Envío gratuito a toda España peninsular en 24-48h laborables.</p><p>Devoluciones aceptadas en los primeros 30 días. Contacta con nosotros para iniciar el proceso.</p>",
-            "icon": "none"
-          }
-        },
-        "collapsible-3": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Cuidado del producto",
-            "content": "<p>Limpia suavemente con un paño seco. Evita productos químicos. El cristal de amatista es natural y cada pieza es única.</p>",
-            "icon": "none"
-          }
-        }
-      },
-      "block_order": ["variant_picker", "buy_buttons", "description", "collapsible-1", "collapsible-2", "collapsible-3"]
+      "settings": {}
     }
   },
   "order": ["main"]
