@@ -1,63 +1,72 @@
 # LUMEI - Product Requirements Document
 
 ## Overview
-LUMEI es una tienda Shopify premium para lámparas LED de cristal de amatista. Tema dark-mode, minimalista y emocional.
-
-**Entregable**: Tema Shopify OS 2.0 completamente funcional.
+Tema Shopify premium para lámparas LED de cristal de amatista. Dark-mode first, minimalista, emocional.
 
 ---
 
 ## ✅ Implementación Completada (Enero 2025)
 
-### Estructura del Tema
+### Estructura Corregida
 
-**Layout:**
-- `theme.liquid` - Layout principal con Google Fonts (Cormorant Garamond + Inter)
+**Layout (`theme.liquid`):**
+- CSS inline con variables de Shopify settings
+- Google Fonts (Cormorant Garamond + Inter)
+- Referencias correctas a header, footer, cart-drawer
 
-**Templates JSON:**
-- `index.json` - Homepage
-- `product.json` - Página de producto **FUNCIONAL con carrito AJAX**
-- `collection.json` - Colección **FUNCIONAL con grid de productos**
-- `cart.json` - Carrito
-- `page.json`, `page.faq.json`, `page.concepto.json`, etc.
-- `404.json`
-- `customers/*` - Login, registro, cuenta, pedidos
+**Header (`header.liquid`):**
+- Logo editable
+- Navegación con menú por defecto
+- Carrito con contador y apertura de drawer
+- Menú móvil responsive
+- Scroll effect
 
-**Secciones Principales:**
-- `main-product.liquid` - Página de producto completa con:
-  - Galería de imágenes con thumbnails
-  - Selector de variantes con cambio AJAX
-  - Botón "Añadir al carrito" con AJAX
-  - Iconos de pago nativos de Shopify
-  - Beneficios y garantías
-  - Reviews placeholder
-  
-- `main-collection.liquid` - Colección con:
-  - Grid de productos responsive
-  - Cards con hover effects y glow
-  - Precios y badges de descuento
-  - Paginación
+**Footer (`footer.liquid`):**
+- Logo y tagline editables
+- Navegación
+- Contacto
+- Iconos de pago nativos de Shopify
+- Links a políticas
 
-- `cart-drawer.liquid` - Carrito lateral con:
-  - Barra de progreso envío gratis
-  - Cambio de cantidad AJAX
-  - Eliminación de productos AJAX
-  - Botón checkout
+**Hero Section:**
+- Título en dos líneas editables
+- Descripción editable
+- Imagen del producto con glow effect
+- Trust indicators
+- CTAs duales
 
-- `header.liquid` - Header con:
-  - Logo y navegación
-  - Contador de carrito
-  - Botón para abrir cart-drawer
-  - Menú móvil
+**Concept, Variants, Context, FAQ, Testimonials, Reassurance:**
+- Todas las secciones con bloques editables
+- Estilos inline usando settings de Shopify
+- Colores de tema consistentes
 
-### Características Clave
+**Product Page:**
+- Galería con thumbnails
+- Selector de variantes AJAX
+- Carrito AJAX funcional
+- Iconos de pago nativos
+- Trust indicators y beneficios
 
-✅ **Carrito AJAX funcional** - Sin recargas de página
-✅ **Métodos de pago nativos** - `{{ shop.enabled_payment_types }}`
-✅ **Productos dinámicos** - `{{ product }}`, `{{ collection }}`
-✅ **100% editable** desde Theme Editor
-✅ **Dark mode premium** con efectos glow
-✅ **Responsive** - Móvil, tablet, escritorio
+**Collection Page:**
+- Grid responsive de productos
+- Cards con hover effects
+- Precios dinámicos
+- Badges de descuento
+
+**Cart Drawer:**
+- Carrito lateral funcional
+- Cantidad AJAX
+- Eliminar AJAX
+- Botón checkout
+
+### Colores del Tema (settings)
+- Background: `#0a0a0a`
+- Card: `#0f0f0f`
+- Foreground: `#ebebeb`
+- Muted: `#808080`
+- Primary (púrpura): `#9966cc`
+- Secondary (azul): `#33aaff`
+- Tertiary (ámbar): `#f5a623`
 
 ---
 
@@ -66,28 +75,19 @@ LUMEI es una tienda Shopify premium para lámparas LED de cristal de amatista. T
 **URL**: https://lightvibe.preview.emergentagent.com/lumei-theme.zip
 
 **Contenido:**
-- 53 archivos
-- ~400KB comprimido
+- 63 archivos
+- ~397KB comprimido
 - Imágenes incluidas en `/assets`
 
 ---
 
 ## 📋 Post-Instalación
 
-1. **Subir tema** a Shopify Admin → Temas → Cargar ZIP
-2. **Crear productos** con variantes (CALMA, ENFOQUE, PROFUNDO)
-3. **Crear páginas** (FAQ, Concepto, Políticas)
-4. **Configurar menú** de navegación
-5. **Personalizar** desde Theme Editor
-
----
-
-## 🔮 Pendiente / Backlog
-
-- [ ] Sistema de reviews real (integración con app)
-- [ ] Galería con zoom
-- [ ] Multi-idioma
-- [ ] Newsletter integration
+1. Subir ZIP a Shopify
+2. Crear productos con variantes
+3. Crear páginas (FAQ, Concepto)
+4. Configurar menú de navegación
+5. Personalizar desde Theme Editor
 
 ---
 
