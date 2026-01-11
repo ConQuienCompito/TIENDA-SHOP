@@ -1,0 +1,415 @@
+<footer class="footer">
+  <!-- Trust Bar -->
+  <div class="footer__trust-bar">
+    <div class="page-width">
+      <div class="footer__trust-inner">
+        <div class="footer__trust-text">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>{{ section.settings.trust_text }}</span>
+        </div>
+        <div class="footer__payment-icons">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'footer__payment-icon' }}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Footer -->
+  <div class="footer__main">
+    <div class="page-width">
+      <div class="footer__grid">
+        <!-- Brand -->
+        <div class="footer__brand">
+          <a href="{{ routes.root_url }}" class="footer__logo">{{ section.settings.logo_text }}</a>
+          <p class="footer__tagline">{{ section.settings.tagline }}</p>
+          <div class="footer__guarantee">
+            <p>{{ section.settings.guarantee_text }}</p>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="footer__section">
+          <h4 class="footer__heading">{{ section.settings.nav_heading }}</h4>
+          <nav class="footer__links">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'nav_link' -%}
+                <a href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</a>
+              {%- endif -%}
+            {%- endfor -%}
+          </nav>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer__section">
+          <h4 class="footer__heading">{{ section.settings.contact_heading }}</h4>
+          <nav class="footer__links">
+            <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+            <span>{{ section.settings.location }}</span>
+          </nav>
+          <div class="footer__support">
+            <h4 class="footer__heading">{{ section.settings.support_heading }}</h4>
+            <p>{{ section.settings.support_text }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom -->
+      <div class="footer__bottom">
+        <p class="footer__copyright">© {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.copyright_text }}</p>
+        <nav class="footer__legal">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'legal_link' -%}
+              <a href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+.footer {
+  background: var(--card);
+  border-top: 1px solid var(--border);
+}
+
+.footer__trust-bar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px 0;
+}
+
+.footer__trust-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .footer__trust-inner {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.footer__trust-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.footer__trust-text svg {
+  opacity: 0.6;
+}
+
+.footer__payment-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.4;
+}
+
+.footer__payment-icon {
+  height: 20px;
+  width: auto;
+}
+
+.footer__main {
+  padding: 64px 0;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+  .footer__grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+.footer__logo {
+  display: inline-block;
+  font-size: 1.75rem;
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: var(--foreground);
+  margin-bottom: 16px;
+}
+
+.footer__tagline {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+  max-width: 350px;
+  margin-bottom: 24px;
+}
+
+.footer__guarantee {
+  background: rgba(10, 10, 10, 0.3);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  max-width: 350px;
+}
+
+.footer__guarantee p {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.footer__heading {
+  font-size: 0.75rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  margin-bottom: 16px;
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer__links a,
+.footer__links span {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  transition: color 0.2s;
+}
+
+.footer__links a:hover {
+  color: var(--foreground);
+}
+
+.footer__support {
+  margin-top: 24px;
+}
+
+.footer__support p {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+}
+
+.footer__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+@media (min-width: 768px) {
+  .footer__bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.footer__copyright {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.footer__legal a {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  transition: color 0.2s;
+}
+
+.footer__legal a:hover {
+  color: var(--foreground);
+}
+</style>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Texto del logo",
+      "default": "LUMEI"
+    },
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Identidad a través de la luz. Cada LUMEI es único, como quien lo elige."
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Texto de garantías",
+      "default": "30 días para devoluciones · Garantía de 2 años · Envío gratuito en península"
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Texto de confianza",
+      "default": "Pago seguro · Datos encriptados"
+    },
+    {
+      "type": "header",
+      "content": "Navegación"
+    },
+    {
+      "type": "text",
+      "id": "nav_heading",
+      "label": "Título navegación",
+      "default": "Navegación"
+    },
+    {
+      "type": "header",
+      "content": "Contacto"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Título contacto",
+      "default": "Contacto"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "hola@lumei.es"
+    },
+    {
+      "type": "text",
+      "id": "location",
+      "label": "Ubicación",
+      "default": "España"
+    },
+    {
+      "type": "header",
+      "content": "Soporte"
+    },
+    {
+      "type": "text",
+      "id": "support_heading",
+      "label": "Título soporte",
+      "default": "Soporte"
+    },
+    {
+      "type": "text",
+      "id": "support_text",
+      "label": "Texto soporte",
+      "default": "Respondemos en menos de 24h laborables"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Texto copyright",
+      "default": "Todos los derechos reservados."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Enlace navegación",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Inicio"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        }
+      ]
+    },
+    {
+      "type": "legal_link",
+      "name": "Enlace legal",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Política de Privacidad"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        {
+          "type": "nav_link",
+          "settings": {
+            "text": "Inicio"
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "text": "Colección"
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "text": "Concepto"
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "text": "FAQ"
+          }
+        },
+        {
+          "type": "legal_link",
+          "settings": {
+            "text": "Política de Privacidad"
+          }
+        },
+        {
+          "type": "legal_link",
+          "settings": {
+            "text": "Términos y Condiciones"
+          }
+        },
+        {
+          "type": "legal_link",
+          "settings": {
+            "text": "Política de Devoluciones"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

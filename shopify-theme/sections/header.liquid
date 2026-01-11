@@ -4,13 +4,19 @@
       <div class="header__container">
         <a href="/" class="header__logo">{{ section.settings.logo_text | default: "LUMEI" }}</a>
         
-        <nav class="header__nav">
-          <ul class="header__nav-list">
-            <li><a href="/" class="header__nav-link">Inicio</a></li>
-            <li><a href="/collections/all" class="header__nav-link">Colección</a></li>
-            <li><a href="/pages/concepto" class="header__nav-link">Concepto</a></li>
-            <li><a href="/pages/faq" class="header__nav-link">FAQ</a></li>
-          </ul>
+        <nav class="header__nav" role="navigation" aria-label="Navegación principal">
+          {%- if section.settings.menu != blank -%}
+            <ul class="header__nav-list">
+              {%- for link in linklists[section.settings.menu].links -%}
+                <li><a href="{{ link.url }}" class="header__nav-link{% if link.active %} is-active{% endif %}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- else -%}
+            <ul class="header__nav-list">
+              <li><a href="/" class="header__nav-link">Inicio</a></li>
+              <li><a href="/collections/all" class="header__nav-link">Colección</a></li>
+            </ul>
+          {%- endif -%}
         </nav>
         
         <div class="header__actions">
@@ -32,11 +38,15 @@
       <button class="header__mobile-close" id="menu-close" type="button">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
-      <nav class="header__mobile-nav">
-        <a href="/" class="header__mobile-link">Inicio</a>
-        <a href="/collections/all" class="header__mobile-link">Colección</a>
-        <a href="/pages/concepto" class="header__mobile-link">Concepto</a>
-        <a href="/pages/faq" class="header__mobile-link">FAQ</a>
+      <nav class="header__mobile-nav" role="navigation" aria-label="Navegación móvil">
+        {%- if section.settings.menu != blank -%}
+          {%- for link in linklists[section.settings.menu].links -%}
+            <a href="{{ link.url }}" class="header__mobile-link{% if link.active %} is-active{% endif %}">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          <a href="/" class="header__mobile-link">Inicio</a>
+          <a href="/collections/all" class="header__mobile-link">Colección</a>
+        {%- endif -%}
       </nav>
     </div>
   </div>
@@ -49,8 +59,9 @@
 .header__logo { font-size: 1.75rem; font-family: var(--font-display); font-weight: 300; letter-spacing: 0.15em; color: var(--color-text); }
 .header__nav { display: none; }
 .header__nav-list { display: flex; align-items: center; gap: 32px; list-style: none; }
-.header__nav-link { font-size: 0.9375rem; font-weight: 400; color: var(--color-text-soft); transition: color 0.15s; }
-.header__nav-link:hover { color: var(--color-text); }
+.header__nav-link { font-size: 0.9375rem; font-weight: 400; color: var(--color-text-soft); transition: color var(--transition-base); }
+.header__nav-link:hover, .header__nav-link:focus { color: var(--color-text); outline: none; }
+.header__nav-link.is-active { color: var(--color-primary); }
 .header__actions { display: flex; align-items: center; gap: 8px; }
 .header__cart { position: relative; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: none; color: var(--color-text); cursor: pointer; }
 .header__cart-count { position: absolute; top: 4px; right: 4px; min-width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; background: var(--color-primary); color: white; font-size: 0.6875rem; font-weight: 600; border-radius: 50%; }
@@ -60,7 +71,9 @@
 .header__mobile-menu-inner { padding: 24px; display: flex; flex-direction: column; height: 100%; }
 .header__mobile-close { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: none; color: var(--color-text); margin-left: auto; margin-bottom: 24px; cursor: pointer; }
 .header__mobile-nav { display: flex; flex-direction: column; gap: 4px; }
-.header__mobile-link { display: block; padding: 14px 0; font-size: 1.125rem; font-weight: 400; color: var(--color-text); border-bottom: 1px solid var(--color-border-light); }
+.header__mobile-link { display: block; padding: 14px 0; font-size: 1.125rem; font-weight: 400; color: var(--color-text); border-bottom: 1px solid var(--color-border-light); transition: color var(--transition-base); }
+.header__mobile-link:hover, .header__mobile-link:focus { color: var(--color-primary); outline: none; }
+.header__mobile-link.is-active { color: var(--color-primary); }
 @media (min-width: 1024px) { .header__nav { display: block; } .header__menu-btn { display: none; } }
 </style>
 

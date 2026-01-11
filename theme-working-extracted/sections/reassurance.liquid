@@ -1,0 +1,159 @@
+<section class="section section--sm reassurance">
+  <div class="page-width">
+    <div class="reassurance__grid">
+      {%- for block in section.blocks -%}
+        <div class="reassurance__item" {{ block.shopify_attributes }}>
+          {%- case block.settings.icon -%}
+            {%- when 'truck' -%}
+              <svg class="reassurance__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="1" y="3" width="15" height="13"/>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+            {%- when 'return' -%}
+              <svg class="reassurance__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polyline points="23 4 23 10 17 10"/>
+                <polyline points="1 20 1 14 7 14"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+              </svg>
+            {%- when 'shield' -%}
+              <svg class="reassurance__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            {%- when 'package' -%}
+              <svg class="reassurance__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                <line x1="12" y1="22.08" x2="12" y2="12"/>
+              </svg>
+          {%- endcase -%}
+          <p class="reassurance__title">{{ block.settings.title }}</p>
+          <p class="reassurance__text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.reassurance {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.reassurance__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .reassurance__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+  }
+}
+
+.reassurance__item {
+  text-align: center;
+}
+
+.reassurance__icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 auto 12px;
+  color: var(--muted-foreground);
+}
+
+.reassurance__title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 4px;
+}
+
+.reassurance__text {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+</style>
+
+{% schema %}
+{
+  "name": "Garantías",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Elemento",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "truck", "label": "Envío" },
+            { "value": "return", "label": "Devolución" },
+            { "value": "shield", "label": "Seguridad" },
+            { "value": "package", "label": "Garantía" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Envío gratuito"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "España peninsular 24-48h"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Garantías",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Envío gratuito",
+            "text": "España peninsular 24-48h"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "return",
+            "title": "30 días",
+            "text": "Devolución sin preguntas"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "Pago seguro",
+            "text": "Datos encriptados"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "package",
+            "title": "Garantía 2 años",
+            "text": "Tranquilidad total"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

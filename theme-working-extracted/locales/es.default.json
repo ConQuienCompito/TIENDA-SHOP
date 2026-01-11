@@ -1,0 +1,103 @@
+{
+  "general": {
+    "password_page": {
+      "login_form_heading": "Introduce la contraseña de la tienda:",
+      "login_password_button": "Entrar usando contraseña",
+      "login_form_password_label": "Contraseña",
+      "login_form_password_placeholder": "Tu contraseña",
+      "login_form_error": "Contraseña incorrecta",
+      "login_form_submit": "Entrar"
+    },
+    "social": {
+      "alt_text": {
+        "share_on_facebook": "Compartir en Facebook",
+        "share_on_twitter": "Compartir en Twitter",
+        "share_on_pinterest": "Pinear en Pinterest"
+      }
+    },
+    "accessibility": {
+      "skip_to_content": "Saltar al contenido",
+      "close": "Cerrar"
+    },
+    "meta": {
+      "tags": "Etiquetado \"{{ tags }}\"",
+      "page": "Página {{ page }}"
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "current_page": "Página {{ current }} de {{ total }}"
+    }
+  },
+  "blogs": {
+    "article": {
+      "author_on_date": "{{ author }} el {{ date }}",
+      "read_more": "Leer más"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Carrito",
+      "remove": "Eliminar",
+      "note": "Instrucciones especiales",
+      "subtotal": "Subtotal",
+      "taxes_and_shipping_at_checkout": "Impuestos y gastos de envío se calculan en el checkout",
+      "taxes_and_shipping_policy_at_checkout_html": "Impuestos incluidos. <a href=\"{{ link }}\">Gastos de envío</a> calculados en el checkout.",
+      "update": "Actualizar carrito",
+      "checkout": "Finalizar compra",
+      "empty": "Tu carrito está vacío",
+      "continue_shopping": "Seguir comprando"
+    }
+  },
+  "collections": {
+    "general": {
+      "no_matches": "Lo sentimos, no hay productos que coincidan con tu búsqueda.",
+      "items_with_count": {
+        "one": "{{ count }} producto",
+        "other": "{{ count }} productos"
+      }
+    },
+    "sorting": {
+      "title": "Ordenar por"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Añadir al carrito",
+      "sold_out": "Agotado",
+      "unavailable": "No disponible",
+      "quantity": "Cantidad",
+      "description": "Descripción",
+      "include_taxes": "Impuestos incluidos",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Gastos de envío</a> calculados en el checkout."
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Mi cuenta",
+      "details": "Detalles de la cuenta",
+      "view_addresses": "Ver direcciones",
+      "return": "Volver a detalles de la cuenta"
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgot_password": "¿Olvidaste tu contraseña?",
+      "sign_in": "Iniciar sesión",
+      "guest_title": "Continuar como invitado",
+      "guest_continue": "Continuar"
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "first_name": "Nombre",
+      "last_name": "Apellidos",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Crear"
+    }
+  },
+  "date_formats": {
+    "month_day_year": "%d %B %Y"
+  }
+}

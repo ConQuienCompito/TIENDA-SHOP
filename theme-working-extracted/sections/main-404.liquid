@@ -1,0 +1,24 @@
+<section class="page-404">
+  <div class="page-width">
+    <div class="page-404__content">
+      <h1>404</h1>
+      <h2>Página no encontrada</h2>
+      <p>La página que buscas no existe o ha sido movida.</p>
+      <a href="{{ routes.root_url }}" class="btn btn--primary btn--large">Volver al inicio</a>
+    </div>
+  </div>
+</section>
+
+<style>
+.page-404 { min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 100px 20px; }
+.page-404__content h1 { font-size: 8rem; font-weight: 200; color: var(--color-primary); line-height: 1; margin-bottom: 16px; }
+.page-404__content h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 16px; font-family: var(--font-main); }
+.page-404__content p { color: var(--color-text-muted); margin-bottom: 32px; }
+</style>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": []
+}
+{% endschema %}

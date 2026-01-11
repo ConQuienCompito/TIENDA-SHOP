@@ -1,19 +1,33 @@
 <section class="page-content">
   <div class="page-width page-width--narrow">
-    <h1 class="page-content__title">{{ page.title }}</h1>
+    {%- if section.settings.show_title -%}
+      <h1 class="page-content__title page-content__title--{{ section.settings.title_alignment }}">{{ page.title }}</h1>
+    {%- endif -%}
     <div class="page-content__body">{{ page.content }}</div>
   </div>
 </section>
 
 <style>
 .page-content { padding: 100px 0 80px; }
-.page-content__title { font-size: 2.5rem; font-weight: 300; margin-bottom: 32px; text-align: center; }
+.page-content__title { font-size: 2.5rem; font-weight: 300; margin-bottom: 32px; font-family: var(--font-display); }
+.page-content__title--left { text-align: left; }
+.page-content__title--center { text-align: center; }
+.page-content__title--right { text-align: right; }
+@media (min-width: 768px) { .page-content__title { font-size: 3rem; } }
 .page-content__body { font-size: 1rem; line-height: 1.8; color: var(--color-text-soft); }
-.page-content__body h2 { font-size: 1.5rem; margin: 32px 0 16px; color: var(--color-text); }
+.page-content__body h2 { font-size: 1.75rem; margin: 32px 0 16px; color: var(--color-text); font-family: var(--font-display); font-weight: 300; }
+.page-content__body h3 { font-size: 1.5rem; margin: 24px 0 12px; color: var(--color-text); font-family: var(--font-display); font-weight: 300; }
+.page-content__body h4 { font-size: 1.25rem; margin: 20px 0 10px; color: var(--color-text); font-family: var(--font-main); font-weight: 500; }
 .page-content__body p { margin-bottom: 16px; }
 .page-content__body ul, .page-content__body ol { margin: 16px 0; padding-left: 24px; }
 .page-content__body li { margin-bottom: 8px; }
-.page-content__body a { color: var(--color-primary); text-decoration: underline; }
+.page-content__body a { color: var(--color-primary); text-decoration: underline; transition: color var(--transition-base); }
+.page-content__body a:hover, .page-content__body a:focus { color: var(--color-primary-dark); outline: none; }
+.page-content__body img { max-width: 100%; height: auto; border-radius: var(--radius-md); margin: 24px 0; }
+.page-content__body blockquote { border-left: 4px solid var(--color-primary); padding-left: 24px; margin: 24px 0; color: var(--color-text-soft); font-style: italic; }
+.page-content__body table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+.page-content__body table th, .page-content__body table td { padding: 12px; border: 1px solid var(--color-border); text-align: left; }
+.page-content__body table th { background: var(--color-bg-card); font-weight: 600; color: var(--color-text); }
 </style>
 
 {% schema %}

@@ -1,0 +1,113 @@
+<section id="concepto" class="section concept">
+  <div class="concept__glow"></div>
+  
+  <div class="page-width concept__inner">
+    <p class="concept__label">{{ section.settings.label }}</p>
+    <h2 class="concept__title">
+      {{ section.settings.title_line1 }}
+      <br>
+      <span class="text-muted">{{ section.settings.title_line2 }}</span>
+    </h2>
+    <p class="concept__text">{{ section.settings.description }}</p>
+  </div>
+</section>
+
+<style>
+.concept {
+  position: relative;
+  overflow: hidden;
+}
+
+.concept__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(147, 112, 219, 0.1), transparent 70%);
+  filter: blur(80px);
+  opacity: 0.2;
+}
+
+.concept__inner {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  text-align: center;
+}
+
+.concept__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 32px;
+}
+
+.concept__title {
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  .concept__title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .concept__title {
+    font-size: 3rem;
+  }
+}
+
+.concept__text {
+  font-size: 1.125rem;
+  color: var(--muted-foreground);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Concepto",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Etiqueta",
+      "default": "El concepto"
+    },
+    {
+      "type": "text",
+      "id": "title_line1",
+      "label": "Título línea 1",
+      "default": "No todas las luces"
+    },
+    {
+      "type": "text",
+      "id": "title_line2",
+      "label": "Título línea 2",
+      "default": "se sienten igual."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "Hay quienes buscan calma en el púrpura. Hay quienes piensan mejor en azul. Hay quienes prefieren la calidez del ámbar. Tu elección de luz no es decoración, es una declaración silenciosa de quién eres."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Concepto"
+    }
+  ]
+}
+{% endschema %}

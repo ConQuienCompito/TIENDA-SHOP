@@ -1,0 +1,49 @@
+{
+  "current": {
+    "color_primary": "#9370DB",
+    "color_secondary": "#33AAFF",
+    "color_background": "#0A0A0A",
+    "color_foreground": "#FAFAFA",
+    "logo_width": 150,
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo_text": "LUMEI"
+        },
+        "blocks": {
+          "nav_1": {
+            "type": "nav_link",
+            "settings": {
+              "text": "Colección",
+              "link": "#variantes"
+            }
+          },
+          "nav_2": {
+            "type": "nav_link",
+            "settings": {
+              "text": "Concepto",
+              "link": "#concepto"
+            }
+          },
+          "nav_3": {
+            "type": "nav_link",
+            "settings": {
+              "text": "FAQ",
+              "link": "#faq"
+            }
+          }
+        },
+        "block_order": ["nav_1", "nav_2", "nav_3"]
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      }
+    }
+  }
+}

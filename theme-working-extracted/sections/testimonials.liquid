@@ -1,0 +1,312 @@
+<section class="section testimonials">
+  <div class="testimonials__glow"></div>
+  
+  <div class="page-width">
+    <div class="testimonials__header">
+      <p class="testimonials__label">{{ section.settings.label }}</p>
+      <h2 class="testimonials__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="testimonials__carousel">
+      {%- for block in section.blocks -%}
+        <div class="testimonial-card{% if forloop.first %} testimonial-card--active{% endif %}" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          <svg class="testimonial-card__quote" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" opacity="0.1">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+          </svg>
+          
+          <p class="testimonial-card__text">"{{ block.settings.quote }}"</p>
+          
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__dot" style="background: {{ block.settings.color }};"></div>
+            <span>{{ block.settings.author }} — {{ block.settings.variant }}</span>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.blocks.size > 1 -%}
+      <div class="testimonials__nav">
+        <button class="testimonials__btn" type="button" aria-label="Anterior" onclick="changeTestimonial(-1)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        
+        <div class="testimonials__dots">
+          {%- for block in section.blocks -%}
+            <button class="testimonials__dot{% if forloop.first %} testimonials__dot--active{% endif %}" type="button" data-index="{{ forloop.index0 }}" aria-label="Testimonio {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
+        
+        <button class="testimonials__btn" type="button" aria-label="Siguiente" onclick="changeTestimonial(1)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+.testimonials {
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(147, 112, 219, 0.1), transparent 70%);
+  filter: blur(80px);
+  transition: background 0.7s;
+}
+
+.testimonials__header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.testimonials__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 16px;
+}
+
+.testimonials__title {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+@media (min-width: 768px) {
+  .testimonials__title {
+    font-size: 2.5rem;
+  }
+}
+
+.testimonials__carousel {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.testimonial-card {
+  display: none;
+  position: relative;
+  background: rgba(15, 15, 15, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  padding: 32px;
+  text-align: center;
+}
+
+.testimonial-card--active {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .testimonial-card {
+    padding: 48px;
+  }
+}
+
+.testimonial-card__quote {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  color: var(--accent);
+}
+
+.testimonial-card__text {
+  font-size: 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  .testimonial-card__text {
+    font-size: 1.5rem;
+  }
+}
+
+.testimonial-card__author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.testimonial-card__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.testimonials__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.testimonials__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--foreground);
+  transition: background 0.2s;
+}
+
+.testimonials__btn:hover {
+  background: var(--card);
+}
+
+.testimonials__dots {
+  display: flex;
+  gap: 8px;
+}
+
+.testimonials__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s;
+}
+
+.testimonials__dot--active {
+  width: 24px;
+  background: var(--foreground);
+}
+</style>
+
+<script>
+(function() {
+  var currentIndex = 0;
+  var cards = document.querySelectorAll('.testimonial-card');
+  var dots = document.querySelectorAll('.testimonials__dot');
+  var total = cards.length;
+
+  window.changeTestimonial = function(direction) {
+    cards[currentIndex].classList.remove('testimonial-card--active');
+    dots[currentIndex].classList.remove('testimonials__dot--active');
+    
+    currentIndex = (currentIndex + direction + total) % total;
+    
+    cards[currentIndex].classList.add('testimonial-card--active');
+    dots[currentIndex].classList.add('testimonials__dot--active');
+  };
+
+  dots.forEach(function(dot, index) {
+    dot.addEventListener('click', function() {
+      cards[currentIndex].classList.remove('testimonial-card--active');
+      dots[currentIndex].classList.remove('testimonials__dot--active');
+      
+      currentIndex = index;
+      
+      cards[currentIndex].classList.add('testimonial-card--active');
+      dots[currentIndex].classList.add('testimonials__dot--active');
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Testimonios",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Etiqueta",
+      "default": "Lo que dicen"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Conexiones reales."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonio",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Cita",
+          "default": "No sabía que necesitaba esto hasta que lo tuve. Ahora no concibo mi escritorio sin ella."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Autor",
+          "default": "María L."
+        },
+        {
+          "type": "text",
+          "id": "variant",
+          "label": "Variante",
+          "default": "CALMA"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color de la variante",
+          "default": "#9370DB"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonios",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "No sabía que necesitaba esto hasta que lo tuve. Ahora no concibo mi escritorio sin ella.",
+            "author": "María L.",
+            "variant": "CALMA",
+            "color": "#9370DB"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Elegí ENFOQUE sin pensarlo. Era exactamente lo que buscaba, aunque no sabía cómo describirlo.",
+            "author": "Carlos R.",
+            "variant": "ENFOQUE",
+            "color": "#33AAFF"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Mis amigos siempre comentan la luz. No es solo decoración, es parte de quién soy.",
+            "author": "Ana P.",
+            "variant": "PROFUNDO",
+            "color": "#F5A623"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

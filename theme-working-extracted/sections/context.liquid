@@ -1,0 +1,195 @@
+<section class="section section--bg context">
+  <div class="page-width">
+    <div class="context__header">
+      <p class="context__label">{{ section.settings.label }}</p>
+      <h2 class="context__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="context__grid">
+      {%- for block in section.blocks -%}
+        <div class="context__card" {{ block.shopify_attributes }}>
+          <div class="context__card-image">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title }}" loading="lazy">
+            {%- else -%}
+              <img src="https://images.pexels.com/photos/2082092/pexels-photo-2082092.jpeg?auto=compress&cs=tinysrgb&w=800" alt="{{ block.settings.title }}" loading="lazy">
+            {%- endif -%}
+            <div class="context__card-overlay"></div>
+          </div>
+          <div class="context__card-content">
+            <h3 class="context__card-title">{{ block.settings.title }}</h3>
+            <p class="context__card-text">{{ block.settings.text }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.context__header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.context__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 16px;
+}
+
+.context__title {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+@media (min-width: 768px) {
+  .context__title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .context__title {
+    font-size: 3rem;
+  }
+}
+
+.context__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .context__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+}
+
+.context__card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+}
+
+.context__card-image {
+  position: absolute;
+  inset: 0;
+}
+
+.context__card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s;
+}
+
+.context__card:hover .context__card-image img {
+  transform: scale(1.05);
+}
+
+.context__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.2) 50%, transparent);
+}
+
+.context__card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+}
+
+.context__card-title {
+  font-size: 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+.context__card-text {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+</style>
+
+{% schema %}
+{
+  "name": "Contexto",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Etiqueta",
+      "default": "En tu espacio"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Cómo vive en tu vida."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Tarjeta",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "En tu escritorio"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Donde las ideas toman forma."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contexto",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "En tu escritorio",
+            "text": "Donde las ideas toman forma."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Junto a tu cama",
+            "text": "Donde el día termina y comienza."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "En tu estante",
+            "text": "Donde lo personal se muestra."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

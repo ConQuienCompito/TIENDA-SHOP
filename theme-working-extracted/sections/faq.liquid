@@ -1,0 +1,178 @@
+<section id="faq" class="section section--bg faq">
+  <div class="page-width page-width--narrow">
+    <div class="faq__header">
+      <p class="faq__label">{{ section.settings.label }}</p>
+      <h2 class="faq__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="faq__list">
+      {%- for block in section.blocks -%}
+        <details class="faq__item" {{ block.shopify_attributes }}>
+          <summary class="faq__question">
+            <span>{{ block.settings.question }}</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>{{ block.settings.answer }}</p>
+          </div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.faq__header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.faq__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 16px;
+}
+
+.faq__title {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+@media (min-width: 768px) {
+  .faq__title {
+    font-size: 2.5rem;
+  }
+}
+
+.faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.faq__item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 0 24px;
+  background: transparent;
+  transition: background 0.2s;
+}
+
+.faq__item[open] {
+  background: rgba(10, 10, 10, 0.5);
+}
+
+.faq__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--foreground);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.faq__question svg {
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.faq__item[open] .faq__question svg {
+  transform: rotate(180deg);
+}
+
+.faq__answer {
+  padding-bottom: 20px;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+.faq__answer p {
+  margin: 0;
+}
+</style>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Etiqueta",
+      "default": "Preguntas"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Lo esencial."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Pregunta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "¿Cómo funciona el envío?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Respuesta",
+          "default": "Envío gratuito a toda España peninsular en 24-48h laborables. Baleares, Canarias y Portugal tienen un coste adicional calculado al finalizar la compra."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cómo funciona el envío?",
+            "answer": "Envío gratuito a toda España peninsular en 24-48h laborables. Baleares, Canarias y Portugal tienen un coste adicional calculado al finalizar la compra."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué fuente de alimentación necesita?",
+            "answer": "LUMEI funciona mediante conexión USB-C. Incluye un cable de 2 metros. Puedes conectarla a cualquier puerto USB, adaptador de corriente o powerbank."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Puedo devolver el producto?",
+            "answer": "Sí, tienes 30 días desde la recepción para devolver tu LUMEI sin usar y en su embalaje original. Contacta con nosotros para iniciar el proceso."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cada pieza es única?",
+            "answer": "Sí. Cada LUMEI está hecha con cristales de amatista naturales, por lo que cada pieza tiene variaciones únicas en forma y tonalidad."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

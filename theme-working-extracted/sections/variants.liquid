@@ -1,0 +1,345 @@
+<section id="variantes" class="section variants">
+  <div class="variants__glow"></div>
+  
+  <div class="page-width">
+    <div class="variants__header">
+      <p class="variants__label">{{ section.settings.label }}</p>
+      <h2 class="variants__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="variants__grid">
+      <!-- Product Preview -->
+      <div class="variants__preview">
+        <div class="variants__preview-glow" id="variant-glow"></div>
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 600 }}" alt="LUMEI Lamp" class="variants__preview-image">
+        {%- else -%}
+          <img src="{{ 'lumei-product.png' | asset_url }}" alt="LUMEI Lamp" class="variants__preview-image">
+        {%- endif -%}
+      </div>
+
+      <!-- Variant Cards -->
+      <div class="variants__list">
+        {%- for block in section.blocks -%}
+          <a href="{{ block.settings.link }}" class="variant-card{% if forloop.first %} variant-card--active{% endif %}" {{ block.shopify_attributes }}>
+            <div class="variant-card__indicator" style="background: {{ block.settings.color }};"></div>
+            <div class="variant-card__content">
+              <h3 class="variant-card__name" style="color: {{ block.settings.color }};">{{ block.settings.name }}</h3>
+              <p class="variant-card__desc">{{ block.settings.description }}</p>
+              <p class="variant-card__identity">{{ block.settings.identity }}</p>
+            </div>
+            <svg class="variant-card__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        {%- endfor -%}
+
+        <div class="variants__cta">
+          <a href="{{ section.settings.button_link }}" class="btn btn--primary btn--lg">
+            {{ section.settings.button_text }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <div class="variants__guarantee">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>{{ section.settings.guarantee_text }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.variants {
+  position: relative;
+  overflow: hidden;
+}
+
+.variants__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(147, 112, 219, 0.15), transparent 60%);
+  filter: blur(100px);
+  transition: background 1s;
+}
+
+.variants__header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.variants__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 16px;
+}
+
+.variants__title {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+@media (min-width: 768px) {
+  .variants__title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .variants__title {
+    font-size: 3rem;
+  }
+}
+
+.variants__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .variants__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.variants__preview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.variants__preview-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(147, 112, 219, 0.4), transparent 60%);
+  filter: blur(50px);
+  transform: scale(1.3);
+  transition: background 0.7s;
+}
+
+.variants__preview-image {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 350px;
+  transition: all 0.5s;
+}
+
+.variants__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.variant-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.variant-card:hover,
+.variant-card--active {
+  background: var(--card);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.variant-card__indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+  transition: transform 0.3s;
+}
+
+.variant-card:hover .variant-card__indicator {
+  transform: scale(1.1);
+}
+
+.variant-card__content {
+  flex: 1;
+}
+
+.variant-card__name {
+  font-size: 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 300;
+  margin-bottom: 8px;
+  transition: color 0.3s;
+}
+
+.variant-card__desc {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  margin-bottom: 8px;
+}
+
+.variant-card__identity {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+}
+
+.variant-card__arrow {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.3s;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+.variant-card--active .variant-card__arrow,
+.variant-card:hover .variant-card__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.variants__cta {
+  margin-top: 24px;
+}
+
+.variants__guarantee {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.variants__guarantee svg {
+  opacity: 0.6;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Variantes",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Etiqueta",
+      "default": "Colección"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Elige tu identidad."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen del producto"
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto del botón",
+      "default": "Ver colección"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Texto de garantía",
+      "default": "Pago seguro · Devolución en 30 días"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "variant",
+      "name": "Variante",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre",
+          "default": "CALMA"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Para quienes buscan silencio en la luz."
+        },
+        {
+          "type": "text",
+          "id": "identity",
+          "label": "Identidad",
+          "default": "Introspectivo. Sereno. Profundo."
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#9370DB"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Variantes",
+      "blocks": [
+        {
+          "type": "variant",
+          "settings": {
+            "name": "CALMA",
+            "description": "Para quienes buscan silencio en la luz.",
+            "identity": "Introspectivo. Sereno. Profundo.",
+            "color": "#9370DB"
+          }
+        },
+        {
+          "type": "variant",
+          "settings": {
+            "name": "ENFOQUE",
+            "description": "Para quienes piensan mejor en azul.",
+            "identity": "Claro. Preciso. Decidido.",
+            "color": "#33AAFF"
+          }
+        },
+        {
+          "type": "variant",
+          "settings": {
+            "name": "PROFUNDO",
+            "description": "Para quienes prefieren la calidez.",
+            "identity": "Cálido. Presente. Cercano.",
+            "color": "#F5A623"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

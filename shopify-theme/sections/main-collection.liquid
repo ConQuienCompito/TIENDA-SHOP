@@ -3,82 +3,116 @@
     <header class="collection-page__header">
       <h1>{{ collection.title | default: 'Colección LUMEI' }}</h1>
       {%- if collection.description != blank -%}
-        <p>{{ collection.description }}</p>
+        <div class="collection-page__description">{{ collection.description }}</div>
       {%- else -%}
         <p>Cada pieza de cristal de amatista es única, como quien la elige.</p>
       {%- endif -%}
     </header>
     
-    {%- if collection.products.size > 0 -%}
-      <div class="collection-page__grid">
-        {%- for product in collection.products -%}
-          <a href="{{ product.url }}" class="product-card">
-            <div class="product-card__image">
-              {%- if product.featured_image -%}
-                <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title | escape }}" loading="lazy">
-              {%- else -%}
-                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-              {%- endif -%}
-              <div class="product-card__glow"></div>
-              {%- if product.compare_at_price > product.price -%}
-                {%- assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
-                <span class="product-card__badge">-{{ discount }}%</span>
-              {%- endif -%}
-            </div>
-            <div class="product-card__content">
-              <p class="product-card__brand">LUMEI</p>
-              <h3 class="product-card__title">{{ product.title }}</h3>
-              <div class="product-card__price">
-                {%- if product.compare_at_price > product.price -%}
-                  <span class="product-card__price-compare">{{ product.compare_at_price | money }}</span>
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {%- if collection.products.size > 0 -%}
+        <div class="collection-page__grid collection-page__grid--columns-{{ section.settings.grid_columns }}">
+          {%- for product in collection.products -%}
+            <a href="{{ product.url }}" class="product-card">
+              <div class="product-card__image">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title | escape }}" loading="lazy">
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
                 {%- endif -%}
-                <span class="product-card__price-current">{{ product.price | money }}</span>
+                <div class="product-card__glow"></div>
+                {%- if product.compare_at_price > product.price -%}
+                  {%- assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+                  <span class="product-card__badge">-{{ discount }}%</span>
+                {%- endif -%}
               </div>
-              <span class="product-card__cta">Ver producto →</span>
-            </div>
-          </a>
-        {%- endfor -%}
-      </div>
-    {%- else -%}
-      <div class="collection-page__empty">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-        <h3>No hay productos en esta colección</h3>
-        <p>Pronto añadiremos nuevas piezas únicas.</p>
-        <a href="/" class="btn btn--primary">Volver al inicio</a>
-      </div>
-    {%- endif -%}
+              <div class="product-card__content">
+                <p class="product-card__brand">LUMEI</p>
+                <h3 class="product-card__title">{{ product.title }}</h3>
+                <div class="product-card__price">
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="product-card__price-compare">{{ product.compare_at_price | money }}</span>
+                  {%- endif -%}
+                  <span class="product-card__price-current">{{ product.price | money }}</span>
+                </div>
+                <span class="product-card__cta">Ver producto →</span>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="collection-page__pagination" role="navigation" aria-label="Paginación">
+            <ul class="pagination">
+              {%- if paginate.previous -%}
+                <li><a href="{{ paginate.previous.url }}" class="pagination__link pagination__link--prev" aria-label="Página anterior">← Anterior</a></li>
+              {%- endif -%}
+              
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <li><a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a></li>
+                {%- else -%}
+                  <li><span class="pagination__current" aria-current="page">{{ part.title }}</span></li>
+                {%- endif -%}
+              {%- endfor -%}
+              
+              {%- if paginate.next -%}
+                <li><a href="{{ paginate.next.url }}" class="pagination__link pagination__link--next" aria-label="Página siguiente">Siguiente →</a></li>
+              {%- endif -%}
+            </ul>
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <div class="collection-page__empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <h3>No hay productos en esta colección</h3>
+          <p>Pronto añadiremos nuevas piezas únicas.</p>
+          <a href="/" class="btn btn--primary">Volver al inicio</a>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
   </div>
 </section>
 
 <style>
 .collection-page { padding: 100px 0 80px; }
 .collection-page__header { text-align: center; margin-bottom: 48px; }
-.collection-page__header h1 { font-size: 2.5rem; font-weight: 300; margin-bottom: 16px; }
+.collection-page__header h1 { font-size: 2.5rem; font-weight: 300; margin-bottom: 16px; font-family: var(--font-display); }
 @media (min-width: 768px) { .collection-page__header h1 { font-size: 3rem; } }
-.collection-page__header p { font-size: 1.125rem; color: var(--color-text-soft); max-width: 600px; margin: 0 auto; }
+.collection-page__description { font-size: 1.125rem; color: var(--color-text-soft); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+.collection-page__description p { margin-bottom: 16px; }
 .collection-page__grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
 @media (min-width: 600px) { .collection-page__grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .collection-page__grid { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
-.product-card { display: block; background: var(--color-bg-card); border-radius: 16px; border: 1px solid var(--color-border); overflow: hidden; transition: all 0.3s; }
+@media (min-width: 1024px) { 
+  .collection-page__grid--columns-2 { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .collection-page__grid--columns-3 { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .collection-page__grid--columns-4 { grid-template-columns: repeat(4, 1fr); gap: 32px; }
+}
+.product-card { display: block; background: var(--color-bg-card); border-radius: var(--radius-lg); border: 1px solid var(--color-border); overflow: hidden; transition: all var(--transition-base); }
 .product-card:hover { border-color: var(--color-primary); transform: translateY(-4px); box-shadow: 0 0 40px rgba(153, 102, 204, 0.2); }
+.product-card:focus { outline: 2px solid var(--color-primary); outline-offset: 2px; }
 .product-card__image { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--color-bg-soft); }
-.product-card__image img { width: 100%; height: 100%; object-fit: contain; padding: 24px; transition: transform 0.3s; }
+.product-card__image img { width: 100%; height: 100%; object-fit: contain; padding: 24px; transition: transform var(--transition-base); }
 .product-card:hover .product-card__image img { transform: scale(1.05); }
-.product-card__glow { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(153, 102, 204, 0.2), transparent 60%); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.product-card__glow { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(153, 102, 204, 0.2), transparent 60%); opacity: 0; transition: opacity var(--transition-base); pointer-events: none; }
 .product-card:hover .product-card__glow { opacity: 1; }
-.product-card__badge { position: absolute; top: 12px; left: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 6px 10px; border-radius: 6px; }
+.product-card__badge { position: absolute; top: 12px; left: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 6px 10px; border-radius: var(--radius-sm); }
 .product-card__content { padding: 20px; }
 .product-card__brand { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 4px; }
-.product-card__title { font-size: 1.125rem; font-weight: 400; margin-bottom: 12px; font-family: var(--font-display); }
+.product-card__title { font-size: 1.125rem; font-weight: 400; margin-bottom: 12px; font-family: var(--font-display); color: var(--color-text); }
 .product-card__price { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
-.product-card__price-current { font-size: 1.25rem; font-weight: 300; font-family: var(--font-display); }
+.product-card__price-current { font-size: 1.25rem; font-weight: 300; font-family: var(--font-display); color: var(--color-text); }
 .product-card__price-compare { font-size: 0.875rem; color: var(--color-text-muted); text-decoration: line-through; }
-.product-card__cta { font-size: 0.875rem; font-weight: 500; color: var(--color-primary); }
+.product-card__cta { font-size: 0.875rem; font-weight: 500; color: var(--color-primary); transition: color var(--transition-base); }
 .product-card:hover .product-card__cta { color: var(--color-text); }
 .collection-page__empty { text-align: center; padding: 80px 20px; display: flex; flex-direction: column; align-items: center; color: var(--color-text-muted); }
-.collection-page__empty svg { margin-bottom: 16px; }
+.collection-page__empty svg { margin-bottom: 16px; color: var(--color-text-muted); }
 .collection-page__empty h3 { font-size: 1.25rem; margin-bottom: 12px; color: var(--color-text); font-family: var(--font-main); }
 .collection-page__empty p { margin-bottom: 24px; }
+.pagination { display: flex; align-items: center; justify-content: center; gap: 8px; list-style: none; margin-top: 48px; flex-wrap: wrap; }
+.pagination__link { display: flex; align-items: center; justify-content: center; min-width: 44px; height: 44px; padding: 0 16px; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); color: var(--color-text); font-size: 0.9375rem; font-weight: 500; transition: all var(--transition-base); text-decoration: none; }
+.pagination__link:hover, .pagination__link:focus { background: var(--color-primary); border-color: var(--color-primary); color: white; outline: none; }
+.pagination__current { display: flex; align-items: center; justify-content: center; min-width: 44px; height: 44px; padding: 0 16px; background: var(--color-primary); border: 1px solid var(--color-primary); border-radius: var(--radius-md); color: white; font-size: 0.9375rem; font-weight: 500; }
 </style>
 
 {% schema %}

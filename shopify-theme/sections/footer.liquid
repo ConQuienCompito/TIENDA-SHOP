@@ -8,11 +8,15 @@
       
       <div class="footer__nav">
         <h4 class="footer__title">Navegación</h4>
-        <nav class="footer__links">
-          <a href="/">Inicio</a>
-          <a href="/collections/all">Colección</a>
-          <a href="/pages/concepto">Concepto</a>
-          <a href="/pages/faq">FAQ</a>
+        <nav class="footer__links" role="navigation" aria-label="Navegación del footer">
+          {%- if section.settings.menu != blank -%}
+            {%- for link in linklists[section.settings.menu].links -%}
+              <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+            {%- endfor -%}
+          {%- else -%}
+            <a href="/">Inicio</a>
+            <a href="/collections/all">Colección</a>
+          {%- endif -%}
         </nav>
       </div>
       

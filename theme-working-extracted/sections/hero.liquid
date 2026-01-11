@@ -1,0 +1,353 @@
+<section class="hero">
+  <div class="glow-container">
+    <div class="glow-purple animate-pulse-glow" style="top: 33%; left: 25%;"></div>
+    <div class="glow-blue animate-pulse-glow" style="bottom: 25%; right: 25%; animation-delay: 0.2s;"></div>
+  </div>
+
+  <div class="page-width hero__inner">
+    <div class="hero__grid">
+      <!-- Text Content -->
+      <div class="hero__content">
+        <p class="hero__label">{{ section.settings.label }}</p>
+        <h1 class="hero__title">
+          {{ section.settings.title_line1 }}
+          <br>
+          <span class="text-gradient">{{ section.settings.title_line2 }}</span>
+        </h1>
+        <p class="hero__description">{{ section.settings.description }}</p>
+        <div class="hero__cta">
+          {%- if section.settings.button_primary_text != blank -%}
+            <a href="{{ section.settings.button_primary_link }}" class="btn btn--primary btn--xl">
+              {{ section.settings.button_primary_text }}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_secondary_text != blank -%}
+            <a href="{{ section.settings.button_secondary_link }}" class="btn btn--outline btn--xl">{{ section.settings.button_secondary_text }}</a>
+          {%- endif -%}
+        </div>
+        <div class="hero__trust">
+          <div class="hero__trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span>{{ section.settings.trust_1 }}</span>
+          </div>
+          <div class="hero__trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            <span>{{ section.settings.trust_2 }}</span>
+          </div>
+          <div class="hero__trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>{{ section.settings.trust_3 }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Image -->
+      <div class="hero__image-wrapper">
+        <div class="hero__image-glow animate-pulse-glow"></div>
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.image.alt | default: 'LUMEI Lamp' }}" class="hero__image animate-float" loading="eager">
+        {%- else -%}
+          <img src="{{ 'lumei-product.png' | asset_url }}" alt="LUMEI Lámpara de Amatista" class="hero__image animate-float" loading="eager">
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="hero__scroll">
+    <span>Scroll</span>
+    <div class="hero__scroll-line"></div>
+  </div>
+</section>
+
+<style>
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 10;
+  padding: 120px 0 80px;
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .hero__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+}
+
+.hero__content {
+  order: 2;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .hero__content {
+    order: 1;
+    text-align: left;
+  }
+}
+
+.hero__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: 24px;
+}
+
+.hero__title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .hero__title {
+    font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__title {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero__title {
+    font-size: 4.5rem;
+  }
+}
+
+.hero__description {
+  font-size: 1.125rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+@media (min-width: 1024px) {
+  .hero__description {
+    margin: 0 0 40px;
+  }
+}
+
+.hero__cta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .hero__cta {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__cta {
+    justify-content: flex-start;
+  }
+}
+
+.hero__trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+@media (min-width: 1024px) {
+  .hero__trust {
+    justify-content: flex-start;
+  }
+}
+
+.hero__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.hero__trust-item svg {
+  opacity: 0.6;
+}
+
+.hero__image-wrapper {
+  order: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .hero__image-wrapper {
+    order: 2;
+  }
+}
+
+.hero__image-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(147, 112, 219, 0.3), transparent 60%);
+  filter: blur(40px);
+  transform: scale(1.2);
+}
+
+.hero__image {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 400px;
+}
+
+@media (min-width: 1024px) {
+  .hero__image {
+    max-width: 500px;
+  }
+}
+
+.hero__scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.5;
+}
+
+.hero__scroll span {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(to bottom, var(--foreground), transparent);
+}
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Etiqueta superior",
+      "default": "Tu luz. Tu elección."
+    },
+    {
+      "type": "text",
+      "id": "title_line1",
+      "label": "Título línea 1",
+      "default": "La luz que eliges"
+    },
+    {
+      "type": "text",
+      "id": "title_line2",
+      "label": "Título línea 2 (con gradiente)",
+      "default": "dice quién eres."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "LUMEI no vende lámparas. LUMEI ofrece identidad a través de la luz."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen del producto"
+    },
+    {
+      "type": "header",
+      "content": "Botón principal"
+    },
+    {
+      "type": "text",
+      "id": "button_primary_text",
+      "label": "Texto del botón",
+      "default": "Elige tu luz"
+    },
+    {
+      "type": "url",
+      "id": "button_primary_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Botón secundario"
+    },
+    {
+      "type": "text",
+      "id": "button_secondary_text",
+      "label": "Texto del botón",
+      "default": "Ver colección"
+    },
+    {
+      "type": "url",
+      "id": "button_secondary_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Indicadores de confianza"
+    },
+    {
+      "type": "text",
+      "id": "trust_1",
+      "label": "Indicador 1",
+      "default": "Envío gratuito"
+    },
+    {
+      "type": "text",
+      "id": "trust_2",
+      "label": "Indicador 2",
+      "default": "30 días devolución"
+    },
+    {
+      "type": "text",
+      "id": "trust_3",
+      "label": "Indicador 3",
+      "default": "Pago seguro"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

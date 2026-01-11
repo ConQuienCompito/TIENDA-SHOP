@@ -1,0 +1,79 @@
+<section class="cart-page">
+  <div class="page-width page-width--narrow">
+    <h1 class="cart-page__title">Tu carrito</h1>
+    
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" class="cart-page__form">
+        <div class="cart-page__items">
+          {%- for item in cart.items -%}
+            <div class="cart-page__item">
+              <a href="{{ item.url }}" class="cart-page__item-image">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.product.title | escape }}" loading="lazy">
+                {%- endif -%}
+              </a>
+              <div class="cart-page__item-info">
+                <a href="{{ item.url }}" class="cart-page__item-title">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}
+                  <p class="cart-page__item-variant">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <div class="cart-page__item-price">{{ item.final_line_price | money }}</div>
+              </div>
+              <div class="cart-page__item-qty">
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" class="cart-page__qty-input" aria-label="Cantidad">
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+        
+        <div class="cart-page__footer">
+          <div class="cart-page__subtotal">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart-page__note">Impuestos incluidos. Gastos de envío calculados en el checkout.</p>
+          <div class="cart-page__actions">
+            <button type="submit" name="update" class="btn btn--secondary">Actualizar carrito</button>
+            <button type="submit" name="checkout" class="btn btn--primary btn--large">Finalizar compra</button>
+          </div>
+        </div>
+      </form>
+    {%- else -%}
+      <div class="cart-page__empty">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <h2>Tu carrito está vacío</h2>
+        <p>Descubre nuestras lámparas de cristal de amatista</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary btn--large">Ver colección</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+.cart-page { padding: 100px 0 80px; }
+.cart-page__title { font-size: 2rem; font-weight: 300; margin-bottom: 40px; text-align: center; }
+.cart-page__items { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+.cart-page__item { display: grid; grid-template-columns: 100px 1fr auto; gap: 16px; padding: 16px; background: var(--color-bg-card); border-radius: 12px; border: 1px solid var(--color-border); align-items: center; }
+.cart-page__item-image { width: 100px; height: 100px; border-radius: 8px; overflow: hidden; background: var(--color-bg-soft); }
+.cart-page__item-image img { width: 100%; height: 100%; object-fit: cover; }
+.cart-page__item-title { font-size: 1rem; font-weight: 500; margin-bottom: 4px; display: block; }
+.cart-page__item-variant { font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 8px; }
+.cart-page__item-price { font-size: 1rem; font-weight: 600; }
+.cart-page__qty-input { width: 60px; padding: 8px; text-align: center; background: var(--color-bg-soft); border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text); font-family: var(--font-main); }
+.cart-page__footer { background: var(--color-bg-card); border-radius: 16px; padding: 24px; border: 1px solid var(--color-border); }
+.cart-page__subtotal { display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: 500; margin-bottom: 8px; }
+.cart-page__note { font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 24px; }
+.cart-page__actions { display: flex; flex-direction: column; gap: 12px; }
+@media (min-width: 600px) { .cart-page__actions { flex-direction: row; justify-content: space-between; } }
+.cart-page__empty { text-align: center; padding: 60px 20px; color: var(--color-text-muted); }
+.cart-page__empty svg { margin-bottom: 24px; }
+.cart-page__empty h2 { font-size: 1.5rem; font-weight: 300; margin-bottom: 8px; color: var(--color-text); }
+.cart-page__empty p { margin-bottom: 24px; }
+</style>
+
+{% schema %}
+{
+  "name": "Cart Page",
+  "settings": []
+}
+{% endschema %}
