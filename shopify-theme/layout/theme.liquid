@@ -18,9 +18,36 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-    {% if page_description %}
+    {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
+    {%- elsif template.name == 'product' -%}
+      <meta name="description" content="{{ product.description | strip_html | truncate: 160 | escape }}">
+    {%- elsif template.name == 'collection' -%}
+      <meta name="description" content="{{ collection.description | strip_html | truncate: 160 | escape }}">
+    {%- endif -%}
+
+    {%- comment -%} Open Graph / Facebook {%- endcomment -%}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:title" content="{{ page_title | escape }}">
+    {%- if template.name == 'product' -%}
+      <meta property="og:description" content="{{ product.description | strip_html | truncate: 160 | escape }}">
+      <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">
+    {%- elsif template.name == 'collection' -%}
+      <meta property="og:description" content="{{ collection.description | strip_html | truncate: 160 | escape }}">
+      {%- if collection.featured_image -%}
+        <meta property="og:image" content="{{ collection.featured_image | image_url: width: 1200 }}">
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} Twitter {%- endcomment -%}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ canonical_url }}">
+    <meta name="twitter:title" content="{{ page_title | escape }}">
+    {%- if template.name == 'product' -%}
+      <meta name="twitter:description" content="{{ product.description | strip_html | truncate: 160 | escape }}">
+      <meta name="twitter:image" content="{{ product.featured_image | image_url: width: 1200 }}">
+    {%- endif -%}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

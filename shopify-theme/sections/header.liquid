@@ -2,7 +2,7 @@
   <div class="header__main">
     <div class="page-width">
       <div class="header__container">
-        <a href="/" class="header__logo">LUMEI</a>
+        <a href="/" class="header__logo">{{ section.settings.logo_text | default: "LUMEI" }}</a>
         
         <nav class="header__nav">
           <ul class="header__nav-list">
@@ -65,5 +65,21 @@
 </style>
 
 {% schema %}
-{ "name": "Header", "settings": [] }
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Texto del logo",
+      "default": "LUMEI"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú",
+      "default": "main-menu"
+    }
+  ]
+}
 {% endschema %}

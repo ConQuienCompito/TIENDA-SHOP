@@ -2,8 +2,8 @@
   <div class="page-width">
     <div class="footer__grid">
       <div class="footer__brand">
-        <span class="footer__logo">LUMEI</span>
-        <p class="footer__tagline">Identidad a través de la luz. Cada LUMEI es único, como quien lo elige.</p>
+        <span class="footer__logo">{{ section.settings.logo_text | default: "LUMEI" }}</span>
+        <p class="footer__tagline">{{ section.settings.tagline | default: "Identidad a través de la luz. Cada LUMEI es único, como quien lo elige." }}</p>
       </div>
       
       <div class="footer__nav">
@@ -18,8 +18,12 @@
       
       <div class="footer__contact">
         <h4 class="footer__title">Contacto</h4>
-        <p class="footer__contact-email">hola@lumei.es</p>
-        <p class="footer__contact-location">España</p>
+        {%- if section.settings.email != blank -%}
+          <p class="footer__contact-email">{{ section.settings.email }}</p>
+        {%- endif -%}
+        {%- if section.settings.location != blank -%}
+          <p class="footer__contact-location">{{ section.settings.location }}</p>
+        {%- endif -%}
       </div>
     </div>
     
@@ -54,5 +58,38 @@
 </style>
 
 {% schema %}
-{ "name": "Footer", "settings": [] }
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Texto del logo",
+      "default": "LUMEI"
+    },
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Identidad a través de la luz. Cada LUMEI es único, como quien lo elige."
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email de contacto",
+      "default": "hola@lumei.es"
+    },
+    {
+      "type": "text",
+      "id": "location",
+      "label": "Ubicación",
+      "default": "España"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú de navegación"
+    }
+  ]
+}
 {% endschema %}

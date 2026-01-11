@@ -17,5 +17,26 @@
 </style>
 
 {% schema %}
-{ "name": "Page Content", "settings": [] }
+{
+  "name": "Page Content",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Mostrar título",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Alineación del título",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    }
+  ]
+}
 {% endschema %}

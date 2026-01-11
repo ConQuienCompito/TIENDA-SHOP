@@ -214,6 +214,11 @@ h4 { font-size: 1.25rem; }
   color: #33aaff;
 }
 
+.badge--error {
+  background: rgba(220, 38, 38, 0.2);
+  color: #f87171;
+}
+
 /* Cart Drawer Overlay */
 .cart-drawer-overlay {
   position: fixed;
@@ -273,4 +278,73 @@ h4 { font-size: 1.25rem; }
 
 @media (min-width: 768px) {
   .hide-desktop { display: none !important; }
+}
+
+/* Notificaciones */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 16px 24px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 10000;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+  max-width: 400px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.notification.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.notification--success {
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.notification--error {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+/* Loading states */
+.is-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.is-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Cart count badge */
+#cart-count.has-items {
+  animation: pulse 0.3s ease;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
 }

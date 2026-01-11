@@ -17,5 +17,27 @@
 </style>
 
 {% schema %}
-{ "name": "404 Page", "settings": [] }
+{
+  "name": "404 Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Página no encontrada"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Descripción",
+      "default": "La página que buscas no existe o ha sido movida."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto del botón",
+      "default": "Volver al inicio"
+    }
+  ]
+}
 {% endschema %}

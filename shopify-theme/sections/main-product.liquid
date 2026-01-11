@@ -4,7 +4,7 @@
       <div class="product-page__gallery">
         <div class="product-page__main-image">
           {%- if product.featured_image -%}
-            <img id="main-product-image" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}">
+            <img id="main-product-image" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}" loading="eager" fetchpriority="high">
           {%- else -%}
             {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
           {%- endif -%}
@@ -14,7 +14,7 @@
           <div class="product-page__thumbs">
             {%- for image in product.images limit: 5 -%}
               <button class="product-page__thumb{% if forloop.first %} active{% endif %}" onclick="document.getElementById('main-product-image').src='{{ image | image_url: width: 800 }}';document.querySelectorAll('.product-page__thumb').forEach(t=>t.classList.remove('active'));this.classList.add('active');" type="button">
-                <img src="{{ image | image_url: width: 100 }}" alt="">
+                <img src="{{ image | image_url: width: 100 }}" alt="{{ product.title | escape }}" loading="lazy">
               </button>
             {%- endfor -%}
           </div>
@@ -100,7 +100,7 @@
 .product-page__gallery { position: sticky; top: 100px; }
 @media (max-width: 1023px) { .product-page__gallery { position: relative; top: 0; } }
 .product-page__main-image { position: relative; background: var(--color-bg-card); border-radius: 16px; overflow: hidden; margin-bottom: 16px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
-.product-page__main-image img { width: 100%; height: 100%; object-fit: contain; padding: 24px; }
+.product-page__main-image img { width: 100%; height: 100%; object-fit: contain; padding: 24px; transition: opacity 0.3s ease; }
 .product-page__glow { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(153, 102, 204, 0.25), transparent 60%); pointer-events: none; }
 .product-page__thumbs { display: flex; gap: 12px; }
 .product-page__thumb { width: 72px; height: 72px; border: 2px solid var(--color-border); border-radius: 10px; overflow: hidden; cursor: pointer; padding: 0; background: var(--color-bg-card); }
@@ -123,8 +123,9 @@
 .product-page__option-item span { display: inline-block; padding: 12px 24px; border: 1px solid var(--color-border); border-radius: 10px; font-size: 0.9375rem; font-weight: 500; background: var(--color-bg-card); color: var(--color-text); transition: all 0.2s; }
 .product-page__option-item:hover span { border-color: var(--color-primary); }
 .product-page__option-item.active span { background: var(--color-primary); border-color: var(--color-primary); color: white; }
-.product-page__submit { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: var(--color-primary); color: white; border: none; padding: 20px 32px; font-size: 1.0625rem; font-weight: 600; border-radius: 10px; cursor: pointer; margin-bottom: 20px; }
-.product-page__submit:hover { background: var(--color-primary-dark); box-shadow: var(--shadow-glow); }
+.product-page__submit { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: var(--color-primary); color: white; border: none; padding: 20px 32px; font-size: 1.0625rem; font-weight: 600; border-radius: 10px; cursor: pointer; margin-bottom: 20px; transition: all var(--transition-base); }
+.product-page__submit:hover:not(:disabled) { background: var(--color-primary-dark); box-shadow: var(--shadow-glow); }
+.product-page__submit:disabled, .product-page__submit.is-disabled { opacity: 0.6; cursor: not-allowed; }
 .product-page__payment { background: var(--color-bg-card); border-radius: 16px; padding: 24px; text-align: center; margin-bottom: 20px; border: 1px solid var(--color-border); }
 .product-page__payment-label { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.9375rem; font-weight: 500; margin-bottom: 16px; }
 .product-page__payment-label svg { color: var(--color-success); }
@@ -140,16 +141,83 @@
 .product-page__description-content { font-size: 0.9375rem; line-height: 1.8; color: var(--color-text-soft); }
 </style>
 
+<script id="product-json" type="application/json">
+{
+  "id": {{ product.id | json }},
+  "title": {{ product.title | json }},
+  "handle": {{ product.handle | json }},
+  "variants": [
+    {%- for variant in product.variants -%}
+      {
+        "id": {{ variant.id | json }},
+        "title": {{ variant.title | json }},
+        "price": {{ variant.price | json }},
+        "compare_at_price": {{ variant.compare_at_price | json }},
+        "available": {{ variant.available | json }},
+        "options": {{ variant.options | json }},
+        "featured_image": {%- if variant.featured_image -%}{{ variant.featured_image | image_url: width: 800 | json }}{%- else -%}null{%- endif -%},
+        "sku": {{ variant.sku | json }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+
 <script>
+// Manejar cambio visual de opciones
 document.querySelectorAll('.product-page__option-item input').forEach(function(input) {
   input.addEventListener('change', function() {
     var parent = this.closest('.product-page__option-btns');
-    parent.querySelectorAll('.product-page__option-item').forEach(function(item) { item.classList.remove('active'); });
+    parent.querySelectorAll('.product-page__option-item').forEach(function(item) { 
+      item.classList.remove('active'); 
+    });
     this.closest('.product-page__option-item').classList.add('active');
   });
 });
+
+// Manejar submit del formulario con AJAX
+var productForm = document.querySelector('form[action*="/cart/add"]');
+if (productForm && window.addToCart) {
+  productForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    var variantIdInput = this.querySelector('input[name="id"]');
+    var variantId = variantIdInput ? parseInt(variantIdInput.value) : null;
+    
+    if (!variantId) {
+      console.error('Variant ID not found');
+      return;
+    }
+    
+    window.addToCart(variantId, 1, {});
+  });
+}
 </script>
 
+{{ 'product.js' | asset_url | script_tag }}
+
 {% schema %}
-{ "name": "Product Page", "settings": [] }
+{
+  "name": "Product Page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Mostrar valoración",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Mostrar badges",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Mostrar iconos de pago",
+      "default": true
+    }
+  ]
+}
 {% endschema %}

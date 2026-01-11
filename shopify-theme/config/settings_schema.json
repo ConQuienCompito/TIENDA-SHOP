@@ -1,1 +1,99 @@
-[]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "LUMEI",
+    "theme_version": "1.0.0",
+    "theme_author": "LUMEI",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Color",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Colores principales"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Color principal",
+        "default": "#9966cc"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_dark",
+        "label": "Color principal oscuro",
+        "default": "#7c4db8"
+      }
+    ]
+  },
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "text",
+        "id": "logo_text",
+        "label": "Texto del logo",
+        "default": "LUMEI"
+      },
+      {
+        "type": "link_list",
+        "id": "main_menu",
+        "label": "Menú principal",
+        "default": "main-menu"
+      }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "footer_tagline",
+        "label": "Tagline del footer",
+        "default": "Identidad a través de la luz. Cada LUMEI es único, como quien lo elige."
+      },
+      {
+        "type": "text",
+        "id": "footer_email",
+        "label": "Email de contacto",
+        "default": "hola@lumei.es"
+      },
+      {
+        "type": "text",
+        "id": "footer_location",
+        "label": "Ubicación",
+        "default": "España"
+      }
+    ]
+  },
+  {
+    "name": "Productos",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_product_rating",
+        "label": "Mostrar valoraciones",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_badges",
+        "label": "Mostrar badges de producto",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Carrito",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_drawer_enabled",
+        "label": "Activar cart drawer",
+        "default": true
+      }
+    ]
+  }
+]
