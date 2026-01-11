@@ -1,0 +1,1686 @@
+# MANUAL OPERATIVO: ARQUITECTURA DE PRODUCTO DIGITAL SHOPIFY
+## Sistema Experto para Generación de Páginas Web Premium
+
+**Clasificación:** Documento interno de sistema  
+**Versión:** 1.0  
+**Fecha:** Enero 2026
+
+---
+
+# ÍNDICE EJECUTIVO
+
+1. [Filosofía Operativa](#1-filosofía-operativa)
+2. [Arquitectura de Página](#2-arquitectura-de-página)
+3. [Sistema de Conversión](#3-sistema-de-conversión)
+4. [UI Profesional](#4-ui-profesional)
+5. [Sistema de Movimiento](#5-sistema-de-movimiento)
+6. [Ingeniería de Copy](#6-ingeniería-de-copy)
+7. [Arquitectura Shopify](#7-arquitectura-shopify)
+8. [Anti-Patrones](#8-anti-patrones)
+9. [Checklist de Calidad](#9-checklist-de-calidad)
+10. [Prompt Maestro Definitivo](#10-prompt-maestro-definitivo)
+
+---
+
+# 1. FILOSOFÍA OPERATIVA
+
+## 1.1 Principio Fundacional
+
+**Una página web premium no se distingue por lo que tiene, sino por lo que NO tiene.**
+
+El trabajo amateur añade. El trabajo senior sustrae.
+
+Cada elemento presente debe justificar su existencia respondiendo:
+- ¿Qué acción facilita?
+- ¿Qué objeción resuelve?
+- ¿Qué emoción genera?
+
+Si no responde a ninguna, se elimina.
+
+## 1.2 Jerarquía de Decisión
+
+```
+CONVERSIÓN > CLARIDAD > ESTÉTICA > ORIGINALIDAD
+```
+
+Nunca sacrificar un nivel superior por uno inferior.
+
+**Ejemplo de violación común:** Ocultar el precio para "generar intriga" (sacrifica claridad por originalidad).
+
+## 1.3 El Usuario No Lee, Escanea
+
+Diseñar para el escaneo:
+- **Primer escaneo (0-3s):** ¿Qué es esto? ¿Es para mí?
+- **Segundo escaneo (3-10s):** ¿Qué gano? ¿Cuánto cuesta?
+- **Tercer escaneo (10-30s):** ¿Puedo confiar? ¿Cómo compro?
+
+Cada sección debe optimizar para UNO de estos escaneos.
+
+## 1.4 Principio de Carga Cognitiva
+
+El cerebro tiene capacidad limitada de procesamiento. Cada decisión que el usuario debe tomar consume recursos.
+
+**Regla operativa:** Máximo 1 decisión por viewport.
+
+Decisiones que consumen recursos:
+- Elegir entre múltiples CTAs
+- Interpretar iconografía no estándar
+- Procesar texto denso
+- Navegar menús complejos
+
+---
+
+# 2. ARQUITECTURA DE PÁGINA
+
+## 2.1 Homepage: Estructura Canónica
+
+```
+┌─────────────────────────────────────────┐
+│           HEADER (sticky)               │
+├─────────────────────────────────────────┤
+│                                         │
+│              HERO                       │
+│    [Propuesta de valor + CTA único]     │
+│                                         │
+├─────────────────────────────────────────┤
+│           TRUST BAR (opcional)          │
+│   [Envío gratis | Garantía | Pago]      │
+├─────────────────────────────────────────┤
+│                                         │
+│          PROBLEMA/SOLUCIÓN              │
+│    [Por qué existes como marca]         │
+│                                         │
+├─────────────────────────────────────────┤
+│                                         │
+│          PRODUCTO PRINCIPAL             │
+│   [Colección destacada o hero product]  │
+│                                         │
+├─────────────────────────────────────────┤
+│                                         │
+│            DIFERENCIACIÓN               │
+│    [Qué te hace diferente - no mejor]   │
+│                                         │
+├─────────────────────────────────────────┤
+│                                         │
+│           PRUEBA SOCIAL                 │
+│      [Testimonios / Reviews / Press]    │
+│                                         │
+├─────────────────────────────────────────┤
+│                                         │
+│              CONTEXTO                   │
+│   [El producto en uso real - lifestyle] │
+│                                         │
+├─────────────────────────────────────────┤
+│                                         │
+│               FAQ                       │
+│    [Objeciones finales resueltas]       │
+│                                         │
+├─────────────────────────────────────────┤
+│            CTA FINAL                    │
+│   [Última oportunidad de conversión]    │
+├─────────────────────────────────────────┤
+│              FOOTER                     │
+└─────────────────────────────────────────┘
+```
+
+### Reglas de Implementación
+
+**HERO:**
+- Máximo 12 palabras en headline
+- Subheadline máximo 25 palabras
+- UN solo CTA primario
+- Imagen que muestre el producto EN USO, no en aislamiento
+- El CTA debe ser visible sin scroll en desktop Y mobile
+
+**TRUST BAR:**
+- Solo incluir si hay algo real que comunicar
+- Máximo 4 elementos
+- Iconos monocromáticos, no coloridos
+- Posición: inmediatamente después del hero O integrado en footer del hero
+
+**PROBLEMA/SOLUCIÓN:**
+- Esta sección existe para usuarios que no conocen la categoría
+- Si el producto es commodity (camiseta, taza), omitir
+- Si el producto resuelve problema específico, obligatoria
+
+**PRODUCTO:**
+- Mostrar 3-4 productos máximo, no el catálogo completo
+- Si tienes UN producto hero, mostrarlo en grande
+- Si tienes colección, mostrar la más relevante para el tráfico esperado
+
+**DIFERENCIACIÓN:**
+- NO hablar de "calidad premium" o "mejor del mercado"
+- Hablar de PROCESO o ORIGEN específico
+- Ejemplo malo: "Materiales de la más alta calidad"
+- Ejemplo bueno: "Cada pieza tallada a mano en nuestro taller de Cantabria"
+
+**PRUEBA SOCIAL:**
+- Reviews > Testimonios escritos
+- Testimonios con foto > Testimonios sin foto
+- Press logos > Nada
+- NO inventar testimonios, se nota inmediatamente
+
+**CONTEXTO:**
+- Imágenes de lifestyle, no de producto
+- Mostrar el producto en el entorno donde vivirá
+- Resolución: mínimo 800px de ancho
+
+**FAQ:**
+- Máximo 5-6 preguntas
+- Ordenar por frecuencia real, no por lo que quieres comunicar
+- Primera pregunta: siempre sobre envío/devoluciones
+- Última pregunta: siempre sobre uso/mantenimiento
+
+## 2.2 PDP (Product Detail Page): Estructura Canónica
+
+```
+┌─────────────────────────────────────────────────────┐
+│                    HEADER                           │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│  ┌─────────────────┐  ┌─────────────────────────┐  │
+│  │                 │  │  BREADCRUMB (sutil)      │  │
+│  │    GALERÍA      │  │  BADGES [Stock/Envío]    │  │
+│  │                 │  │  MARCA                   │  │
+│  │   [Principal]   │  │  TÍTULO                  │  │
+│  │                 │  │  RATING (si hay reviews) │  │
+│  │  [Thumbnails]   │  │  PRECIO                  │  │
+│  │                 │  │  VARIANTES               │  │
+│  │                 │  │  [ADD TO CART]           │  │
+│  │                 │  │  TRUST ICONS             │  │
+│  │                 │  │  BENEFICIOS (3 máx)      │  │
+│  └─────────────────┘  └─────────────────────────┘  │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│              DESCRIPCIÓN EXPANDIDA                  │
+│   [Storytelling + especificaciones técnicas]        │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│                   REVIEWS                           │
+│        [Si hay, mostrar. Si no, omitir]             │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│             PRODUCTOS RELACIONADOS                  │
+│          [Máximo 4, misma categoría]                │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│                    FOOTER                           │
+└─────────────────────────────────────────────────────┘
+```
+
+### Reglas de Implementación PDP
+
+**ABOVE THE FOLD:**
+Todo lo necesario para comprar debe estar visible sin scroll:
+- Imagen principal
+- Título
+- Precio
+- Variantes (si aplica)
+- Botón Add to Cart
+- Al menos un elemento de trust
+
+**GALERÍA:**
+- Primera imagen: producto completo, fondo neutro o contextual
+- Segunda imagen: detalle o textura
+- Tercera imagen: producto en uso
+- Cuarta imagen: escala/dimensiones
+- Quinta imagen: packaging (si es premium)
+- Máximo 5-6 imágenes
+- Aspect ratio consistente (1:1 o 4:5)
+
+**PRECIO:**
+- Siempre visible, nunca "consultar"
+- Si hay descuento, mostrar precio original tachado A LA IZQUIERDA
+- Formato: ~~€129~~ €99 (no al revés)
+- Incluir "IVA incluido" si es B2C en España
+
+**VARIANTES:**
+- Si hay menos de 5 opciones: botones
+- Si hay más de 5 opciones: dropdown
+- Variante seleccionada debe tener estado visual claro
+- Si una variante está agotada, mostrarla deshabilitada, no ocultarla
+
+**ADD TO CART:**
+- Texto: "Añadir al carrito" o "Comprar ahora"
+- NO usar: "Lo quiero", "Mío", "Agregar", emojis
+- Color: el de mayor contraste en la página
+- Estado hover: sutil, no transformación dramática
+- Estado disabled: opacidad 50%, texto "Agotado"
+
+**TRUST ICONS:**
+- Máximo 3
+- Siempre incluir: Envío (plazo real), Devolución (días reales), Pago (seguro)
+- Formato: Icono + Texto corto
+- NO incluir "Atención 24/7" si no es real
+
+## 2.3 Collection Page: Estructura
+
+```
+┌─────────────────────────────────────────┐
+│               HEADER                    │
+├─────────────────────────────────────────┤
+│          TÍTULO COLECCIÓN               │
+│         [Descripción breve]             │
+├─────────────────────────────────────────┤
+│  FILTROS (si >12 productos)  │ SORT BY  │
+├─────────────────────────────────────────┤
+│                                         │
+│  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐       │
+│  │     │ │     │ │     │ │     │       │
+│  │ PRD │ │ PRD │ │ PRD │ │ PRD │       │
+│  │     │ │     │ │     │ │     │       │
+│  └─────┘ └─────┘ └─────┘ └─────┘       │
+│                                         │
+│  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐       │
+│  │     │ │     │ │     │ │     │       │
+│  │ PRD │ │ PRD │ │ PRD │ │ PRD │       │
+│  │     │ │     │ │     │ │     │       │
+│  └─────┘ └─────┘ └─────┘ └─────┘       │
+│                                         │
+├─────────────────────────────────────────┤
+│            PAGINACIÓN                   │
+├─────────────────────────────────────────┤
+│               FOOTER                    │
+└─────────────────────────────────────────┘
+```
+
+### Reglas de Implementación Collection
+
+**GRID:**
+- Mobile: 2 columnas
+- Tablet: 3 columnas
+- Desktop: 4 columnas
+- Gap consistente: 16-24px
+
+**PRODUCT CARD:**
+- Imagen: aspect ratio 1:1 o 4:5 (consistente en todo el sitio)
+- Hover: segunda imagen O sutil zoom (NO ambos)
+- Info mínima: Título, Precio
+- Info opcional: Variantes disponibles (puntos de color), Rating
+- NO incluir: Descripción, botón Add to Cart directo
+
+**FILTROS:**
+- Solo mostrar si hay >12 productos
+- Filtros útiles: Precio, Color, Talla
+- NO filtrar por: "Popularidad", "Novedades" (eso es sorting)
+- En mobile: modal/drawer, no inline
+
+**PAGINACIÓN:**
+- Preferir scroll infinito si catálogo <100 productos
+- Si paginación tradicional: mostrar números, no solo flechas
+- Productos por página: 12-24 (múltiplos de columnas de grid)
+
+## 2.4 Páginas Auxiliares
+
+### About/Nuestra Historia
+- Solo si hay historia real que contar
+- NO inventar narrativa emocional falsa
+- Estructura: Origen → Problema que vimos → Cómo lo resolvemos → Equipo (opcional)
+- Incluir fotos reales, no stock
+
+### Contact
+- Formulario simple: Nombre, Email, Mensaje
+- Mostrar email directo como alternativa
+- Tiempo de respuesta realista
+- NO chat bot si no hay humano detrás
+
+### FAQ
+- Agrupar por categoría si >10 preguntas
+- Formato acordeón
+- Primera pregunta siempre abierta
+
+### Políticas (Envío, Devoluciones, Privacidad)
+- Lenguaje claro, no legal incomprensible
+- Bullet points > párrafos
+- Destacar lo favorable al cliente
+
+---
+
+# 3. SISTEMA DE CONVERSIÓN
+
+## 3.1 Anatomía del CTA
+
+### Jerarquía de CTAs
+
+```
+PRIMARIO    → Acción principal de la página
+SECUNDARIO  → Alternativa válida
+TERCIARIO   → Navegación o información adicional
+FANTASMA    → Acción que no queremos destacar pero debe existir
+```
+
+### Reglas de Coexistencia
+
+| Página | Primario | Secundario | Terciario |
+|--------|----------|------------|-----------|
+| Home Hero | Comprar/Ver colección | Ver más (scroll) | - |
+| PDP | Add to Cart | - | Compartir, Wishlist |
+| Collection | - | - | Filtros, Sort |
+| Cart | Checkout | Seguir comprando | Eliminar item |
+
+**Regla crítica:** Nunca dos CTAs primarios en el mismo viewport.
+
+### Diseño Visual de CTAs
+
+**Primario:**
+```css
+background: color-más-contrastante;
+color: white o black (según contraste);
+padding: 16px 32px;
+border-radius: 8-12px;
+font-weight: 600;
+text-transform: none; /* NO mayúsculas */
+```
+
+**Secundario:**
+```css
+background: transparent;
+border: 1px solid color-borde;
+color: color-texto;
+padding: igual-que-primario;
+```
+
+**Terciario:**
+```css
+background: transparent;
+border: none;
+color: color-texto-muted;
+text-decoration: underline; /* o sin decoración */
+padding: 8px 0;
+```
+
+### Estados del CTA
+
+```
+DEFAULT  → Estado base
+HOVER    → Ligero cambio (opacidad 90% o background shift)
+ACTIVE   → Feedback instantáneo (scale 0.98)
+DISABLED → Opacidad 50%, cursor not-allowed
+LOADING  → Spinner o texto "Añadiendo..."
+SUCCESS  → Checkmark o texto "Añadido ✓"
+```
+
+**Transiciones de estado:**
+```css
+transition: all 0.15s ease;
+/* NO usar transition más largas en CTAs */
+```
+
+## 3.2 Posicionamiento de CTAs
+
+### Above the Fold
+- El CTA primario DEBE ser visible sin scroll
+- Excepción: páginas de contenido (blog, about)
+
+### Repetición de CTA
+- Home: CTA en hero + CTA al final
+- PDP: CTA sticky en mobile, fijo en desktop
+- Collection: NO repetir, está implícito en cada card
+
+### Sticky CTA en Mobile
+```
+Condiciones para activar:
+- Página de producto
+- Usuario ha scrolleado más del 50% de la galería
+- Producto disponible
+
+Contenido:
+- Precio + Botón Add to Cart
+- NO incluir: variantes, cantidad
+```
+
+## 3.3 Reducción de Fricción
+
+### Fricción Cognitiva (qué pensar)
+| Problema | Solución |
+|----------|----------|
+| Demasiadas opciones | Limitar a 3-4 destacadas |
+| Precio oculto | Siempre visible |
+| Variantes confusas | Nombres claros, visualización |
+| Proceso de compra desconocido | Progress indicator |
+
+### Fricción de Interacción (qué hacer)
+| Problema | Solución |
+|----------|----------|
+| Formularios largos | Campos mínimos necesarios |
+| Cuenta obligatoria | Guest checkout |
+| Múltiples clics para comprar | One-click upsells |
+| Scroll excesivo | Información prioritaria arriba |
+
+### Fricción Emocional (qué sentir)
+| Problema | Solución |
+|----------|----------|
+| Desconfianza | Badges de seguridad, reviews |
+| FOMO negativo | Stock real, no falsa escasez |
+| Arrepentimiento anticipado | Política de devolución visible |
+| Confusión | Copy claro, sin jerga |
+
+## 3.4 Urgencia y Escasez
+
+### Cuándo usar
+- Stock realmente bajo (<10 unidades)
+- Oferta con fecha de fin real
+- Edición limitada genuina
+
+### Cuándo NO usar
+- Siempre (falsa escasez)
+- En productos estándar con restock
+- Sin datos reales
+
+### Implementación correcta
+```liquid
+{%- if product.inventory_quantity <= 5 and product.inventory_quantity > 0 -%}
+  <span class="stock-warning">
+    Solo quedan {{ product.inventory_quantity }} unidades
+  </span>
+{%- endif -%}
+```
+
+**NO hacer:**
+- "¡Solo 3 personas mirando esto!" (si es mentira)
+- Countdown timers que se reinician
+- "Últimas unidades" permanente
+
+---
+
+# 4. UI PROFESIONAL
+
+## 4.1 Sistema de Espaciado
+
+### Escala de Espaciado
+```css
+--space-1: 4px;   /* Micro: entre icono y texto */
+--space-2: 8px;   /* Pequeño: padding interno */
+--space-3: 12px;  /* Medio-pequeño */
+--space-4: 16px;  /* Base: gap en elementos relacionados */
+--space-5: 20px;  /* Medio */
+--space-6: 24px;  /* Medio-grande: gap en grids */
+--space-8: 32px;  /* Grande: separación entre bloques */
+--space-10: 40px; /* Extra: separación de secciones */
+--space-12: 48px; /* Máxima frecuente */
+--space-16: 64px; /* Secciones principales */
+--space-20: 80px; /* Entre secciones mayores */
+--space-24: 96px; /* Padding de secciones hero */
+--space-32: 128px;/* Separación máxima */
+```
+
+### Reglas de Aplicación
+
+**Principio de proximidad:**
+Elementos relacionados deben estar más cerca entre sí que de elementos no relacionados.
+
+```
+✓ Correcto:
+┌──────────────────┐
+│ Título           │ ← 8px
+│ Subtítulo        │
+│                  │ ← 24px
+│ Párrafo          │
+└──────────────────┘
+
+✗ Incorrecto:
+┌──────────────────┐
+│ Título           │ ← 24px
+│                  │
+│ Subtítulo        │ ← 8px
+│ Párrafo          │
+└──────────────────┘
+```
+
+**Padding de secciones:**
+- Mobile: 64px vertical, 16-24px horizontal
+- Desktop: 96-128px vertical, 24-48px horizontal
+
+**Gap entre elementos:**
+- Texto y texto relacionado: 8-16px
+- Grupos de contenido: 24-32px
+- Secciones: 64-128px
+
+## 4.2 Sistema Tipográfico
+
+### Jerarquía de Tamaños
+```css
+/* Mobile-first, escala hacia arriba */
+--text-xs: 0.75rem;    /* 12px - Labels, badges */
+--text-sm: 0.875rem;   /* 14px - Texto secundario */
+--text-base: 1rem;     /* 16px - Cuerpo */
+--text-lg: 1.125rem;   /* 18px - Cuerpo destacado */
+--text-xl: 1.25rem;    /* 20px - Subtítulos */
+--text-2xl: 1.5rem;    /* 24px - H4 */
+--text-3xl: 1.875rem;  /* 30px - H3 */
+--text-4xl: 2.25rem;   /* 36px - H2 */
+--text-5xl: 3rem;      /* 48px - H1 mobile */
+--text-6xl: 3.75rem;   /* 60px - H1 desktop */
+--text-7xl: 4.5rem;    /* 72px - Hero headlines */
+```
+
+### Pesos y Usos
+```
+300 Light    → Headlines display, efecto elegante
+400 Regular  → Cuerpo de texto, descripciones
+500 Medium   → Subtítulos, énfasis sutil
+600 Semibold → CTAs, labels importantes
+700 Bold     → Headlines impactantes (usar con moderación)
+```
+
+### Combinación de Fuentes
+
+**Patrón premium recomendado:**
+- Headlines: Serif con personalidad (Cormorant, Playfair, Fraunces)
+- Body: Sans-serif neutral (Inter, DM Sans, Outfit)
+
+**Patrón moderno/tech:**
+- Headlines: Sans-serif geométrica (Space Grotesk, Clash Display)
+- Body: Sans-serif humanista (Inter, Source Sans)
+
+**Patrón minimalista:**
+- Todo: Una sola familia con variación de peso
+- Ejemplo: Inter Light + Inter Medium + Inter Semibold
+
+### Reglas de Legibilidad
+
+```css
+/* Cuerpo de texto */
+line-height: 1.6-1.8;
+max-width: 65-75ch;
+
+/* Headlines */
+line-height: 1.1-1.3;
+letter-spacing: -0.02em; /* Para tamaños grandes */
+
+/* Labels y texto pequeño */
+line-height: 1.4;
+letter-spacing: 0.02em; /* Mejora legibilidad */
+```
+
+## 4.3 Sistema de Color
+
+### Estructura de Paleta
+```css
+/* Colores semánticos, no descriptivos */
+--color-background: #0a0a0a;
+--color-foreground: #ebebeb;
+--color-muted: #808080;
+--color-border: rgba(255,255,255,0.1);
+
+/* Accent - color de marca */
+--color-accent: #9370DB;
+--color-accent-muted: rgba(147,112,219,0.2);
+
+/* Estados */
+--color-success: #059669;
+--color-warning: #d97706;
+--color-error: #dc2626;
+```
+
+### Reglas de Aplicación
+
+**Proporción de colores:**
+- 60% color dominante (background)
+- 30% color secundario (foreground, cards)
+- 10% color accent (CTAs, highlights)
+
+**Contraste mínimo:**
+- Texto cuerpo: ratio 4.5:1
+- Texto grande: ratio 3:1
+- Elementos interactivos: ratio 3:1
+
+**Cuándo usar el accent:**
+- CTAs primarios
+- Estados activos
+- Links importantes
+- Badges de información crítica
+
+**Cuándo NO usar el accent:**
+- Decoración sin propósito
+- Múltiples elementos en mismo viewport
+- Texto largo (fatiga visual)
+
+## 4.4 Sistema de Layout
+
+### Grid System
+```css
+/* Desktop: 12 columnas */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-6);
+}
+
+/* Variantes comunes */
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+```
+
+### Anchos de Contenedor
+```css
+--width-narrow: 680px;  /* Texto de lectura */
+--width-base: 1024px;   /* Contenido general */
+--width-wide: 1280px;   /* Layouts con sidebar */
+--width-full: 1440px;   /* Hero y secciones amplias */
+```
+
+### Breakpoints
+```css
+/* Mobile first */
+--bp-sm: 640px;   /* Mobile grande */
+--bp-md: 768px;   /* Tablet */
+--bp-lg: 1024px;  /* Desktop */
+--bp-xl: 1280px;  /* Desktop grande */
+--bp-2xl: 1536px; /* Ultra wide */
+```
+
+## 4.5 Elevación y Profundidad
+
+### Capas Z-Index
+```css
+--z-base: 0;
+--z-dropdown: 100;
+--z-sticky: 200;
+--z-overlay: 300;
+--z-modal: 400;
+--z-toast: 500;
+--z-tooltip: 600;
+```
+
+### Sombras
+```css
+/* Usar sombras para indicar elevación, no decoración */
+--shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+--shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+--shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+--shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
+
+/* Sombras con color (para glow effects) */
+--shadow-glow: 0 0 60px rgba(var(--color-accent-rgb), 0.3);
+```
+
+### Cuándo Usar Sombras
+- ✓ Elementos flotantes (dropdowns, modals)
+- ✓ Cards que necesitan separarse del fondo
+- ✓ Sticky headers
+- ✗ Decoración sin propósito
+- ✗ Cada card en un grid (ruido visual)
+
+---
+
+# 5. SISTEMA DE MOVIMIENTO
+
+## 5.1 Principios de Animación
+
+### La animación debe ser:
+1. **Funcional:** Indica cambio de estado o relación espacial
+2. **Breve:** 150-400ms máximo para UI
+3. **Natural:** Sigue física real (ease-out, spring)
+4. **Consistente:** Misma curva en toda la interfaz
+
+### Cuándo animar:
+- Transiciones de estado (hover, active, disabled)
+- Aparición de elementos (modals, drawers)
+- Feedback de interacción (click, submit)
+- Scroll-triggered reveals (con moderación)
+
+### Cuándo NO animar:
+- Si el usuario tiene preferencia de reduced-motion
+- Elementos que aparecen inmediatamente al cargar
+- Cambios de texto/contenido (confuso)
+- Por decoración sin función
+
+## 5.2 Curvas de Timing
+
+```css
+/* Curvas estándar */
+--ease-out: cubic-bezier(0, 0, 0.2, 1);        /* Elementos que entran */
+--ease-in: cubic-bezier(0.4, 0, 1, 1);         /* Elementos que salen */
+--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);   /* Transformaciones */
+
+/* Curvas con personalidad */
+--ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);  /* Rebote sutil */
+--ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);       /* Suave */
+```
+
+### Duraciones
+```css
+--duration-instant: 0ms;     /* Sin transición */
+--duration-fast: 150ms;      /* Hover, pequeños cambios */
+--duration-base: 200ms;      /* Transiciones estándar */
+--duration-slow: 300ms;      /* Modales, drawers */
+--duration-slower: 400ms;    /* Transiciones complejas */
+--duration-slowest: 500ms;   /* Animaciones de entrada hero */
+```
+
+## 5.3 Catálogo de Transiciones
+
+### Hover States
+```css
+/* Botones */
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  transition: all 150ms var(--ease-out);
+}
+
+/* Cards */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  transition: all 200ms var(--ease-out);
+}
+
+/* Links */
+.link:hover {
+  color: var(--color-accent);
+  transition: color 150ms var(--ease-out);
+}
+
+/* Imágenes */
+.image-hover:hover img {
+  transform: scale(1.05);
+  transition: transform 400ms var(--ease-out);
+}
+```
+
+### Aparición de Elementos
+```css
+/* Fade in up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInUp 400ms var(--ease-out) forwards;
+}
+
+/* Staggered children */
+.stagger-item:nth-child(1) { animation-delay: 0ms; }
+.stagger-item:nth-child(2) { animation-delay: 50ms; }
+.stagger-item:nth-child(3) { animation-delay: 100ms; }
+.stagger-item:nth-child(4) { animation-delay: 150ms; }
+```
+
+### Drawers y Modales
+```css
+/* Overlay */
+.overlay {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 200ms var(--ease-out);
+}
+
+.overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Drawer */
+.drawer {
+  transform: translateX(100%);
+  transition: transform 300ms var(--ease-out);
+}
+
+.drawer.is-open {
+  transform: translateX(0);
+}
+```
+
+## 5.4 Scroll Animations
+
+### Reglas
+- Usar solo para elementos decorativos o de refuerzo
+- NUNCA para contenido crítico (CTAs, información de producto)
+- Intersection Observer, no scroll event
+- Trigger al 10-20% de visibilidad
+
+### Implementación
+```javascript
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('animate-in');
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+});
+
+document.querySelectorAll('.scroll-animate').forEach(el => {
+  observer.observe(el);
+});
+```
+
+## 5.5 Reduced Motion
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+---
+
+# 6. INGENIERÍA DE COPY
+
+## 6.1 Principios de Copy Profesional
+
+### El copy profesional es:
+1. **Específico:** Datos concretos, no adjetivos vacíos
+2. **Conciso:** Cada palabra tiene propósito
+3. **Humano:** Voz real, no corporativa ni robótica
+4. **Orientado:** Al beneficio del usuario, no a la marca
+
+### Anti-patrones de IA (evitar siempre):
+```
+❌ "Descubre una experiencia única"
+❌ "Diseñado pensando en ti"
+❌ "Llevando la calidad al siguiente nivel"
+❌ "Tu satisfacción es nuestra prioridad"
+❌ "Únete a miles de clientes satisfechos"
+❌ "La solución perfecta para tus necesidades"
+```
+
+### Patrones profesionales:
+```
+✓ "Envío en 24-48h a península"
+✓ "3.847 unidades vendidas"
+✓ "Tallado a mano en nuestro taller de Bilbao"
+✓ "30 días para devolverlo sin preguntas"
+✓ "USB-C, 2 metros de cable incluido"
+```
+
+## 6.2 Copy por Nivel de Consciencia
+
+### Nivel 1: No consciente del problema
+El usuario no sabe que tiene un problema.
+
+**Estrategia:** Educación, despertar curiosidad.
+
+**Ejemplo (producto de luz ambiental):**
+```
+MALO: "Compra nuestra lámpara LED"
+BUENO: "¿Por qué algunas habitaciones se sienten bien y otras no?"
+```
+
+### Nivel 2: Consciente del problema
+Sabe que algo no está bien, no sabe la solución.
+
+**Estrategia:** Articular el problema, introducir categoría.
+
+**Ejemplo:**
+```
+MALO: "Lámpara LED premium"
+BUENO: "La luz correcta cambia cómo piensas, cómo trabajas, cómo descansas"
+```
+
+### Nivel 3: Consciente de la solución
+Sabe que la luz ambiental ayuda, busca opciones.
+
+**Estrategia:** Diferenciación, por qué tú.
+
+**Ejemplo:**
+```
+MALO: "La mejor lámpara del mercado"
+BUENO: "Cristal de amatista natural. Cada pieza tallada individualmente."
+```
+
+### Nivel 4: Consciente del producto
+Conoce tu producto, evalúa si comprar.
+
+**Estrategia:** Prueba social, garantías, urgencia real.
+
+**Ejemplo:**
+```
+MALO: "Compra ahora"
+BUENO: "Envío gratis hoy. Si no te convence, devuélvela en 30 días."
+```
+
+### Nivel 5: Totalmente consciente
+Listo para comprar, solo necesita el empujón final.
+
+**Estrategia:** CTA directo, eliminar fricción.
+
+**Ejemplo:**
+```
+MALO: "Descubre más sobre nuestro producto"
+BUENO: "Añadir al carrito — €99"
+```
+
+## 6.3 Fórmulas de Copy
+
+### Headline Hero
+```
+[Beneficio principal] + [Diferenciador o emoción]
+
+Ejemplos:
+"La luz que eliges dice quién eres."
+"Café que sabe a la mañana que mereces."
+"Ropa de trabajo que no parece ropa de trabajo."
+```
+
+### Subheadline
+```
+[Qué es] + [Por qué es diferente] en máximo 20 palabras.
+
+Ejemplos:
+"Lámparas de cristal de amatista talladas a mano. Cada pieza es única."
+"Café de especialidad tostado cada martes. Nunca más de 7 días en estantería."
+```
+
+### CTA
+```
+[Verbo de acción] + [Objeto opcional] + [Beneficio implícito opcional]
+
+Ejemplos:
+"Comprar ahora"
+"Añadir al carrito"
+"Ver colección"
+"Empezar"
+
+EVITAR:
+"Haz clic aquí"
+"Enviar"
+"Submit"
+"Lo quiero"
+```
+
+### Beneficios (bullets)
+```
+[Resultado específico], no [característica técnica]
+
+MALO:
+• Material de alta calidad
+• Diseño innovador
+• Atención al cliente
+
+BUENO:
+• Envío gratis en 24-48h
+• 30 días para devolución
+• Garantía de 2 años
+```
+
+### Testimonios
+```
+[Resultado específico] + [Contexto personal] + [Emoción]
+
+MALO:
+"Excelente producto, muy recomendable. 5 estrellas."
+
+BUENO:
+"Lo tengo en mi escritorio desde hace 3 meses. Mis compañeros siempre preguntan de dónde es. — María, diseñadora"
+```
+
+## 6.4 Tono por Sector
+
+### Lujo/Premium
+```
+Tono: Calmado, seguro, sin exclamaciones
+Ejemplo: "Cada pieza cuenta una historia. Esta puede ser la tuya."
+NO: "¡Increíble oferta en productos de lujo!"
+```
+
+### Tech/Moderno
+```
+Tono: Directo, funcional, datos
+Ejemplo: "10.000 mAh. Carga completa en 45 minutos. Puerto USB-C."
+NO: "¡La batería más revolucionaria del mercado!"
+```
+
+### Lifestyle/Bienestar
+```
+Tono: Cálido, cercano, aspiracional realista
+Ejemplo: "Para las mañanas lentas y las tardes que se alargan."
+NO: "¡Transforma tu vida hoy!"
+```
+
+### Sostenible/Eco
+```
+Tono: Honesto, específico, sin greenwashing
+Ejemplo: "Embalaje 100% reciclado. Compensamos 2kg de CO2 por envío."
+NO: "¡Comprometidos con el planeta!"
+```
+
+---
+
+# 7. ARQUITECTURA SHOPIFY
+
+## 7.1 Estructura de Archivos Óptima
+
+```
+theme/
+├── assets/
+│   ├── base.css           # Variables + reset + utilities
+│   ├── sections.css       # Estilos de secciones (o inline)
+│   ├── base.js            # JS principal
+│   └── [imágenes]
+│
+├── config/
+│   ├── settings_schema.json  # Solo si necesitas settings globales
+│   └── settings_data.json    # Estado inicial
+│
+├── layout/
+│   └── theme.liquid          # Layout único, limpio
+│
+├── locales/
+│   └── [idioma].default.json
+│
+├── sections/
+│   ├── header.liquid
+│   ├── footer.liquid
+│   ├── hero.liquid
+│   ├── [secciones-de-home].liquid
+│   ├── main-product.liquid
+│   ├── main-collection.liquid
+│   ├── main-cart.liquid
+│   └── [otras-main-*.liquid]
+│
+├── snippets/
+│   ├── product-card.liquid
+│   ├── price.liquid
+│   ├── icon-*.liquid
+│   └── [componentes-reutilizables]
+│
+└── templates/
+    ├── index.json
+    ├── product.json
+    ├── collection.json
+    ├── cart.json
+    ├── page.json
+    ├── 404.json
+    └── customers/
+        └── [todos los templates de cuenta]
+```
+
+## 7.2 Schema Design Patterns
+
+### Patrón: Contenido Editable Completo
+```json
+{
+  "type": "text",
+  "id": "titulo",
+  "label": "Título",
+  "default": "Valor por defecto"
+}
+```
+
+Usar para: Todo texto visible en la página.
+
+### Patrón: Bloques Repetibles
+```json
+{
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Elemento",
+      "limit": 6,
+      "settings": [...]
+    }
+  ]
+}
+```
+
+Usar para: FAQs, testimonios, features, cualquier lista editable.
+
+### Patrón: Presets con Contenido
+```json
+{
+  "presets": [
+    {
+      "name": "Testimonios",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Texto de ejemplo...",
+            "author": "Nombre Apellido"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+Usar para: Secciones que queremos añadibles con contenido de ejemplo.
+
+### Patrón: Settings Agrupados
+```json
+{
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "text",
+      "id": "titulo"
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "select",
+      "id": "alineacion"
+    }
+  ]
+}
+```
+
+Usar para: Secciones con muchos settings (>5).
+
+## 7.3 Liquid Best Practices
+
+### Eliminar whitespace
+```liquid
+{%- assign x = 'value' -%}
+{{- output -}}
+```
+
+Usar siempre `{%-` y `-%}` para evitar líneas vacías en HTML.
+
+### Valores por defecto
+```liquid
+{{ section.settings.titulo | default: 'Título por defecto' }}
+```
+
+### Condicionales limpios
+```liquid
+{%- if product.available -%}
+  {%- if product.compare_at_price > product.price -%}
+    <span class="sale">Oferta</span>
+  {%- endif -%}
+{%- endif -%}
+```
+
+### Loops con salida condicional
+```liquid
+{%- for product in collection.products limit: 4 -%}
+  {%- render 'product-card', product: product -%}
+{%- else -%}
+  <p>No hay productos</p>
+{%- endfor -%}
+```
+
+### No repetir lógica
+```liquid
+{%- comment -%}
+  MAL: Repetir lógica de precio en múltiples lugares
+  BIEN: Crear snippet 'price.liquid'
+{%- endcomment -%}
+
+{%- render 'price', product: product -%}
+```
+
+## 7.4 Performance en Shopify
+
+### Imágenes
+```liquid
+{%- comment -%} Siempre usar image_url con width {%- endcomment -%}
+{{ image | image_url: width: 800 }}
+
+{%- comment -%} Lazy loading excepto hero {%- endcomment -%}
+<img src="{{ image | image_url: width: 800 }}" loading="lazy">
+
+{%- comment -%} Srcset para responsive {%- endcomment -%}
+<img 
+  src="{{ image | image_url: width: 800 }}"
+  srcset="
+    {{ image | image_url: width: 400 }} 400w,
+    {{ image | image_url: width: 800 }} 800w,
+    {{ image | image_url: width: 1200 }} 1200w
+  "
+  sizes="(max-width: 768px) 100vw, 50vw"
+>
+```
+
+### CSS
+```liquid
+{%- comment -%} Cargar CSS de forma estándar {%- endcomment -%}
+{{ 'base.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%} CSS crítico inline si es necesario {%- endcomment -%}
+<style>
+  /* Solo CSS above-the-fold */
+</style>
+```
+
+### JavaScript
+```liquid
+{%- comment -%} Defer siempre que sea posible {%- endcomment -%}
+<script src="{{ 'base.js' | asset_url }}" defer></script>
+```
+
+## 7.5 Errores que Matan Conversión
+
+### Error 1: Checkout guest deshabilitado
+**Impacto:** -30% conversión
+**Solución:** Admin > Settings > Checkout > Guest checkout ON
+
+### Error 2: Información de envío oculta
+**Impacto:** -20% conversión
+**Solución:** Mostrar en PDP y cart antes del checkout
+
+### Error 3: Imágenes de baja calidad
+**Impacto:** -25% conversión
+**Solución:** Mínimo 1000px, fondo consistente, múltiples ángulos
+
+### Error 4: Proceso de checkout largo
+**Impacto:** -15% por cada paso extra
+**Solución:** Usar Shopify Checkout (no personalizar excesivamente)
+
+### Error 5: Sin reviews
+**Impacto:** -15% conversión
+**Solución:** Implementar sistema de reviews real
+
+### Error 6: Mobile no optimizado
+**Impacto:** -50% del tráfico mobile
+**Solución:** Mobile-first, probar en dispositivos reales
+
+### Error 7: Velocidad lenta (>3s)
+**Impacto:** -7% conversión por segundo adicional
+**Solución:** Optimizar imágenes, reducir apps, código limpio
+
+---
+
+# 8. ANTI-PATRONES
+
+## 8.1 Anti-patrones de Diseño
+
+| Anti-patrón | Por qué es malo | Qué hacer |
+|-------------|-----------------|-----------|
+| Slider de hero con múltiples slides | Usuario no ve el resto, reduce claridad | Un mensaje claro, sin rotación |
+| Pop-up inmediato de newsletter | Interrupción antes de ver valor | Trigger después de scroll o tiempo |
+| Mega menú con todas las categorías | Parálisis de elección | Máximo 7 items de primer nivel |
+| Carrusel de productos sin control | Usuario pierde el control | Grid estático o carrusel con flechas visibles |
+| Iconos custom sin label | Nadie sabe qué significan | Iconos estándar + texto |
+| Animaciones en cada scroll | Distrae del contenido | Solo para elementos secundarios |
+| Dark patterns (falsa escasez, etc.) | Destruye confianza | Honestidad absoluta |
+
+## 8.2 Anti-patrones de Copy
+
+| Anti-patrón | Por qué es malo | Qué hacer |
+|-------------|-----------------|-----------|
+| "Somos líderes del mercado" | Nadie lo cree | Datos específicos |
+| "Calidad premium" | Vacío de significado | Describir proceso o material |
+| "Para todos los gustos" | No significa nada | Definir audiencia |
+| "¡Oferta increíble!" | Spam vibes | Describir la oferta |
+| Mayúsculas y exclamaciones | Gritar no convence | Tono calmado |
+| Jerga técnica sin contexto | Excluye usuarios | Explicar beneficio |
+| Lorem ipsum en producción | Imperdonable | Contenido real siempre |
+
+## 8.3 Anti-patrones Técnicos
+
+| Anti-patrón | Por qué es malo | Qué hacer |
+|-------------|-----------------|-----------|
+| !important en CSS | Imposible de mantener | Especificidad correcta |
+| Inline styles | No escalable | Clases CSS |
+| IDs para styling | Demasiado específico | Clases |
+| Scripts en head sin defer | Bloquea render | defer o al final del body |
+| Imágenes sin dimensiones | CLS (layout shift) | width y height explícitos |
+| console.log en producción | Poco profesional | Eliminar antes de deploy |
+| Código comentado | Ruido | Eliminar |
+| Variables hardcodeadas | No editable | Settings de sección |
+
+---
+
+# 9. CHECKLIST DE CALIDAD
+
+## Pre-Entrega
+
+### Funcionalidad
+- [ ] Todos los enlaces funcionan
+- [ ] Formulario de contacto envía correctamente
+- [ ] Add to Cart funciona
+- [ ] Cart se actualiza correctamente
+- [ ] Checkout funciona
+- [ ] Variantes de producto funcionan
+- [ ] Búsqueda funciona (si existe)
+- [ ] Filtros funcionan (si existen)
+
+### Contenido
+- [ ] No hay lorem ipsum
+- [ ] No hay imágenes placeholder
+- [ ] Textos revisados (sin typos)
+- [ ] Precios correctos
+- [ ] Información de envío correcta
+- [ ] Políticas actualizadas
+
+### Responsive
+- [ ] Mobile 375px OK
+- [ ] Mobile 414px OK
+- [ ] Tablet 768px OK
+- [ ] Desktop 1024px OK
+- [ ] Desktop 1440px OK
+- [ ] No hay overflow horizontal
+
+### Performance
+- [ ] LCP < 2.5s
+- [ ] FID < 100ms
+- [ ] CLS < 0.1
+- [ ] Imágenes optimizadas
+- [ ] Sin 404s en assets
+
+### SEO
+- [ ] Titles únicos por página
+- [ ] Meta descriptions presentes
+- [ ] Alt text en imágenes
+- [ ] Canonical URLs correctas
+- [ ] Schema markup en PDP
+
+### Accesibilidad
+- [ ] Skip link funciona
+- [ ] Navegable con teclado
+- [ ] Focus visible
+- [ ] Contraste suficiente
+- [ ] Labels en formularios
+
+### Shopify
+- [ ] Theme Editor funciona
+- [ ] Secciones editables
+- [ ] Settings funcionan
+- [ ] Preview mode OK
+- [ ] Guest checkout habilitado
+
+---
+
+# 10. PROMPT MAESTRO DEFINITIVO
+
+```
+# PROMPT PARA GENERACIÓN DE PÁGINAS SHOPIFY PREMIUM
+
+## CONTEXTO
+Actúas como Arquitecto Senior de Producto Digital especializado en Shopify DTC premium. Tu output debe ser indistinguible del trabajo de un estudio de diseño de primer nivel.
+
+## INPUTS REQUERIDOS
+Antes de generar, necesitas:
+1. MARCA: Nombre, sector, posicionamiento
+2. PRODUCTO: Qué vende, rango de precio, diferenciador
+3. AUDIENCIA: Quién compra, nivel de consciencia
+4. TONO: Premium/casual/técnico/lifestyle
+5. REFERENCIAS: URLs de inspiración (opcional)
+
+## REGLAS ABSOLUTAS
+
+### Jerarquía de decisión
+CONVERSIÓN > CLARIDAD > ESTÉTICA > ORIGINALIDAD
+
+### Copy
+- Específico, nunca genérico
+- Sin clichés de IA ("experiencia única", "calidad premium", "diseñado para ti")
+- Máximo 12 palabras en headlines
+- Datos concretos > adjetivos
+
+### UI
+- Un CTA primario por viewport
+- Espaciado consistente (usar escala: 4, 8, 16, 24, 32, 48, 64, 96, 128px)
+- Contraste mínimo 4.5:1 en texto
+- Mobile-first, siempre
+
+### Transiciones
+- Máximo 300ms para UI
+- ease-out para entradas, ease-in para salidas
+- Reducir o eliminar si prefers-reduced-motion
+
+### Estructura
+- Hero: propuesta de valor + CTA único
+- Trust bar después de hero
+- Producto/colección visible sin scroll excesivo
+- FAQ siempre, envío/devolución primera pregunta
+- CTA de cierre antes del footer
+
+### Shopify
+- Todas las secciones con schema completo
+- Todos los textos editables via settings
+- Bloques para contenido repetible (FAQs, testimonios, etc.)
+- Presets con contenido de ejemplo realista
+- Imágenes con image_url + width
+
+### Lo que NUNCA hacer
+- Slider hero con múltiples mensajes
+- Pop-up inmediato
+- Falsa escasez o urgencia
+- Lorem ipsum
+- Iconos sin labels
+- Settings vacíos (siempre default)
+- Console.log en producción
+- CSS !important
+- Imágenes sin lazy loading (excepto hero)
+
+## OUTPUT ESPERADO
+
+### Para cada sección generar:
+1. HTML/Liquid semántico y limpio
+2. CSS con variables (--color-*, --space-*, etc.)
+3. Schema completo con todos los settings editables
+4. Presets con contenido de ejemplo realista
+
+### Estructura de archivos:
+- sections/[nombre].liquid (contenido + schema)
+- templates/[pagina].json (orden de secciones + settings iniciales)
+- assets/base.css (sistema de diseño completo)
+
+### Calidad mínima:
+- 0 errores de Liquid
+- 0 textos hardcodeados que deban ser editables
+- 0 valores sin default en settings
+- 100% responsive sin overflow
+- 100% navegable con teclado
+
+## PROCESO DE GENERACIÓN
+
+1. Analizar inputs y nivel de consciencia del usuario
+2. Definir estructura de página según tipo (home/PDP/collection)
+3. Generar esqueleto de secciones
+4. Escribir copy específico para cada sección
+5. Implementar código Liquid + CSS
+6. Generar schemas completos
+7. Verificar contra checklist de calidad
+
+## VERIFICACIÓN FINAL
+
+Antes de entregar, confirmar:
+- [ ] ¿El CTA principal es visible sin scroll en mobile?
+- [ ] ¿El copy responde "qué gano yo" en 5 segundos?
+- [ ] ¿Cada sección tiene UN propósito claro?
+- [ ] ¿El merchant puede editar TODO el contenido visible?
+- [ ] ¿Funciona sin JavaScript?
+- [ ] ¿Pasa el "test de la abuela" (¿lo entendería alguien no técnico)?
+
+---
+
+EJECUTAR CON ESTOS PARÁMETROS:
+[INSERTAR INPUTS DEL PROYECTO AQUÍ]
+```
+
+---
+
+# ANEXO: RECURSOS DE IMPLEMENTACIÓN
+
+## Snippet: Product Card Estándar
+```liquid
+{%- comment -%}
+  Uso: {% render 'product-card', product: product %}
+{%- endcomment -%}
+
+<article class="product-card">
+  <a href="{{ product.url }}" class="product-card__link">
+    <div class="product-card__image">
+      {%- if product.featured_image -%}
+        <img 
+          src="{{ product.featured_image | image_url: width: 600 }}"
+          alt="{{ product.title | escape }}"
+          loading="lazy"
+          width="600"
+          height="600"
+        >
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+      {%- endif -%}
+      
+      {%- if product.compare_at_price > product.price -%}
+        <span class="product-card__badge">Oferta</span>
+      {%- endif -%}
+    </div>
+    
+    <div class="product-card__info">
+      <h3 class="product-card__title">{{ product.title }}</h3>
+      
+      <div class="product-card__price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="product-card__price-compare">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+        <span class="product-card__price-current">{{ product.price | money }}</span>
+      </div>
+    </div>
+  </a>
+</article>
+```
+
+## Snippet: Price Estándar
+```liquid
+{%- comment -%}
+  Uso: {% render 'price', product: product %}
+{%- endcomment -%}
+
+<div class="price">
+  {%- if product.compare_at_price > product.price -%}
+    <span class="price__compare">
+      <span class="visually-hidden">Precio original</span>
+      {{ product.compare_at_price | money }}
+    </span>
+  {%- endif -%}
+  
+  <span class="price__current">
+    <span class="visually-hidden">Precio actual</span>
+    {{ product.price | money }}
+  </span>
+  
+  {%- if product.compare_at_price > product.price -%}
+    {%- assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+    <span class="price__discount">-{{ discount }}%</span>
+  {%- endif -%}
+</div>
+```
+
+## CSS: Variables Completas
+```css
+:root {
+  /* === COLORES === */
+  --color-bg: #0a0a0a;
+  --color-bg-soft: #0f0f0f;
+  --color-bg-card: #141414;
+  --color-bg-elevated: #1a1a1a;
+  
+  --color-fg: #ebebeb;
+  --color-fg-soft: #a0a0a0;
+  --color-fg-muted: #666666;
+  
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+  
+  --color-accent: #9370DB;
+  --color-accent-soft: rgba(147, 112, 219, 0.2);
+  
+  --color-success: #059669;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+  
+  /* === TIPOGRAFÍA === */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+  
+  /* === ESPACIADO === */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  
+  /* === LAYOUT === */
+  --width-narrow: 680px;
+  --width-base: 1024px;
+  --width-wide: 1280px;
+  --width-full: 1440px;
+  
+  /* === BORDES === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+  
+  /* === SOMBRAS === */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+  --shadow-xl: 0 16px 32px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 60px rgba(147, 112, 219, 0.3);
+  
+  /* === TRANSICIONES === */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 400ms;
+  
+  /* === Z-INDEX === */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+```
+
+---
+
+**FIN DEL DOCUMENTO**
+
+*Este manual representa la operativa completa para generación de páginas web Shopify de nivel profesional. Debe usarse como referencia definitiva para replicación de calidad.*

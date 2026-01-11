@@ -382,7 +382,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ---- Overlays ---- */
-.overlay {
+.overlay,
+.cart-drawer-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
@@ -391,9 +392,11 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.overlay.is-visible {
+.overlay.is-visible,
+.cart-drawer-overlay.is-visible {
   opacity: 1;
   visibility: visible;
 }

@@ -2,7 +2,128 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {}
+      "blocks": {
+        "description": {
+          "type": "description",
+          "settings": {
+            "title": "Descripción"
+          }
+        },
+        "includes": {
+          "type": "custom",
+          "settings": {
+            "title": "¿Qué incluye el paquete?",
+            "content": "<p>• Lámpara de cristal natural seleccionado<br>• Base de madera premium<br>• LED integrado de bajo consumo<br>• Cable USB de 2 metros<br>• Caja de regalo</p>"
+          }
+        },
+        "shipping": {
+          "type": "custom",
+          "settings": {
+            "title": "Envío",
+            "content": "<p><strong>España peninsular:</strong> GRATIS · 24-48h laborables<br><strong>Baleares:</strong> 4,99€ · 3-5 días<br><strong>Canarias:</strong> 9,99€ · 5-7 días<br><br>Todos los envíos incluyen seguro.</p>"
+          }
+        },
+        "returns": {
+          "type": "custom",
+          "settings": {
+            "title": "Devoluciones y garantía",
+            "content": "<p><strong>30 días</strong> para devolver sin preguntas.<br><strong>2 años de garantía</strong> completa.<br><br>Contacta: hola@lumei.es</p>"
+          }
+        },
+        "r1": {
+          "type": "review",
+          "settings": {
+            "name": "María García",
+            "rating": 5,
+            "verified": true,
+            "title": "¡Absolutamente preciosa!",
+            "text": "La lámpara es incluso más bonita en persona. La luz que emite es súper relajante, perfecta para meditar.",
+            "date": "Hace 2 semanas"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "name": "Carlos Ruiz",
+            "rating": 5,
+            "verified": true,
+            "title": "Calidad premium",
+            "text": "Se nota que es un producto de calidad desde que abres la caja. El cristal es precioso.",
+            "date": "Hace 1 mes"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "name": "Laura Fernández",
+            "rating": 5,
+            "verified": true,
+            "title": "Superó expectativas",
+            "text": "Embalaje impecable. Llegó perfecta.",
+            "date": "Hace 3 semanas"
+          }
+        },
+        "r4": {
+          "type": "review",
+          "settings": {
+            "name": "Ana Martínez",
+            "rating": 5,
+            "verified": true,
+            "text": "Regalo perfecto para mi madre. Cada pieza es única.",
+            "date": "Hace 1 semana"
+          }
+        },
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Es resistente el cristal?",
+            "answer": "Sí, los cristales son naturales y resistentes. Recomendamos manipularlos con cuidado como cualquier pieza de decoración."
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cómo se limpia?",
+            "answer": "Con paño seco o ligeramente húmedo. Evita productos químicos."
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto dura el LED?",
+            "answer": "Más de 50.000 horas. Con uso normal de 4-5 horas diarias, durará más de 25 años."
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Da suficiente luz?",
+            "answer": "Es perfecta como luz ambiental y nocturna. Crea un ambiente relajante ideal."
+          }
+        }
+      },
+      "block_order": ["description", "includes", "shipping", "returns", "r1", "r2", "r3", "r4", "f1", "f2", "f3", "f4"],
+      "settings": {
+        "show_rating": true,
+        "rating_value": "4.8",
+        "review_count": "89",
+        "value_1_icon": "🎁",
+        "value_1": "Envío gratis en península (24-48h)",
+        "value_2_icon": "✨",
+        "value_2": "Cristal natural seleccionado a mano",
+        "value_3_icon": "🔄",
+        "value_3": "30 días para devolución sin preguntas",
+        "value_4_icon": "⚡",
+        "value_4": "USB incluido, listo para conectar",
+        "show_testimonial": true,
+        "testimonial_name": "Susana G.",
+        "testimonial_text": "La compré por curiosidad y acabó siendo mi rincón favorito. Cada vez que la enciendo siento una energía especial.",
+        "show_reviews": true,
+        "reviews_title": "Lo que dicen nuestros clientes",
+        "reviews_subtitle": "Opiniones reales de compradores verificados",
+        "show_faq": true,
+        "guarantee_text": "Si no te enamora tu LUMEI, tienes 30 días para devolverla. Te reembolsamos el 100% sin preguntas."
+      }
     }
   },
   "order": ["main"]
